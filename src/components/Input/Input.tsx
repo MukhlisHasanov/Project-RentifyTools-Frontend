@@ -10,6 +10,7 @@ function Input({
   error = undefined,
   value,
   onChange,
+  isSmallInput = false,
 }: InputProps) {
   return (
     <InputWrapper>
@@ -22,6 +23,7 @@ function Input({
         $error={error}
         value={value}
         onChange={onChange}
+        $isSmallInput={isSmallInput}
       />
       <ErrorContainer>{error}</ErrorContainer>
     </InputWrapper>

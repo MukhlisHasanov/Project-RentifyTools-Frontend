@@ -15,7 +15,9 @@ import {
   AppFooter,
   FooterNav,
   FooterLink,
+  SearchContainer,
 } from "./styles"
+import Button from "components/Button/Button"
 
 function Layout({ children }: LayoutProps) {
   const navigate = useNavigate()
@@ -66,7 +68,12 @@ function Layout({ children }: LayoutProps) {
     <LayoutWrapper>
       <AppHeader>
         <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
-        <Input id="" name="tool" placeholder="Search tool"></Input>
+        <SearchContainer>
+        <Input id="" name="tool" placeholder="Search tool"/>
+        <Button type="button"
+            name="Search"
+            isSmallButton/>
+        </SearchContainer>
         <HeaderNav>
           <HeaderNav>{headerLinks}</HeaderNav>
           {/* <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>

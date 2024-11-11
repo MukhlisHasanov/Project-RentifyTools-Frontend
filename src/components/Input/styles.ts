@@ -4,6 +4,7 @@ import { colors } from "styles/colors"
 
 export interface InputComponentStyleProps {
   $error?: string | undefined
+  $isSmallInput: boolean
 }
 
 export const InputWrapper = styled.div`
@@ -14,24 +15,22 @@ export const InputWrapper = styled.div`
 
 export const InputLabel = styled.label`
   font-size: 16px;
-  color: hsl(0, 0%, 44%);
+  color: black;
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`
-  /* width: 100%; */
-  width: 500px;
+  width:${({ $isSmallInput }) => 
+    $isSmallInput ? "200px" : "500px"};
   height: 50px;
-  border: 1px solid white;
-  border-radius: 50px;
-  padding: 12px;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin: 10px;
   outline: none;
-  background-color: rgba(255, 255, 255, 0.1);
-
-  color: ${colors.WHITE};
-  backdrop-filter: blur(4px);
+  background-color:  ${colors.WHITE};
+  color: ${colors.BLACK};
 
   &::placeholder {
-    color: ${colors.WHITE};
+    color: ${colors.BLACK};
     font-size: 16px;
   }
 

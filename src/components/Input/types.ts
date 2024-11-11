@@ -7,6 +7,7 @@ export interface InputProps {
   placeholder: string
   disabled?: boolean
   error?: undefined | string
+  isSmallInput?: boolean
   value?: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
