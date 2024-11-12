@@ -28,7 +28,7 @@ function Layout({ children }: LayoutProps) {
     [TOOLS_APP_ROUTES.HOME]: "Home",
     [TOOLS_APP_ROUTES.ADD_ADVERTS]: "Add Adverts",
     [TOOLS_APP_ROUTES.LOGIN]: "Login",
-    // [TOOLS_APP_ROUTES.PROFILE]: "Profile",
+    //[TOOLS_APP_ROUTES.PROFILE]: "Profile",
   }
 
   const appLinksFooter = {
@@ -78,7 +78,9 @@ function Layout({ children }: LayoutProps) {
           <HeaderNav>{headerLinks}</HeaderNav>
           {/* <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
           <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Adverts</HeaderLink>
-          <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink> */}
+          <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink>
+           */
+           <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>}
         </HeaderNav>
       </AppHeader>
       <AppMain>{children}</AppMain>
