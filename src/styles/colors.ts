@@ -14,8 +14,8 @@ export const colors: Colors = {
   DISABLED: "rgb(128, 128, 128)",
   GREY: "rgb(186, 186, 186)",
   WHITE: "#FFFFFF",
-  CARD: "linear-gradient(133.66deg, rgba(47, 72, 111, 0.62) 5.78%, rgba(11, 27, 52, 0.62) 96.58%)",
-  HEADER: "#4D4D4DC7",
+  CARD: "#4D4D4DC8",
+  HEADER: "#4D4D4DC6",
   TRANSPARENT: "transparent",
   BUTTON: "#F69320",
   BLACK: "#000000"
