@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 
-
-import { PageTitle, PageWrapper } from "./styles";
+import {  PageWrapper } from "./styles";
 import { TOOLS_APP_ROUTES } from "constants/routes";
 
 function Home() {
@@ -17,7 +16,7 @@ function Home() {
 
   return (
     <PageWrapper>
-      <PageTitle>Home</PageTitle>
+      
       
       {/* <ButtonControl>
         <Button name="Go back" onClick={goBack} />
