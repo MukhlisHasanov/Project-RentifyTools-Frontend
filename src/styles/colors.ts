@@ -1,13 +1,14 @@
 export interface Colors {
-  ERROR: string;
-  DISABLED: string;
-  GREY: string;
-  WHITE: string;
-  CARD: string;
-  HEADER: string;
-  TRANSPARENT: string;
-  BUTTON: string;
-  BLACK: string;
+  ERROR: string
+  DISABLED: string
+  GREY: string
+  WHITE: string
+  CARD: string
+  HEADER: string
+  TRANSPARENT: string
+  BUTTON: string
+  BLACK: string
+  SHADOW: string
 }
 export const colors: Colors = {
   ERROR: "rgb(206, 44, 44)",
@@ -18,5 +19,6 @@ export const colors: Colors = {
   HEADER: "#4D4D4DC6",
   TRANSPARENT: "transparent",
   BUTTON: "#F69320",
-  BLACK: "#000000"
+  BLACK: "#000000",
+  SHADOW: "rgba(0, 0, 0, 0.2)",
 }

@@ -1,26 +1,34 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled"
+import { CategoryImg1 } from "assets"
+import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 10px;
-`;
-
-export const CategoryContainer =styled.div`
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 4px;
 `
 
-export const CadrsContainer = styled.div`
+export const PageTitle = styled.p`
+  font-size: 30px;
+  font-weight: bold;
+`
+export const PageContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px;
+  gap: 30px;
+  background-color: ${colors.HEADER};
+`
+export const CategoryImg = styled.div`
+display: flex;
+  flex-direction: row;
   flex: 1;
-  flex-wrap: wrap;
-  margin: 10px;
-  gap: 10px;
-`;
+  background-image: url(${CategoryImg1});
+  width: 50px;
+  height: 50px;
+`

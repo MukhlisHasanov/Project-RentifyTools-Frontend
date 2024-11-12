@@ -1,28 +1,55 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { v4 } from "uuid"
 
+import {
+  CategoryImg1,
+  CategoryImg2,
+  CategoryImg3,
+  CategoryImg4,
+  CategoryImg5,
+  CategoryImg6,
+  CategoryImg7,
+  CategoryImg8,
+  CategoryImg9,
+  CategoryImg10,
+  CategoryImg11,
+  CategoryImg12,
+} from "assets"
 
-import {  PageWrapper } from "./styles";
-import { TOOLS_APP_ROUTES } from "constants/routes";
+import { PageTitle, PageWrapper, PageContainer, CategoryImg } from "./styles"
 
+const images = [
+  CategoryImg1,
+  CategoryImg2,
+  CategoryImg3,
+  CategoryImg4,
+  CategoryImg5,
+  CategoryImg6,
+  CategoryImg7,
+  CategoryImg8,
+  CategoryImg9,
+  CategoryImg10,
+  CategoryImg11,
+  CategoryImg12,
+]
 function Home() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const goBack = () => {
-    navigate(-1);
-  };
-  const goToProfile = () => {
-    navigate(TOOLS_APP_ROUTES.PROFILE); 
-  };
-
+    navigate(-1)
+  }
+  const imageContainers = images.map((src: string, index: number) => (
+    <CategoryImg key={v4()}>
+      <img src={src} alt={`Image ${index + 1}`} />
+      
+    </CategoryImg>
+  ))
   return (
     <PageWrapper>
-      
-      
-      {/* <ButtonControl>
-        <Button name="Go back" onClick={goBack} />
-      </ButtonControl> */}
+      <PageTitle></PageTitle>
+      <PageContainer>{imageContainers}</PageContainer>
     </PageWrapper>
-  );
+  )
 }
 
-export default Home;
+export default Home

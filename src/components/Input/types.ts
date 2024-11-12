@@ -3,8 +3,9 @@ import { HTMLInputTypeAttribute, ChangeEvent } from "react"
 export interface InputProps {
   id: string
   name: string
+  label?: string 
   type?: HTMLInputTypeAttribute | undefined
-  placeholder: string
+  placeholder?: string
   disabled?: boolean
   error?: undefined | string
   isSmallInput?: boolean
