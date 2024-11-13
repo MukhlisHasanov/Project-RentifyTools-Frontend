@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserProps } from './types';
+import { ProfileBox, PPBox} from './styles';
 //import api from '../services/api';  (Importieren einen API-Service, wenn einer da ist (Valerian))
 
 
@@ -34,14 +35,14 @@ function Profile() {
     return (
         <div>
             {userData ? (
-                <div>
+                <ProfileBox>
                     <h1>Profil</h1>
-                    <p>Vorname: {userData.first_name}</p>
-                    <p>Nachname: {userData.last_name}</p>
-                    <p>Email: {userData.email}</p>
-                    <p>Telefon: {userData.phone}</p>
+                    <PPBox>Vorname: {userData.first_name}</PPBox>
+                    <PPBox>Nachname: {userData.last_name}</PPBox>
+                    <PPBox>Email: {userData.email}</PPBox>
+                    <PPBox>Telefon: {userData.phone}</PPBox>
                     <button onClick={goToEditProfile}>Profil bearbeiten</button>
-                </div>
+                </ProfileBox>
             ) : (
                 <p>Profil wird geladen...</p>
             )}
