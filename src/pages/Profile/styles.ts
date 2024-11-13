@@ -5,7 +5,7 @@ import { colors } from "styles/colors"
 
 export const ProfileBox = styled.div`
 background-color: rgba(77, 77, 77, 0.78);
-position: absolute;
+position: fixed;
 width: 1077px;
 height: 321px;
 top: 221px;
