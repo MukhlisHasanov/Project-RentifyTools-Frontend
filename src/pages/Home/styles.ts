@@ -24,3 +24,8 @@ export const CadrsContainer = styled.div`
   margin: 10px;
   gap: 10px;
 `;
+
+export const PageTitle = styled.p`
+  font-size: 30px;
+  font-weight: bold;
+`
