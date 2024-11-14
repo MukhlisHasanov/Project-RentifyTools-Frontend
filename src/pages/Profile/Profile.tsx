@@ -65,14 +65,14 @@
 //v141124  export default Profile
 
 
-
+//v141124  import MyAdvert from "pages/MyAdvert/MyAdvert";
 
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserProps } from "./types"
 import { PageWrapper,ProfileBox, PPBox,H1PBox } from "./styles"
 import ProfileCard from "components/ProfileCard/ProfileCard"
-import { UserImg } from "assets"
+//v141124  import { UserImg } from "assets"
 //import api from '../services/api';  (Importieren einen API-Service, wenn einer da ist (Valerian))
 
 function Profile() {

@@ -1,13 +1,15 @@
 import styled from "@emotion/styled"
-import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
+//141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
 import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 4px;
+  gap: 10px;
 `
 
 export const PageTitle = styled.span`
