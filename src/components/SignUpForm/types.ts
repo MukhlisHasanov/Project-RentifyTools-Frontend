@@ -6,3 +6,8 @@ export enum SIGNUP_FORM_NAMES {
   PASSWORD = "password",
   REPEAT_PASSWORD = "repeatPassword",
 }
+
+export interface SignUpFormProps {
+  onSwitchToSignIn: () => void
+  onRegistrationSuccess: () => void
+}

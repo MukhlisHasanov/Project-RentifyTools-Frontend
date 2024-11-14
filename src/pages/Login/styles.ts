@@ -1,15 +1,15 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled"
 
 export const PageWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   align-items: center;
   flex: 1;
   gap: 4px;
-`;
-
-export const PageTitle = styled.p`
-  font-size: 30px;
-  font-weight: bold;
+`
+export const SuccessMessage = styled.div`
+  color: green;
+  font-size: 16px;
+  margin-bottom: 20px;
 `;

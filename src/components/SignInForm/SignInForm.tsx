@@ -13,10 +13,11 @@ import {
   InputLabel,
   Text,
   InputsContainer,
+  TitleContainer,
 } from "./styles"
-import { SIGNIN_FORM_NAMES } from "./types"
+import { SIGNIN_FORM_NAMES, SignInFormProps } from "./types"
 
-function SignInForm() {
+function SignInForm({onSwitchToSignUp}:SignInFormProps) {
   //   const dispatch = useAppDispatch()
 
   //   const navigate = useNavigate()
@@ -47,7 +48,12 @@ function SignInForm() {
 
   return (
     <SignInFormContainer onSubmit={formik.handleSubmit}>
-      <Title>Sign In Sign Up</Title>
+      <TitleContainer>
+        <Title isActive>Sign In</Title>
+        <Title isActive={false} onClick={onSwitchToSignUp}>
+          Sign Up
+        </Title>
+      </TitleContainer>
       <InputsContainer>
         <InputLabel></InputLabel>
         <Input
