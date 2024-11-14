@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"
 
 import { v4 } from "uuid"
 import { useState, ChangeEvent } from "react"
@@ -89,7 +89,12 @@ function Layout({ children }: LayoutProps) {
       <AppHeader>
         <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
         <SearchContainer>
-          <Input id="search-tool" name="tool" placeholder="Search tool" onChange={onChangeValue}/>
+          <Input
+            id="search-tool"
+            name="tool"
+            placeholder="Search tool"
+            onChange={onChangeValue}
+          />
           <Button
             type="button"
             name="Search"

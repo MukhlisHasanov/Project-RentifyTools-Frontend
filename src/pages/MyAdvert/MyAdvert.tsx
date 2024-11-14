@@ -1,7 +1,7 @@
 //v141124  import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"
 //v141124  import { fetchAdverts } from "redux/thunks";
-//v141124  import { RootState } from "redux/store"; 
+//v141124  import { RootState } from "redux/store";
 
 //v141124    const MyAdvert: React.FC = () => {
 //v141124      const dispatch = useDispatch();
@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 //v141124    dispatch(fetchAdverts());
 //v141124  }, [dispatch]);
 
-  //v141124  if (loading) return <p>Laden...</p>;
-  //v141124  if (error) return <p>Fehler: {error}</p>;
+//v141124  if (loading) return <p>Laden...</p>;
+//v141124  if (error) return <p>Fehler: {error}</p>;
 
 //v141124  return (
 //v141124      <div>
@@ -50,8 +50,15 @@ const MyAdvert: React.FC = () => {
   return (
     <div>
       <h1>Meine Anzeigen</h1>
-      {adverts.map((advert) => (
-        <div key={advert.id} style={{ marginBottom: "10px", padding: "10px", border: "1px solid #ddd" }}>
+      {adverts.map(advert => (
+        <div
+          key={advert.id}
+          style={{
+            marginBottom: "10px",
+            padding: "10px",
+            border: "1px solid #ddd",
+          }}
+        >
           <h2>{advert.title}</h2>
           <p>{advert.description}</p>
         </div>
@@ -61,4 +68,3 @@ const MyAdvert: React.FC = () => {
 }
 
 export default MyAdvert
-
