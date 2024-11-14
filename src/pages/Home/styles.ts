@@ -32,3 +32,18 @@ export const CategoryImg = styled.div`
   width: 50px;
   height: 50px;
 `
+export const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 550px;
+  min-height: 50px;
+  max-height: fit-content;
+  border: 1px solid ${colors.WHITE};
+  padding: 60px;
+  border-radius: 15px;
+  backdrop-filter: blur(4px);
+  background: ${colors.HEADER};
+  gap: 20px;
+`

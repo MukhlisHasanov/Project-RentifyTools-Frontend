@@ -1,9 +1,10 @@
 import styled from "@emotion/styled"
+import { NavLink } from "react-router-dom";
 import { colors } from "styles/colors";
 
 
 
-export const CardWrapper = styled.span`
+export const CardWrapper = styled(NavLink)`
   width: 450px;
   height: 250px;
   display: flex;

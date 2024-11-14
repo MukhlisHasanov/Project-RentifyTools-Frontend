@@ -17,7 +17,8 @@ import {
   CategoryImg12,
 } from "assets"
 
-import { PageTitle, PageWrapper, PageContainer, CategoryImg } from "./styles"
+import { PageTitle, PageWrapper, PageContainer, CategoryImg, CardContainer } from "./styles"
+import Card from "components/Card/Card"
 const images = [
   CategoryImg1,
   CategoryImg2,
@@ -46,6 +47,9 @@ function Home() {
         <PageTitle>RentifyTools Category</PageTitle>
         {imageContainers}
       </PageContainer>
+      <CardContainer>
+      <Card title="Tool" price="5" />
+      </CardContainer>
     </PageWrapper>
   )
 }
