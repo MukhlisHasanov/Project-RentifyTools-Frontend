@@ -1,4 +1,4 @@
-// Beispiel für einfache CSS-in-JS-Stile
+
 import styled from "@emotion/styled"
 
 const AdvertContainer = styled.div`

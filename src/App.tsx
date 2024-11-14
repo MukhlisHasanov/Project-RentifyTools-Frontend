@@ -7,23 +7,25 @@ import MyAdvert from "pages/MyAdvert/MyAdvert"
 import SignUpForm from "pages/Login/Login"
 import { TOOLS_APP_ROUTES } from "constants/routes"
 import Profile from "pages/Profile/Profile"
+import SignInForm from "components/SignInForm/SignInForm"
 
 function App() {
   return (
     <BrowserRouter>
-    <LayoutProfile>
-    <Routes>
-          <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
-          <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
-          <Route path={TOOLS_APP_ROUTES.MY_ADVERT} element={<MyAdvert />} />
-        </Routes>
-    </LayoutProfile>
-      {/* <Layout>
-        <Routes>
-          <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
-          <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
-        </Routes>
-      </Layout> */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-advert" element={<Profile />} />
+          <Route path="/login" element={<SignUpForm />} />
+          <Route path="/profile" element={<LayoutProfile />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/messages" element={<Profile />} />
+            <Route path="/profile/my-adverts" element={<MyAdvert />} />
+            <Route path="/profile/favourites" element={<Home />} />
+            <Route path="/profile/rented-tools" element={<Home />} />
+          </Route>
+        </Route>
+      </Routes>
     </BrowserRouter>
   )
 }

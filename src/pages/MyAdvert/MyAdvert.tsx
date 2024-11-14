@@ -29,10 +29,10 @@ import { useDispatch, useSelector } from "react-redux"
 
 //v141124  export default MyAdvert;
 
-// src/pages/MyAdvert/MyAdvert.tsx
+
 import React, { useEffect, useState } from "react"
 
-// Beispiel-Daten zur Anzeige, bis Redux oder eine API integriert ist
+
 const mockAdverts = [
   { id: 1, title: "Anzeige 1", description: "Beschreibung der Anzeige 1" },
   { id: 2, title: "Anzeige 2", description: "Beschreibung der Anzeige 2" },
@@ -42,9 +42,9 @@ const mockAdverts = [
 const MyAdvert: React.FC = () => {
   const [adverts, setAdverts] = useState(mockAdverts)
 
-  // Effekt für spätere API-Aufrufe oder Redux-Integration
+  // Effekt für spätere API-Aufrufe 
   useEffect(() => {
-    // Hier könnte ein API-Aufruf oder eine Redux-Dispatch-Funktion eingebunden werden
+    // Hier könnte ein API-Aufruf 
   }, [])
 
   return (
