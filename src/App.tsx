@@ -20,7 +20,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/messages" element={<Profile />} />
             <Route path="/profile/my-adverts" element={<SignUpForm />} />
-            <Route path="/profile/favorites" element={<Home />} />
+            <Route path="/profile/favourites" element={<Home />} />
             <Route path="/profile/rented-tools" element={<Home />} />
           </Route>
         </Route>
