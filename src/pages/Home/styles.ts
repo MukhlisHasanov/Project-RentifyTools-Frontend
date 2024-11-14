@@ -1,4 +1,6 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled"
+
+import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -8,19 +10,27 @@ export const PageWrapper = styled.div`
   align-items: center;
   flex: 1;
   gap: 10px;
-`;
-
-export const CategoryContainer =styled.div`
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  gap: 20px;
 `
 
-export const CadrsContainer = styled.div`
+export const PageTitle = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  color: ${colors.WHITE};
+`
+export const PageContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px;
+  gap: 30px;
+  background-color: ${colors.HEADER};
+`
+export const CategoryImg = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  flex-wrap: wrap;
-  margin: 10px;
-  gap: 10px;
-`;
+  width: 50px;
+  height: 50px;
+`

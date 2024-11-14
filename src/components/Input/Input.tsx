@@ -1,9 +1,10 @@
 import { InputProps } from "./types"
-import { InputWrapper, InputComponent, ErrorContainer } from "./styles"
+import { InputWrapper, InputComponent,InputLabel, ErrorContainer } from "./styles"
 
 function Input({
   id,
   name,
+  label,
   type = "text",
   placeholder,
   disabled = false,
@@ -14,6 +15,7 @@ function Input({
 }: InputProps) {
   return (
     <InputWrapper>
+     <InputLabel htmlFor={id}>{label}</InputLabel>
       <InputComponent
         id={id}
         name={name}

@@ -15,7 +15,7 @@ export const InputWrapper = styled.div`
 
 export const InputLabel = styled.label`
   font-size: 16px;
-  color: black;
+  color: ${colors.WHITE};
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`
@@ -25,6 +25,7 @@ export const InputComponent = styled.input<InputComponentStyleProps>`
   border: 1px solid black;
   border-radius: 15px;
   margin: 10px;
+  padding-left: 15px;
   outline: none;
   background-color:  ${colors.WHITE};
   color: ${colors.BLACK};
@@ -35,7 +36,7 @@ export const InputComponent = styled.input<InputComponentStyleProps>`
   }
 
   &:hover {
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px ${colors.SHADOW};
   }
 `
 
