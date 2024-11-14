@@ -12,3 +12,5 @@ export {default as CategoryImg9} from "./images/image9.jpg";
 export {default as CategoryImg10} from "./images/image10.jpg";
 export {default as CategoryImg11} from "./images/image11.jpg";
 export {default as CategoryImg12} from "./images/image12.jpg";
+
+export { default as UserImg } from "./User.jpg";
