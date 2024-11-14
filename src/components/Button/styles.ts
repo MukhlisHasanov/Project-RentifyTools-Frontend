@@ -7,8 +7,8 @@ interface ButtonComponentStyleProps {
 }
 
 export const ButtonComponent = styled.button<ButtonComponentStyleProps>`
-  width: 100%;
-  max-width: ${({ $isSmallButton }) => 
+  /* width: 100%; */
+  width: ${({ $isSmallButton }) => 
     $isSmallButton ? "150px" : "500px"};
   height: 55px;
   background-color: ${({ disabled }) =>

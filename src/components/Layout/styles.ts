@@ -1,7 +1,8 @@
 import styled from "@emotion/styled"
-import { Link,NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 import { colors } from "styles/colors"
+
 import { AppImg } from "assets"
 
 export const LayoutWrapper = styled.div`
@@ -24,7 +25,7 @@ export const AppHeader = styled.header`
   position: fixed;
   z-index: 10;
   width: 100%;
-  height:80px;
+  height: 80px;
   border-bottom: 2px solid ${colors.WHITE};
   gap: 10px;
   margin-bottom: 10px;
@@ -32,7 +33,7 @@ export const AppHeader = styled.header`
   background: ${colors.HEADER};
 
   &:hover {
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px ${colors.SHADOW};
   }
 `
 export const AppTitle = styled.span`
@@ -75,6 +76,7 @@ export const AppMain = styled.main`
   padding-top: 70px;
   height: calc(100vh - 80px);
 `
+
 export const AppFooter = styled.footer`
   display: flex;
   align-items: center;
@@ -88,21 +90,23 @@ export const AppFooter = styled.footer`
   background: ${colors.HEADER};
 
   &:hover {
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px ${colors.SHADOW};
   }
-`;
+`
 
 export const FooterNav = styled.nav`
   display: flex;
   flex-direction: row;
-  gap: 10px;
-`;
+  gap: 50px;
+  justify-content: space-evenly;
+  text-align: center;
+`
 
 export const FooterLink = styled(Link)`
   color: white;
   font-size: 14px;
   text-decoration: bold;
-`;
+`
 
 export const SearchContainer = styled.div`
   display: flex;
