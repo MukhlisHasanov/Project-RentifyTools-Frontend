@@ -15,7 +15,7 @@ export const InputWrapper = styled.div`
 
 export const InputLabel = styled.label`
   font-size: 16px;
-  color: ${colors.WHITE};;
+  color: ${colors.WHITE};
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`

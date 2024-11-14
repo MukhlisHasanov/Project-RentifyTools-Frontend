@@ -20,7 +20,7 @@ import {
   SearchContainer,
 } from "./styles"
 
-function Layout({ children }: LayoutProps) {
+function LayoutProfile({ children }: LayoutProps) {
   const [toolName, setToolName] = useState<string>("")
   const navigate = useNavigate()
 
@@ -45,8 +45,7 @@ function Layout({ children }: LayoutProps) {
   const appLinksHeader = {
     [TOOLS_APP_ROUTES.HOME]: "Home",
     [TOOLS_APP_ROUTES.ADD_ADVERTS]: "Add Adverts",
-    [TOOLS_APP_ROUTES.LOGIN]: "Login",
-    //[TOOLS_APP_ROUTES.PROFILE]: "Profile",
+    [TOOLS_APP_ROUTES.PROFILE]: "Profile",
   }
 
   const appLinksFooter = {
@@ -97,10 +96,6 @@ function Layout({ children }: LayoutProps) {
         </SearchContainer>
         <HeaderNav>
           <HeaderNav>{headerLinks}</HeaderNav>
-          {/* <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
-          <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Adverts</HeaderLink>
-          <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink> */}
-          <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
         </HeaderNav>
       </AppHeader>
       <AppMain>{children}</AppMain>
@@ -111,4 +106,4 @@ function Layout({ children }: LayoutProps) {
   )
 }
 
-export default Layout
+export default LayoutProfile

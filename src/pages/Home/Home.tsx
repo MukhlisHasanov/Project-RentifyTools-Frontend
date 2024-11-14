@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
+import { useState } from "react"
 
 import {
   CategoryImg1,
@@ -35,9 +36,6 @@ const images = [
 function Home() {
   const navigate = useNavigate()
 
-  const goBack = () => {
-    navigate(-1)
-  }
   const imageContainers = images.map((src: string, index: number) => (
     <CategoryImg key={v4()}>
       <img src={src} alt={`Image ${index + 1}`} />
@@ -46,8 +44,10 @@ function Home() {
   ))
   return (
     <PageWrapper>
-      <PageTitle></PageTitle>
-      <PageContainer>{imageContainers}</PageContainer>
+      <PageContainer>
+        <PageTitle>RentifyTools Category</PageTitle>
+        {imageContainers}
+      </PageContainer>
     </PageWrapper>
   )
 }

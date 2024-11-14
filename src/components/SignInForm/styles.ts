@@ -2,6 +2,9 @@ import styled from "@emotion/styled"
 
 import { colors } from "styles/colors"
 
+interface TitleStyleProps {
+  isActive: boolean
+}
 export const SignInFormContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -17,11 +20,17 @@ export const SignInFormContainer = styled.form`
   background: ${colors.HEADER};
   gap: 20px;
 `
-export const Title = styled.span`
-  color: ${colors.WHITE};
-  font-size: 24px;
-  font-weight: normal;
+export const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+`
+export const Title = styled.span<TitleStyleProps>`
   cursor: pointer;
+  color: ${({ isActive }) => (isActive ? "#F69320" : "#FFFFFF")};
+  font-size: 30px;
+  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
 `
 export const InputLabel = styled.label`
   font-size: 16px;

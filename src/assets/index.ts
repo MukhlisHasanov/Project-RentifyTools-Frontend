@@ -12,6 +12,9 @@ export {default as CategoryImg10} from "./images/image10.jpg";
 export {default as CategoryImg11} from "./images/image11.jpg";
 export {default as CategoryImg12} from "./images/image12.jpg";
 
+
 export { default as FavIcon} from "./favorite.png";
 export { default as ShopIcon } from "./shopping.png";
 //export { default as SearchIcon } from "./search_24dp_000000_FILL0_wght400_GRAD0_opsz24.png"; 
+export { default as UserImg } from "./User.jpg";
+
