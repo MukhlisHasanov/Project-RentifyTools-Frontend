@@ -42,9 +42,9 @@ const mockAdverts = [
 const MyAdvert: React.FC = () => {
   const [adverts, setAdverts] = useState(mockAdverts)
 
-  // Effekt für spätere API-Aufrufe 
+  //v141124text Effekt für spätere API-Aufrufe 
   useEffect(() => {
-    // Hier könnte ein API-Aufruf 
+    //v141124text Hier könnte ein API-Aufruf 
   }, [])
 
   return (
