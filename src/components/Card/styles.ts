@@ -1,7 +1,6 @@
 import styled from "@emotion/styled"
-import { colors } from "styles/colors";
 
-
+import { colors } from "styles/colors"
 
 export const CardWrapper = styled.span`
   width: 450px;
