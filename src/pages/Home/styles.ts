@@ -5,6 +5,8 @@ import { colors } from "styles/colors"
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
   align-items: center;
   flex: 1;
   gap: 20px;
@@ -14,6 +16,18 @@ export const PageTitle = styled.span`
   font-size: 20px;
   font-weight: bold;
   color: ${colors.WHITE};
+  margin-top: 10px;
+`
+
+export const CategoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.HEADER};
+  gap: 10px;
+  border-radius: 7px;
 `
 
 export const PageContainer = styled.div`
@@ -24,8 +38,6 @@ export const PageContainer = styled.div`
   align-items: center; /* Центрирование по вертикали */
   width: 800px; /* Ширина серого контейнера */
   padding: 20px;
-  background-color: ${colors.HEADER};
-  border-radius: 15px;
 `
 export const ImageWrapper = styled.div`
   display: flex;
@@ -33,7 +45,7 @@ export const ImageWrapper = styled.div`
   align-items: center;
   text-align: center;
   gap: 8px;
-`;
+`
 
 export const CategoryImg = styled.div`
   width: 100px;
@@ -55,4 +67,4 @@ export const ImageTitle = styled.span`
   font-size: 14px;
   font-weight: normal;
   color: ${colors.WHITE};
-`;
+`

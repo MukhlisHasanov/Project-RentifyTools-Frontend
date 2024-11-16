@@ -17,7 +17,6 @@ import {
   FooterLink,
   SearchContainer,
 } from "./styles"
-
 import { colors } from "styles/colors"
 
 function Layout() {

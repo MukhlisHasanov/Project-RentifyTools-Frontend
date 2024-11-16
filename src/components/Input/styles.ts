@@ -20,8 +20,6 @@ export const InputLabel = styled.label`
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`
-  width:${({ $isSmallInput }) => 
-    $isSmallInput ? "200px" : "500px"};
   width: 100%;
   height: 50px;
   border: 1px solid black;

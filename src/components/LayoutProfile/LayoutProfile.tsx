@@ -1,8 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
 
-import { UserImg } from "assets"
-
 import { TOOLS_APP_ROUTES } from "constants/routes"
 import {
   ProfileWrapper,
@@ -14,7 +12,7 @@ import {
   UserPhoto,
   UserName,
 } from "./styles"
-
+import { UserImg } from "assets"
 
 function LayoutProfile() {
   const navigate = useNavigate()

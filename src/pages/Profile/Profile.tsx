@@ -7,7 +7,6 @@ import {
   ProfileItem,
   ProfileContainer,
 } from './styles'
-import ProfileCard from 'components/ProfileCard/ProfileCard'
 
 //import api from '../services/api';  (Importieren einen API-Service, wenn einer da ist (Valerian))
 
@@ -42,7 +41,6 @@ function Profile() {
   }
   return (
     <PageWrapper>
-      <ProfileCard firstName="Jonny" lastName="Depp" />
       {userData ? (
         <ProfileContainer>
           <ProfileTitle>Profile</ProfileTitle>
