@@ -1,12 +1,10 @@
-import { useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
 import { useState, ChangeEvent } from "react"
+import { Button, Input, TextField } from "@mui/material"
 
 import { TOOLS_APP_ROUTES } from "constants/routes"
-import Input from "components/Input/Input"
-import Button from "components/Button/Button"
 
-import { LayoutProps } from "./types"
 import {
   LayoutWrapper,
   AppHeader,
@@ -20,7 +18,9 @@ import {
   SearchContainer,
 } from "./styles"
 
-function Layout({ children }: LayoutProps) {
+import { colors } from "styles/colors"
+
+function Layout() {
   const [toolName, setToolName] = useState<string>("")
   const navigate = useNavigate()
 
@@ -87,19 +87,32 @@ function Layout({ children }: LayoutProps) {
       <AppHeader>
         <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
         <SearchContainer>
-          <Input id="search-tool" name="tool" placeholder="Search tool" onChange={onChangeValue}/>
-          <Button
-            type="button"
-            name="Search"
-            isSmallButton
-            onClick={getToolData}
+          <TextField
+            id="outlined-basic"
+            label="Search tool"
+            variant="outlined"
+            sx={{ width: 500, background: colors.WHITE, borderRadius: 2 }}
           />
+          <Button
+            sx={{
+              backgroundColor: colors.BUTTON,
+              height: 60,
+              width: 150,
+              borderRadius: 2,
+            }}
+            variant="contained"
+            onClick={getToolData}
+          >
+            Search
+          </Button>
         </SearchContainer>
         <HeaderNav>
           <HeaderNav>{headerLinks}</HeaderNav>
         </HeaderNav>
       </AppHeader>
-      <AppMain>{children}</AppMain>
+      <AppMain>
+        <Outlet />
+      </AppMain>
       <AppFooter>
         <FooterNav>{footerLinks}</FooterNav>
       </AppFooter>

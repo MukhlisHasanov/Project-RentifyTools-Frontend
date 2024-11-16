@@ -3,6 +3,6 @@ export interface CardProps {
     price: string;
     description?: string;
     imageUrl?: string;
-    onAddToCart?: () => void;
-    onAddToFavorites?: () => void;
+    onAddToCard?: () => void;
+    onAddToFavourites?: () => void;
   }

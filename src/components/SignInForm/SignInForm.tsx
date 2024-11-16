@@ -16,8 +16,9 @@ import {
   TitleContainer,
 } from "./styles"
 import { SIGNIN_FORM_NAMES, SignInFormProps } from "./types"
+import { ButtonControl } from "components/SignUpForm/styles"
 
-function SignInForm({onSwitchToSignUp}:SignInFormProps) {
+function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   //   const dispatch = useAppDispatch()
 
   //   const navigate = useNavigate()
@@ -55,7 +56,6 @@ function SignInForm({onSwitchToSignUp}:SignInFormProps) {
         </Title>
       </TitleContainer>
       <InputsContainer>
-        <InputLabel></InputLabel>
         <Input
           id="employeeform-email"
           label="Email:"
@@ -75,7 +75,9 @@ function SignInForm({onSwitchToSignUp}:SignInFormProps) {
           error={formik.errors.password}
         />
       </InputsContainer>
-      <Button type="submit" name="Sign In" />
+      <ButtonControl>
+        <Button type="submit" name="Sign In" />
+      </ButtonControl>
       <Text>By signing in, you agree to our Terms of Service</Text>
     </SignInFormContainer>
   )

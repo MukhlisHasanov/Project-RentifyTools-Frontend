@@ -8,7 +8,7 @@ import {
   ProfileContainer,
 } from './styles'
 import ProfileCard from 'components/ProfileCard/ProfileCard'
-import { UserImg } from 'assets'
+
 //import api from '../services/api';  (Importieren einen API-Service, wenn einer da ist (Valerian))
 
 function Profile() {
@@ -50,7 +50,7 @@ function Profile() {
           <ProfileItem>Lastname: {userData.last_name}</ProfileItem>
           <ProfileItem>Email: {userData.email}</ProfileItem>
           <ProfileItem>Telefon: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Profil bearbeiten</button>
+          <button onClick={goToEditProfile}>Profile bearbeiten</button>
 
           <ul>
             {users.map((user: { email: string; id: number }) => (

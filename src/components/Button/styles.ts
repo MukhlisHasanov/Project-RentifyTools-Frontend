@@ -2,25 +2,19 @@ import styled from "@emotion/styled"
 
 import { colors } from "styles/colors"
 
-interface ButtonComponentStyleProps {
-  $isSmallButton: boolean
-}
-
-export const ButtonComponent = styled.button<ButtonComponentStyleProps>`
-  /* width: 100%; */
-  width: ${({ $isSmallButton }) => 
-    $isSmallButton ? "150px" : "500px"};
+export const ButtonComponent = styled.button`
+  width: 100%;
   height: 55px;
   background-color: ${({ disabled }) =>
-  disabled? colors.GREY : colors.BUTTON};
+    disabled ? colors.GREY : colors.BUTTON};
   color: ${colors.WHITE};
   font-size: 20px;
   font-weight: bold;
-  border-radius: 15px;
+  border-radius: 7px;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   transition: transform 0.2s ease;
 
   &:active {
     transform: scale(0.95);
   }
-`;
+`

@@ -11,14 +11,30 @@ import Products from 'pages/Products/Products'
 function App() {
   return (
     <BrowserRouter>
-      <LayoutProfile>
-        <Routes>
+    <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/add-advert" element={<Add />} /> */}
+          <Route path="/login" element={<SignUpForm />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/messages" element={<Profile />} />
+            <Route path="/profile/my-adverts" element={<SignUpForm />} />
+            <Route path="/profile/favourites" element={<Home />} />
+            <Route path="/profile/rented-tools" element={<Home />} />
+          </Route>
+        </Route>
+      </Routes>
+    {/* <LayoutProfile>
+    <Routes>
           <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
           <Route path={TOOLS_APP_ROUTES.PRODUCTS} element={<Products />} />
         </Routes>
       </LayoutProfile>
+    </LayoutProfile> */}
       {/* <Layout>
+      
         <Routes>
           <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
           <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
