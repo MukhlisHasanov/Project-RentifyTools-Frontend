@@ -5,23 +5,44 @@ import {
   DescriptionFrame,
   ToolInfo,
   UserInfo,
+  ButtonControl,
+  ProductImageControl,
+  ProfileImageControl,
 } from './styles'
 import Button from 'components/Button/Button'
 import Card from 'components/Card/Card'
 import ProfileCard from 'components/ProfileCard/ProfileCard'
+import { UserImg } from "assets"
+
 
 function Products() {
-  
+  const nextImage = () => {}
+
+  const prevImage = () => {}
+
   return (
     <PageWrapper>
       <PhotoWrapper>
-        <Button name="<" />
-        <PhotoFrame></PhotoFrame>
-        <Button name=">" />
+        <ButtonControl>
+          <Button name="〈" isTransparent onClick={prevImage} />
+        </ButtonControl>
+        <PhotoFrame>
+          <ProductImageControl src="https://dwt.com.ua/wa-data/public/shop/img/1-17.png" />
+        </PhotoFrame>
+        <ButtonControl>
+          <Button name="〉" isTransparent onClick={nextImage} />
+        </ButtonControl>
       </PhotoWrapper>
       <DescriptionFrame>
-        <ToolInfo>{/* <Card /> */}</ToolInfo>
+        <ToolInfo>
+          <p>Title: </p>
+          <p>Category: </p>
+          <p>Price: </p>
+          <p>Description: </p>
+          {/* <Card /> */}</ToolInfo>
         <UserInfo>
+          <ProfileImageControl src={UserImg}/>
+          <p>Username</p>
           {/* <ProfileCard /> */}
           <Button name="Send message" />
           <Button name="Show phone" />

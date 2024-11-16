@@ -11,7 +11,7 @@ import Products from 'pages/Products/Products'
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
+      <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           {/* <Route path="/add-advert" element={<Add />} /> */}
@@ -23,9 +23,10 @@ function App() {
             <Route path="/profile/favourites" element={<Home />} />
             <Route path="/profile/rented-tools" element={<Home />} />
           </Route>
+          <Route path="/products" element={<Products />} />
         </Route>
       </Routes>
-    {/* <LayoutProfile>
+      {/* <LayoutProfile>
     <Routes>
           <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
