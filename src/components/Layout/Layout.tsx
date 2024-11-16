@@ -107,6 +107,10 @@ function Layout() {
         </SearchContainer>
         <HeaderNav>
           <HeaderNav>{headerLinks}</HeaderNav>
+          {/* <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
+          <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Adverts</HeaderLink>
+          <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink> */}
+          <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
         </HeaderNav>
       </AppHeader>
       <AppMain>

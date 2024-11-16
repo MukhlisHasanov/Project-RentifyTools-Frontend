@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from "components/Layout/Layout"
 import LayoutProfile from "components/LayoutProfile/LayoutProfile"
 import Home from "pages/Home/Home"
+import MyAdvert from "pages/MyAdvert/MyAdvert"
 import SignUpForm from "pages/Login/Login"
 import { TOOLS_APP_ROUTES } from "constants/routes"
 import Profile from "pages/Profile/Profile"
@@ -21,7 +22,7 @@ function App() {
           <Route path="/profile" element={<Profile />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/messages" element={<Profile />} />
-            <Route path="/profile/my-adverts" element={<SignUpForm />} />
+            <Route path="/profile/my-adverts" element={<MyAdvert />} />
             <Route path="/profile/favourites" element={<Home />} />
             <Route path="/profile/rented-tools" element={<Home />} />
           </Route>
