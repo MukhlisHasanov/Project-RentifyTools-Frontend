@@ -6,6 +6,8 @@ import Home from "pages/Home/Home"
 import SignUpForm from "pages/Login/Login"
 import { TOOLS_APP_ROUTES } from "constants/routes"
 import Profile from "pages/Profile/Profile"
+import NewAdvertForm from "components/NewAdvertForm/NewAdvertForm"
+import AddAdvert from "pages/AddAdvert/AddAdvert"
 import SignInForm from "components/SignInForm/SignInForm"
 
 function App() {
@@ -13,8 +15,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/add-advert" element={<Add />} /> */}
+          <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
+          <Route path={TOOLS_APP_ROUTES.ADD_ADVERTS} element={<AddAdvert />} />
           <Route path="/login" element={<SignUpForm />} />
           <Route path="/profile" element={<Profile />}>
             <Route path="/profile" element={<Profile />} />

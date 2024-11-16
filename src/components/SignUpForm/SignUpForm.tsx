@@ -89,7 +89,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
       </TitleContainer>
       <InputsContainer>
         <Input
-          id="employeeform-name"
+          id="signupform-name"
           label="First name:"
           name={SIGNUP_FORM_NAMES.FIRST_NAME}
           type="text"
@@ -98,7 +98,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           error={formik.errors.firstName}
         />
         <Input
-          id="employeeform-surname"
+          id="signupform-surname"
           label="Last name:"
           name={SIGNUP_FORM_NAMES.LAST_NAME}
           type="text"
@@ -107,7 +107,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           error={formik.errors.lastName}
         />
         <Input
-          id="employeeform-email"
+          id="signupform-email"
           label="Email:"
           name={SIGNUP_FORM_NAMES.EMAIL}
           type="email"
@@ -117,7 +117,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           isSmallInput={false}
         />
         <Input
-          id="employeeform-phone"
+          id="signupform-phone"
           label="Phone:"
           name={SIGNUP_FORM_NAMES.PHONE}
           type="tel"
@@ -127,7 +127,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           isSmallInput={false}
         />
         <Input
-          id="employeeform-password"
+          id="signupform-password"
           label="Password:"
           name={SIGNUP_FORM_NAMES.PASSWORD}
           type="password"
@@ -136,7 +136,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           error={formik.errors.password}
         />
         <Input
-          id="employeeform-repeat_password"
+          id="signupform-repeat_password"
           label="Repeat password:"
           name={SIGNUP_FORM_NAMES.REPEAT_PASSWORD}
           type="password"
