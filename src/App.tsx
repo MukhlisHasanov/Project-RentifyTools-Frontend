@@ -10,6 +10,7 @@ import Profile from "pages/Profile/Profile"
 import NewAdvertForm from "components/NewAdvertForm/NewAdvertForm"
 import AddAdvert from "pages/AddAdvert/AddAdvert"
 import SignInForm from "components/SignInForm/SignInForm"
+import Products from 'pages/Products/Products'
 
 function App() {
   return (

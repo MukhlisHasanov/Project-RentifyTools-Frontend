@@ -67,7 +67,7 @@ gap: 10px;
 export const UserInfo = styled.div`
 display: flex;
 flex-direction: column;
-padding: 10px;
+padding: 20px;
 /* background-color: green; */
 align-items: center;
 gap: 20px;

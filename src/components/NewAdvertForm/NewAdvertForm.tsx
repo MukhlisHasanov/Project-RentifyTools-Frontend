@@ -23,6 +23,8 @@ function NewAdvertForm() {
   //   const dispatch = useAppDispatch()
 
   //   const navigate = useNavigate()
+
+  const addImageFunction = () => {}
   
   const validationSchema = Yup.object().shape({
     [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
@@ -43,6 +45,8 @@ function NewAdvertForm() {
       .min(5, "The minimum description length is 5")
       .max(2000, "The maximum description length is 2000"),
   })
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -69,7 +73,7 @@ function NewAdvertForm() {
           id="advertform-title"
           label="Title:"
           name={NEWADVERT_FORM_NAMES.TITLE}
-          type="title"
+          // type="title"
           value={formik.values.title}
           onChange={formik.handleChange}
           error={formik.errors.title}
@@ -78,7 +82,7 @@ function NewAdvertForm() {
           id="advertform-category"
           label="Category:"
           name={NEWADVERT_FORM_NAMES.CATEGORY}
-          type="text"
+          // type="text"
           value={formik.values.category}
           onChange={formik.handleChange}
           error={formik.errors.category}
@@ -98,10 +102,11 @@ function NewAdvertForm() {
           value={formik.values.description}
           name={NEWADVERT_FORM_NAMES.DESCRIPTION}
           onChange={formik.handleChange}
+          
         />
       </InputsContainer>
       <ButtonControl>
-        <Button type="submit" name="Add the photos" />
+        <Button onClick={addImageFunction} name="Add the photos" />
       </ButtonControl>
       <ButtonControl>
         <Button type="submit" name="Create new advert" />
