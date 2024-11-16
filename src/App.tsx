@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* <Route path="/add-advert" element={<Add />} /> */}
           <Route path="/login" element={<SignUpForm />} />
-          <Route path="/profile" element={<Profile />}>
+          <Route path="/profile" element={<LayoutProfile />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/messages" element={<Profile />} />
             <Route path="/profile/my-adverts" element={<SignUpForm />} />
