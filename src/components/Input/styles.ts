@@ -20,13 +20,11 @@ export const InputLabel = styled.label`
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`
-  width:${({ $isSmallInput }) => 
-    $isSmallInput ? "200px" : "500px"};
   width: 100%;
-  height: 50px;
+  height: ${({ $isSmallInput }) => ($isSmallInput ? "100px" : "50px")};
   border: 1px solid black;
   border-radius: 7px;
-  background-color:  ${colors.WHITE};
+  background-color: ${colors.WHITE};
   color: ${colors.BLACK};
 
   &::placeholder {
@@ -38,7 +36,6 @@ export const InputComponent = styled.input<InputComponentStyleProps>`
     box-shadow: 0px 4px 12px ${colors.SHADOW};
   }
 `
-
 export const ErrorContainer = styled.p`
   font-size: 18px;
   color: ${colors.ERROR};

@@ -10,7 +10,6 @@ import { useAppDispatch } from "store/hooks"
 import {
   SignInFormContainer,
   Title,
-  InputLabel,
   Text,
   InputsContainer,
   TitleContainer,
@@ -57,7 +56,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       </TitleContainer>
       <InputsContainer>
         <Input
-          id="employeeform-email"
+          id="signinform-email"
           label="Email:"
           name={SIGNIN_FORM_NAMES.EMAIL}
           type="email"
@@ -66,7 +65,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
           error={formik.errors.email}
         />
         <Input
-          id="employeeform-password"
+          id="signinform-password"
           label="Password:"
           name={SIGNIN_FORM_NAMES.PASSWORD}
           type="password"
