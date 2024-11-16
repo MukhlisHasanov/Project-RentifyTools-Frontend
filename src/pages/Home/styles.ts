@@ -7,7 +7,7 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  gap: 4px;
+  gap: 20px;
 `
 
 export const PageTitle = styled.span`
@@ -15,20 +15,44 @@ export const PageTitle = styled.span`
   font-weight: bold;
   color: ${colors.WHITE};
 `
+
 export const PageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 300px;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 элементов в каждом ряду */
+  grid-gap: 20px; /* Отступы между элементами */
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center; /* Центрирование по вертикали */
+  width: 800px; /* Ширина серого контейнера */
+  padding: 20px;
   background-color: ${colors.HEADER};
+  border-radius: 15px;
 `
-export const CategoryImg = styled.div`
+export const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  width: 50px;
-  height: 50px;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+`;
+
+export const CategoryImg = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.WHITE};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
+export const ImageTitle = styled.span`
+  font-size: 14px;
+  font-weight: normal;
+  color: ${colors.WHITE};
+`;

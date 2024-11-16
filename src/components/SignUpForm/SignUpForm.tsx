@@ -13,12 +13,13 @@ import { SignUpFormProps } from "./types"
 import {
   SignUpFormContainer,
   Title,
-  InputLabel,
   Text,
   TitleContainer,
   InputsContainer,
+  ButtonControl,
 } from "./styles"
 import { SIGNUP_FORM_NAMES } from "./types"
+import { InputComponent } from "components/Input/styles"
 
 function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
@@ -27,7 +28,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
 
-    // Ваша логика регистрации (например, отправка данных на сервер)
+    // Логика регистрации (например, отправка данных на сервер)
     // Пример успешной регистрации:
     onSwitchToSignIn() // Вызываем функцию при успешной регистрации
   }
@@ -81,71 +82,72 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   return (
     <SignUpFormContainer onSubmit={formik.handleSubmit}>
       <TitleContainer>
-        <Title isActive={false} onClick={onSwitchToSignIn}>
+        <Title $isActive={false} onClick={onSwitchToSignIn}>
           Sign In
         </Title>
-        <Title isActive>Sign Up</Title>
+        <Title $isActive>Sign Up</Title>
       </TitleContainer>
       <InputsContainer>
-        <InputLabel>
-          <Input
-            id="employeeform-name"
-            label="First name:"
-            name={SIGNUP_FORM_NAMES.FIRST_NAME}
-            type="text"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            error={formik.errors.firstName}
-          />
-
-          <Input
-            id="employeeform-surname"
-            label="Last name:"
-            name={SIGNUP_FORM_NAMES.LAST_NAME}
-            type="text"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            error={formik.errors.lastName}
-          />
-          <Input
-            id="employeeform-email"
-            label="Email:"
-            name={SIGNUP_FORM_NAMES.EMAIL}
-            type="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.errors.email}
-          />
-          <Input
-            id="employeeform-phone"
-            label="Phone:"
-            name={SIGNUP_FORM_NAMES.PHONE}
-            type="tel"
-            value={formik.values.phone}
-            onChange={formik.handleChange}
-            error={formik.errors.phone}
-          />
-          <Input
-            id="employeeform-password"
-            label="Password:"
-            name={SIGNUP_FORM_NAMES.PASSWORD}
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.errors.password}
-          />
-          <Input
-            id="employeeform-repeat_password"
-            label="Repeat password:"
-            name={SIGNUP_FORM_NAMES.REPEAT_PASSWORD}
-            type="password"
-            value={formik.values.repeatPassword}
-            onChange={formik.handleChange}
-            error={formik.errors.repeatPassword}
-          />
-        </InputLabel>
+        <Input
+          id="employeeform-name"
+          label="First name:"
+          name={SIGNUP_FORM_NAMES.FIRST_NAME}
+          type="text"
+          value={formik.values.firstName}
+          onChange={formik.handleChange}
+          error={formik.errors.firstName}
+        />
+        <Input
+          id="employeeform-surname"
+          label="Last name:"
+          name={SIGNUP_FORM_NAMES.LAST_NAME}
+          type="text"
+          value={formik.values.lastName}
+          onChange={formik.handleChange}
+          error={formik.errors.lastName}
+        />
+        <Input
+          id="employeeform-email"
+          label="Email:"
+          name={SIGNUP_FORM_NAMES.EMAIL}
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.errors.email}
+          isSmallInput={false}
+        />
+        <Input
+          id="employeeform-phone"
+          label="Phone:"
+          name={SIGNUP_FORM_NAMES.PHONE}
+          type="tel"
+          value={formik.values.phone}
+          onChange={formik.handleChange}
+          error={formik.errors.phone}
+          isSmallInput={false}
+        />
+        <Input
+          id="employeeform-password"
+          label="Password:"
+          name={SIGNUP_FORM_NAMES.PASSWORD}
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.errors.password}
+        />
+        <Input
+          id="employeeform-repeat_password"
+          label="Repeat password:"
+          name={SIGNUP_FORM_NAMES.REPEAT_PASSWORD}
+          type="password"
+          value={formik.values.repeatPassword}
+          onChange={formik.handleChange}
+          error={formik.errors.repeatPassword}
+        />
       </InputsContainer>
-      <Button type="submit" name="Sign Up" />
+      <ButtonControl>
+        <Button type="submit" name="Sign Up" />
+      </ButtonControl>
       <Text>
         By signing up, you accept our Terms and Conditions and acknowledge our
         Privacy Policy

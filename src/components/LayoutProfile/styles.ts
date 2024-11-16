@@ -3,114 +3,81 @@ import { Link, NavLink } from "react-router-dom"
 
 import { colors } from "styles/colors"
 
-import { AppImg } from "assets"
+import { UserImg } from "assets"
 
-export const LayoutWrapper = styled.div`
+interface ProfileTitleStyleProps {
+  $isActive?: boolean
+}
+export const ProfileWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`
+
+export const Sidebar = styled.header`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  background-image: url(${AppImg});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`
-
-export const AppHeader = styled.header`
-  position: fixed;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  position: fixed;
-  z-index: 10;
-  width: 100%;
-  height: 80px;
-  border-bottom: 2px solid ${colors.WHITE};
-  padding: 10px;
-  gap: 10px;
+  width: 300px;
+  max-height: calc(100vh -180px);
+  gap: 20px;
+  padding: 30px;
+  border-right: 2px solid ${colors.WHITE};
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
-
-  &:hover {
-    box-shadow: 0px 4px 12px ${colors.SHADOW};
-  }
-`
-export const AppTitle = styled.span`
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 29.05px;
-  margin-left: 30px;
-  color: ${colors.WHITE};
-  cursor: pointer;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  z-index: 1;
+  bottom: 100px;
 `
 
-export const HeaderNav = styled.nav`
+export const UserProfile = styled.div`
   display: flex;
-  gap: 30px;
-  height: 100%;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 `
 
-export const HeaderLink = styled(NavLink)`
+export const UserPhoto = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 10px;
+`
+
+export const UserName = styled.h3`
+  font-size: 24px;
+  color: ${colors.WHITE};
+`
+
+export const SidebarNav = styled.nav`
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 25px;
+`
+
+export const SidebarLink = styled(NavLink)<ProfileTitleStyleProps>`
   font-size: 20px;
   text-decoration: none;
   font-weight: 400px;
   line-height: 24.2px;
   color: ${colors.WHITE};
-  margin-right: 50px;
   border-radius: 20px;
 
   &.active {
     font-weight: bold;
+    color: ${colors.BUTTON};
   }
 `
 
-export const AppMain = styled.main`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-top: 80px;
+export const Content = styled.main`
   flex: 1;
   padding: 40px;
-  padding-top: 70px;
-  height: calc(100vh - 80px);
-`
-
-export const AppFooter = styled.footer`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100px;
-  border-top: 2px solid ${colors.WHITE};
-  padding: 20px 40px;
-  color: white;
-  backdrop-filter: blur(4px);
-  background: ${colors.HEADER};
-
-  &:hover {
-    box-shadow: 0px 4px 12px ${colors.SHADOW};
-  }
-`
-
-export const FooterNav = styled.nav`
-  display: flex;
-  flex-direction: row;
-  gap: 50px;
-  justify-content: space-evenly;
-  text-align: center;
-`
-
-export const FooterLink = styled(Link)`
-  color: white;
-  font-size: 14px;
-  text-decoration: bold;
-`
-
-export const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 700px;
-  height: fit-content;
+  margin-left: 300px;
+  box-sizing: border-box;
+  margin-top: 80px;
 `
