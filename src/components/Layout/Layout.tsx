@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
 import { useState, ChangeEvent } from "react"
+import { Button, Input, TextField } from "@mui/material"
 
 import { TOOLS_APP_ROUTES } from "constants/routes"
 
@@ -16,7 +17,6 @@ import {
   FooterLink,
   SearchContainer,
 } from "./styles"
-import { Button, Input, TextField } from "@mui/material"
 import { colors } from "styles/colors"
 
 function Layout() {
@@ -100,6 +100,7 @@ function Layout() {
               borderRadius: 2,
             }}
             variant="contained"
+            onClick={getToolData}
           >
             Search
           </Button>

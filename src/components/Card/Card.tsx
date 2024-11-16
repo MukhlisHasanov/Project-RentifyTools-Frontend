@@ -1,3 +1,5 @@
+import { ShopIcon, FavIcon } from "assets"
+
 import {
   CardContent,
   CardDescription,
@@ -9,14 +11,13 @@ import {
   CardWrapper,
 } from "./styles"
 import { CardProps } from "./types"
-import { ShopIcon, FavIcon } from "assets"
 
 function Card({
   title,
   price,
   description,
-  onAddToCart,
-  onAddToFavorites,
+  onAddToCard,
+  onAddToFavourites,
 }: CardProps) {
   return (
     <CardWrapper>
@@ -26,10 +27,10 @@ function Card({
         <CardPrice>Price:{price}</CardPrice>
         <CardDescription>Description:{description}</CardDescription>
         <CardIcons>
-          <CardIcon onClick={onAddToCart}>
+          <CardIcon onClick={onAddToCard}>
             <img src={ShopIcon} alt="Add to cart" />
           </CardIcon>
-          <CardIcon onClick={onAddToFavorites}>
+          <CardIcon onClick={onAddToFavourites}>
             <img src={FavIcon} alt="Add to favorites" />
           </CardIcon>
         </CardIcons>

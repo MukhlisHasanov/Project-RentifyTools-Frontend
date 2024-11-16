@@ -5,16 +5,10 @@ function Button({
   type = "button",
   name,
   onClick,
-  isSmallButton = false,
   disabled,
 }: ButtonProps) {
   return (
-    <ButtonComponent
-      $isSmallButton={isSmallButton}
-      disabled={disabled}
-      onClick={onClick}
-      type={type}
-    >
+    <ButtonComponent  disabled={disabled} onClick={onClick} type={type} >
       {name}
     </ButtonComponent>
   )

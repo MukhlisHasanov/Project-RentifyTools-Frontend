@@ -11,12 +11,12 @@ import SignInForm from "components/SignInForm/SignInForm"
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+    <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/add-advert" element={<Profile />} />
+          {/* <Route path="/add-advert" element={<Add />} /> */}
           <Route path="/login" element={<SignUpForm />} />
-          <Route path="/profile" element={<LayoutProfile />}>
+          <Route path="/profile" element={<Profile />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/messages" element={<Profile />} />
             <Route path="/profile/my-adverts" element={<SignUpForm />} />

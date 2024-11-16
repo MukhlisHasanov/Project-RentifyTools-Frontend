@@ -11,7 +11,7 @@ export const PageWrapper = styled.div`
   gap: 4px;
 `
 
-export const ProfileBox = styled.div`
+export const ProfileContainer = styled.div`
   background-color: ${colors.HEADER};
   width: 500px;
   height: 170px;
@@ -22,7 +22,7 @@ export const ProfileBox = styled.div`
   padding: 20px; 
 `;
 
-export const H1PBox = styled.h1`
+export const ProfileTitle = styled.h1`
   font-size: 20px;
   font-family: "Inter", sans-serif;
   color: ${colors.WHITE};
@@ -30,7 +30,7 @@ export const H1PBox = styled.h1`
   line-height: 1.0; 
 `;
 
-export const PPBox = styled.p`
+export const ProfileItem = styled.p`
   font-size: 16px;
   font-family: "Inter", sans-serif;
   color: ${colors.WHITE};

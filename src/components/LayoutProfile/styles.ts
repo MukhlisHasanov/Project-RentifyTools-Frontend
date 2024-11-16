@@ -3,10 +3,10 @@ import { Link, NavLink } from "react-router-dom"
 
 import { colors } from "styles/colors"
 
-import { AppImg } from "assets"
+import { UserImg } from "assets"
 
 interface ProfileTitleStyleProps {
-  isActive?: boolean
+  $isActive?: boolean
 }
 export const ProfileWrapper = styled.div`
   display: flex;

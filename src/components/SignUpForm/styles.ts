@@ -3,22 +3,21 @@ import styled from "@emotion/styled"
 import { colors } from "styles/colors"
 
 interface TitleStyleProps {
-  isActive?: boolean
+  $isActive: boolean
 }
+
 export const SignUpFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 550px;
-  min-height: 30px;
-  max-height: fit-content;
+  width: 450px;
   border: 1px solid ${colors.WHITE};
-  padding: 60px;
-  border-radius: 15px;
+  padding: 40px;
+  border-radius: 7px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
-  gap: 20px;
+  gap: 10px;
 `
 export const TitleContainer = styled.div`
   display: flex;
@@ -28,18 +27,15 @@ export const TitleContainer = styled.div`
 `
 export const Title = styled.span<TitleStyleProps>`
   cursor: pointer;
-  color: ${({ isActive }) => (isActive ? "#F69320" : "#FFFFFF")};
+  color: ${({ $isActive }) => ($isActive ? "#F69320" : "#FFFFFF")};
   font-size: 30px;
-  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
-`
-export const InputLabel = styled.label`
-  font-size: 16px;
-  color: ${colors.WHITE};
+  font-weight: ${({ $isActive }) => ($isActive ? "bold" : "normal")};
 `
 export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-top: 2px;
+  width: 350px;
 `
 export const Text = styled.span`
   color: ${colors.WHITE};
@@ -48,4 +44,7 @@ export const Text = styled.span`
   justify-content: space-evenly;
   text-align: center;
 `
-
+export const ButtonControl = styled.div`
+  width: 350px;
+  height: 55px;
+`

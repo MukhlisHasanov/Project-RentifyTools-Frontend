@@ -16,17 +16,15 @@ export const InputWrapper = styled.div`
 export const InputLabel = styled.label`
   font-size: 16px;
   color: ${colors.WHITE};
+  padding-left: 5px;
 `
 
 export const InputComponent = styled.input<InputComponentStyleProps>`
-  width: ${({ $isSmallInput }) => ($isSmallInput ? "200px" : "500px")};
+  width: 100%;
   height: 50px;
   border: 1px solid black;
-  border-radius: 15px;
-  margin: 10px;
-  padding-left: 15px;
-  outline: none;
-  background-color: ${colors.WHITE};
+  border-radius: 7px;
+  background-color:  ${colors.WHITE};
   color: ${colors.BLACK};
 
   &::placeholder {
