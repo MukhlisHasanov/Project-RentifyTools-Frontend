@@ -16,7 +16,7 @@ import {
   CategoryImg12,
 } from "assets"
 
-import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper } from "./styles"
+import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer } from "./styles"
 // const images = [
 //   CategoryImg1, 
 //   CategoryImg2,
@@ -63,8 +63,10 @@ function Home() {
   ))
   return (
     <PageWrapper>
+      <CategoryContainer>
       <PageTitle>RentifyTools Category</PageTitle>
       <PageContainer>{imageContainers}</PageContainer>
+      </CategoryContainer>
     </PageWrapper>
   )
 }
