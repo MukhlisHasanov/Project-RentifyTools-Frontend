@@ -4,7 +4,6 @@ import { useState, ChangeEvent } from "react"
 
 import { TOOLS_APP_ROUTES } from "constants/routes"
 
-
 import {
   LayoutWrapper,
   AppHeader,
@@ -87,15 +86,30 @@ function Layout() {
       <AppHeader>
         <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
         <SearchContainer>
-        <TextField id="outlined-basic" label="Search tool" variant="outlined" sx={{width:500, background: colors.WHITE, borderRadius: 2}} />
-          <Button  sx={{ backgroundColor: colors.BUTTON, height: 60, width: 150, borderRadius: 2}} variant="contained">Search</Button>
+          <TextField
+            id="outlined-basic"
+            label="Search tool"
+            variant="outlined"
+            sx={{ width: 500, background: colors.WHITE, borderRadius: 2 }}
+          />
+          <Button
+            sx={{
+              backgroundColor: colors.BUTTON,
+              height: 60,
+              width: 150,
+              borderRadius: 2,
+            }}
+            variant="contained"
+          >
+            Search
+          </Button>
         </SearchContainer>
         <HeaderNav>
           <HeaderNav>{headerLinks}</HeaderNav>
         </HeaderNav>
       </AppHeader>
       <AppMain>
-        <Outlet/>
+        <Outlet />
       </AppMain>
       <AppFooter>
         <FooterNav>{footerLinks}</FooterNav>

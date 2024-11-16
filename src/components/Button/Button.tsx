@@ -9,7 +9,12 @@ function Button({
   disabled,
 }: ButtonProps) {
   return (
-    <ButtonComponent $isSmallButton={isSmallButton} disabled={disabled} onClick={onClick} type={type} >
+    <ButtonComponent
+      $isSmallButton={isSmallButton}
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
+    >
       {name}
     </ButtonComponent>
   )

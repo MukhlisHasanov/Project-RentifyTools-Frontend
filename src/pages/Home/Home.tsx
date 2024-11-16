@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
-import { useState } from "react"
 
 import {
   CategoryImg1,
