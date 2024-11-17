@@ -1,7 +1,7 @@
 export interface UserProps {
-    first_name: string,
-    last_name: string,
-    email: string,
-    password: string,
-    phone: number
+  firstname: string
+  lastname: string
+  email: string
+  password: string
+  phone: number
 }

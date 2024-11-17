@@ -11,7 +11,7 @@ import {
 } from './styles'
 import Button from 'components/Button/Button'
 import Card from 'components/Card/Card'
-import ProfileCard from 'components/ProfileCard/ProfileCard'
+// import ProfileCard from 'components/ProfileCard/ProfileCard'
 import { UserImg } from "assets"
 
 
