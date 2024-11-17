@@ -10,14 +10,14 @@ import { useAppDispatch } from "store/hooks"
 import {
   SignInFormContainer,
   Title,
-  InputLabel,
   Text,
   InputsContainer,
   TitleContainer,
 } from "./styles"
 import { SIGNIN_FORM_NAMES, SignInFormProps } from "./types"
+import { ButtonControl } from "components/SignUpForm/styles"
 
-function SignInForm({onSwitchToSignUp}:SignInFormProps) {
+function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   //   const dispatch = useAppDispatch()
 
   //   const navigate = useNavigate()
@@ -55,9 +55,8 @@ function SignInForm({onSwitchToSignUp}:SignInFormProps) {
         </Title>
       </TitleContainer>
       <InputsContainer>
-        <InputLabel></InputLabel>
         <Input
-          id="employeeform-email"
+          id="signinform-email"
           label="Email:"
           name={SIGNIN_FORM_NAMES.EMAIL}
           type="email"
@@ -66,7 +65,7 @@ function SignInForm({onSwitchToSignUp}:SignInFormProps) {
           error={formik.errors.email}
         />
         <Input
-          id="employeeform-password"
+          id="signinform-password"
           label="Password:"
           name={SIGNIN_FORM_NAMES.PASSWORD}
           type="password"
@@ -75,7 +74,9 @@ function SignInForm({onSwitchToSignUp}:SignInFormProps) {
           error={formik.errors.password}
         />
       </InputsContainer>
-      <Button type="submit" name="Sign In" />
+      <ButtonControl>
+        <Button type="submit" name="Sign In" />
+      </ButtonControl>
       <Text>By signing in, you agree to our Terms of Service</Text>
     </SignInFormContainer>
   )

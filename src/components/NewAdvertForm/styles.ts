@@ -2,11 +2,7 @@ import styled from "@emotion/styled"
 
 import { colors } from "styles/colors"
 
-interface TitleStyleProps {
-  $isActive: boolean
-}
-
-export const SignUpFormContainer = styled.form`
+export const SignInFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +13,7 @@ export const SignUpFormContainer = styled.form`
   border-radius: 7px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
-  gap: 10px;
+  gap: 20px;
 `
 export const TitleContainer = styled.div`
   display: flex;
@@ -25,11 +21,15 @@ export const TitleContainer = styled.div`
   gap: 20px;
   margin-bottom: 20px;
 `
-export const Title = styled.span<TitleStyleProps>`
+export const Title = styled.span`
   cursor: pointer;
-  color: ${({ $isActive }) => ($isActive ? "#F69320" : "#FFFFFF")};
+  color: ${colors.BUTTON};
   font-size: 30px;
-  font-weight: ${({ $isActive }) => ($isActive ? "bold" : "normal")};
+  font-weight: bold;
+`
+export const InputLabel = styled.label`
+  font-size: 16px;
+  color: ${colors.WHITE};
 `
 export const InputsContainer = styled.div`
   display: flex;
@@ -37,14 +37,11 @@ export const InputsContainer = styled.div`
   margin-top: 2px;
   width: 350px;
 `
-export const Text = styled.span`
-  color: ${colors.WHITE};
-  font-size: 12px;
-  font-weight: bold;
-  justify-content: space-evenly;
-  text-align: center;
-`
-export const ButtonControl = styled.div`
+export const DescriptionContainer = styled.textarea`
+  display: flex;
+  flex-direction: row;
+  margin-top: 2px;
   width: 350px;
-  height: 55px;
+  height: 100px;
+  border-radius: 7px;
 `

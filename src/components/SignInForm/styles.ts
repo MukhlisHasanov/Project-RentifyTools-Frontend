@@ -10,12 +10,10 @@ export const SignInFormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 550px;
-  min-height: 50px;
-  max-height: fit-content;
+  width: 450px;
   border: 1px solid ${colors.WHITE};
-  padding: 60px;
-  border-radius: 15px;
+  padding: 40px;
+  border-radius: 7px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
   gap: 20px;
@@ -39,7 +37,8 @@ export const InputLabel = styled.label`
 export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-top: 2px;
+  width: 350px;
 `
 export const Text = styled.span`
   color: ${colors.WHITE};

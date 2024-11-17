@@ -13,6 +13,7 @@ export default defineConfig({
       store: path.resolve(__dirname, "src/store"),
       styles: path.resolve(__dirname, "src/styles"),
       constants: path.resolve(__dirname, "src/constants"),
+      '@': path.resolve(__dirname, 'src')
     },
   },
   server: {
