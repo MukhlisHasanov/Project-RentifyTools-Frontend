@@ -26,6 +26,7 @@ function App() {
             <Route path="/profile/my-adverts" element={<MyAdvert />} />
             <Route path="/profile/favourites" element={<Home />} />
             <Route path="/profile/rented-tools" element={<Home />} />
+            
           </Route>
           <Route path="/products" element={<Products />} />
         </Route>

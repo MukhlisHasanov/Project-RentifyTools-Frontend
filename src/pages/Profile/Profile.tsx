@@ -4,8 +4,8 @@ import { UserProps } from './types'
 import {
   PageWrapper,
   ProfileContainer,
-  ProfileTitle,
   ProfileItem,
+  ProfileTitle,
 } from './styles'
 
 function Profile() {
@@ -13,17 +13,18 @@ function Profile() {
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
 
-  async function fetchUsersProfile() {
+  async function fetchUserProfile() {
     const res = await fetch('/api/users/2')
-    const usersData = await res.json()
-    setUsers(usersData)
+    const userData = await res.json()
+    setUserData(userData)
   }
 
   useEffect(() => {
-    fetchUsersProfile()
+    fetchUserProfile()
   }, [])
 
   const goToEditProfile = () => {
+    navigate('/edit-profile')
     navigate('/edit-profile')
   }
 
@@ -31,19 +32,21 @@ function Profile() {
     <PageWrapper>
       {userData ? (
         <ProfileContainer>
-          <ProfileTitle>Profile</ProfileTitle>
-          <ProfileItem>Firstname: {userData.firstname}</ProfileItem>
-          <ProfileItem>Lastname: {userData.lastname}</ProfileItem>
+          <ProfileTitle>Profil</ProfileTitle>
+          <ProfileItem>Vorname: {userData.first_name}</ProfileItem>
+          <ProfileItem>Nachname: {userData.last_name}</ProfileItem>
           <ProfileItem>Email: {userData.email}</ProfileItem>
           <ProfileItem>Telefon: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Profile is loading</button>
+          <button onClick={goToEditProfile}>Profil bearbeiten</button>
 
+          <h2>Andere Benutzer:</h2>
           <ul>
             {users.map((user: { email: string; id: number }) => (
               <li key={user.id}>{user.email}</li>
             ))}
           </ul>
         </ProfileContainer>
+       
       ) : (
         <p>Profil wird geladen...</p>
       )}

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-//141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
+//v141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
 import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
