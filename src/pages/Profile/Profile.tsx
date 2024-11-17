@@ -14,7 +14,7 @@ function Profile() {
   const [users, setUsers] = useState([])
 
   async function fetchUserProfile() {
-    const res = await fetch('/api/users/2')
+    const res = await fetch('/api/users/13')
     const userData = await res.json()
     setUserData(userData)
   }
@@ -25,7 +25,6 @@ function Profile() {
 
   const goToEditProfile = () => {
     navigate('/edit-profile')
-    navigate('/edit-profile')
   }
 
   return (
@@ -33,20 +32,12 @@ function Profile() {
       {userData ? (
         <ProfileContainer>
           <ProfileTitle>Profil</ProfileTitle>
-          <ProfileItem>Vorname: {userData.first_name}</ProfileItem>
-          <ProfileItem>Nachname: {userData.last_name}</ProfileItem>
+          <ProfileItem>Name: {userData.firstname}</ProfileItem>
+          <ProfileItem>Surname: {userData.lastname}</ProfileItem>
           <ProfileItem>Email: {userData.email}</ProfileItem>
-          <ProfileItem>Telefon: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Profil bearbeiten</button>
-
-          <h2>Andere Benutzer:</h2>
-          <ul>
-            {users.map((user: { email: string; id: number }) => (
-              <li key={user.id}>{user.email}</li>
-            ))}
-          </ul>
+          <ProfileItem>Phone: {userData.phone}</ProfileItem>
+          <button onClick={goToEditProfile}>Change information</button>
         </ProfileContainer>
-       
       ) : (
         <p>Profil wird geladen...</p>
       )}
