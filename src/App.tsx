@@ -11,6 +11,7 @@ import NewAdvertForm from "components/NewAdvertForm/NewAdvertForm"
 import AddAdvert from "pages/AddAdvert/AddAdvert"
 import SignInForm from "components/SignInForm/SignInForm"
 import Products from 'pages/Products/Products'
+import HomePlug from 'pages/HomePlug/HomePlug'
 
 function App() {
   return (
@@ -22,10 +23,10 @@ function App() {
           <Route path="/login" element={<SignUpForm />} />
           <Route path="/profile" element={<LayoutProfile />}>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/messages" element={<Profile />} />
+            <Route path="/profile/messages" element={<HomePlug />} />
             <Route path="/profile/my-adverts" element={<MyAdvert />} />
-            <Route path="/profile/favourites" element={<Home />} />
-            <Route path="/profile/rented-tools" element={<Home />} />
+            <Route path="/profile/favourites" element={<HomePlug />} />
+            <Route path="/profile/rented-tools" element={<HomePlug />} />
             
           </Route>
           <Route path="/products" element={<Products />} />
