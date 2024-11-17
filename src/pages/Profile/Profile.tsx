@@ -1,34 +1,31 @@
-
-
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserProps } from "./types";
-import { PageWrapper, ProfileContainer, ProfileItem, ProfileTitle } from "./styles";
-
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserProps } from './types'
+import {
+  PageWrapper,
+  ProfileContainer,
+  ProfileItem,
+  ProfileTitle,
+} from './styles'
 
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null);
-  const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState<UserProps | null>(null)
+  const navigate = useNavigate()
+  const [users, setUsers] = useState([])
 
-  
   async function fetchUserProfile() {
-    
-      const res = await fetch("/api/user-profile");
-      const userData = await res.json();
-      setUserData(userData);
-    
+    const res = await fetch('/api/users/2')
+    const userData = await res.json()
+    setUserData(userData)
   }
 
-
   useEffect(() => {
-    fetchUserProfile(); 
-  
-  }, []);
+    fetchUserProfile()
+  }, [])
 
   const goToEditProfile = () => {
-    navigate("/edit-profile");
-  };
+    navigate('/edit-profile')
+  }
 
   return (
     <PageWrapper>
@@ -52,8 +49,7 @@ function Profile() {
         <p>Profil wird geladen...</p>
       )}
     </PageWrapper>
-  );
+  )
 }
 
-export default Profile;
-
+export default Profile
