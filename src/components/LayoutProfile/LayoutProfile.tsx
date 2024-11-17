@@ -18,6 +18,7 @@ function LayoutProfile() {
   const navigate = useNavigate()
 
   const profileLinks = {
+    [TOOLS_APP_ROUTES.PROFILE]: "Profile",
     [TOOLS_APP_ROUTES.MESSAGES]: "Messages",
     [TOOLS_APP_ROUTES.MY_ADVERTS]: "My Adverts",
     [TOOLS_APP_ROUTES.FAVOURITES]: "Favourites",

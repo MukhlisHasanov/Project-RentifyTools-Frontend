@@ -18,24 +18,6 @@ import {
 
 import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer } from "./styles"
 import { Card } from "@mui/material";
-// const images = [
-//   CategoryImg1, 
-//   CategoryImg2,
-//   CategoryImg3,
-//   CategoryImg4,
-//   CategoryImg5,
-//   CategoryImg6,
-//   CategoryImg7,
-//   CategoryImg8,
-//   CategoryImg9,
-//   CategoryImg10,
-//   CategoryImg11,
-//   CategoryImg12,
-// ]
-// const imagesWithTitles = images.map((src, index) => ({
-//   src, // путь к изображению
-//   title: `Image ${index + 1}`, // заголовок
-// }));
 
 const imagesWithTitles = [
   { src: CategoryImg1, title: "Excavators & Mini Excavators" },
