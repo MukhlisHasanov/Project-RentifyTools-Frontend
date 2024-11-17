@@ -1,9 +1,9 @@
-import styled from "@emotion/styled"
-import { Link, NavLink } from "react-router-dom"
+import styled from '@emotion/styled'
+import { Link, NavLink } from 'react-router-dom'
 
-import { colors } from "styles/colors"
+import { colors } from 'styles/colors'
 
-import { AppImg } from "assets"
+import { AppImg } from 'assets'
 
 export const LayoutWrapper = styled.div`
   display: flex;
@@ -27,8 +27,6 @@ export const AppHeader = styled.header`
   width: 100%;
   height: 80px;
   border-bottom: 2px solid ${colors.WHITE};
-  gap: 10px;
-  margin-bottom: 10px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
 `
@@ -80,10 +78,10 @@ export const AppFooter = styled.footer`
   width: 100%;
   height: 100px;
   border-top: 2px solid ${colors.WHITE};
-  padding: 20px 40px;
+  padding-left: 20px;
   color: white;
   backdrop-filter: blur(4px);
-  background: ${colors.HEADER};
+  background: ${colors.FOOTER};
 
   &:hover {
     box-shadow: 0px 4px 12px ${colors.SHADOW};
