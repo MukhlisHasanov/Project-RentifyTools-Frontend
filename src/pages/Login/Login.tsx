@@ -13,7 +13,7 @@ function Login() {
   //     navigate(-1);
   //   };
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
-  const [isSignInMode, setIsSignInMode] = useState<boolean>(false);
+  const [isSignInMode, setIsSignInMode] = useState<boolean>(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   const onSignUpClick = () => setIsSignInMode(false);
