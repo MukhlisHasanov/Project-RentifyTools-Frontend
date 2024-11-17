@@ -25,6 +25,7 @@ function Profile() {
 
   const goToEditProfile = () => {
     navigate('/edit-profile')
+    navigate('/edit-profile')
   }
 
   return (
@@ -45,6 +46,7 @@ function Profile() {
             ))}
           </ul>
         </ProfileContainer>
+       
       ) : (
         <p>Profil wird geladen...</p>
       )}

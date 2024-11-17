@@ -22,7 +22,7 @@ export const PageTitle = styled.span`
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   background-color: ${colors.HEADER};
@@ -32,19 +32,33 @@ export const CategoryContainer = styled.div`
 
 export const PageContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 элементов в каждом ряду */
-  grid-gap: 20px; /* Отступы между элементами */
-  justify-content: center; /* Центрирование по горизонтали */
-  align-items: center; /* Центрирование по вертикали */
-  width: 800px; /* Ширина серого контейнера */
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
   padding: 20px;
 `
-export const ImageWrapper = styled.div`
+
+export const CardsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 20px;
+`
+
+export const ImageWrapper = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 8px;
+  height: 150px;
+  width: 140px;
+  cursor: pointer;
 `
 
 export const CategoryImg = styled.div`
@@ -55,7 +69,6 @@ export const CategoryImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.WHITE};
 
   img {
     width: 100%;
