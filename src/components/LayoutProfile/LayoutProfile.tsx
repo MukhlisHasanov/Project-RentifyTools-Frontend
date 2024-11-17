@@ -17,12 +17,12 @@ import { UserImg } from "assets";
 function LayoutProfile() {
   const navigate = useNavigate();
 
-  // Функція для переходу на профіль
+
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE);
   };
 
-  // Посилання на сторінки профілю
+
   const profileLinks = {
     [TOOLS_APP_ROUTES.MESSAGES]: "Messages",
     [TOOLS_APP_ROUTES.MY_ADVERTS]: "My Adverts",
@@ -30,7 +30,6 @@ function LayoutProfile() {
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: "Rented Tools",
   };
 
-  // Генерація посилань для Sidebar
   const sidebarLinks = Object.keys(profileLinks).map((link) => {
     return (
       <SidebarLink key={v4()} to={link}>
