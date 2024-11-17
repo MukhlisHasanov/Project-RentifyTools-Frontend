@@ -1,5 +1,10 @@
 import { InputProps } from "./types"
-import { InputWrapper, InputComponent,InputLabel, ErrorContainer } from "./styles"
+import {
+  InputWrapper,
+  InputComponent,
+  InputLabel,
+  ErrorContainer,
+} from "./styles"
 
 function Input({
   id,
@@ -15,7 +20,7 @@ function Input({
 }: InputProps) {
   return (
     <InputWrapper>
-     <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
       <InputComponent
         id={id}
         name={name}

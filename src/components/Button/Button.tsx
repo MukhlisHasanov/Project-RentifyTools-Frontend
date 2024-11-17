@@ -1,15 +1,20 @@
-import { ButtonProps } from "./types"
-import { ButtonComponent } from "./styles"
+import { ButtonProps } from './types'
+import { ButtonComponent } from './styles'
 
 function Button({
-  type = "button",
+  type = 'button',
   name,
   onClick,
-  isSmallButton = false,
   disabled,
+  isTransparent = false,
 }: ButtonProps) {
   return (
-    <ButtonComponent  disabled={disabled} onClick={onClick} type={type} >
+    <ButtonComponent
+      $isTransparent={isTransparent}
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
+    >
       {name}
     </ButtonComponent>
   )

@@ -13,6 +13,7 @@ export const LayoutWrapper = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  overflow: auto;
 `
 
 export const AppHeader = styled.header`
@@ -26,8 +27,8 @@ export const AppHeader = styled.header`
   width: 100%;
   height: 80px;
   border-bottom: 2px solid ${colors.WHITE};
-  padding: 10px;
   gap: 10px;
+  margin-bottom: 10px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
 

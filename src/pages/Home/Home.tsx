@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
-import { useState } from "react"
 
 import {
   CategoryImg1,
@@ -17,7 +16,8 @@ import {
   CategoryImg12,
 } from "assets"
 
-import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper } from "./styles"
+import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer } from "./styles"
+import { Card } from "@mui/material";
 // const images = [
 //   CategoryImg1, 
 //   CategoryImg2,
@@ -38,18 +38,18 @@ import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWr
 // }));
 
 const imagesWithTitles = [
-  { src: CategoryImg1, title: "Image 1" },
-  { src: CategoryImg2, title: "Image 2" },
-  { src: CategoryImg3, title: "Image 3" },
-  { src: CategoryImg4, title: "Image 4" },
-  { src: CategoryImg5, title: "Image 5" },
-  { src: CategoryImg6, title: "Image 6" },
-  { src: CategoryImg7, title: "Image 7" },
-  { src: CategoryImg8, title: "Image 8" },
-  { src: CategoryImg9, title: "Image 9" },
-  { src: CategoryImg10, title: "Image 10" },
-  { src: CategoryImg11, title: "Image 11" },
-  { src: CategoryImg12, title: "Image 12" },
+  { src: CategoryImg1, title: "Excavators & Mini Excavators" },
+  { src: CategoryImg2, title: "Lifting Equipment & Aerial Work Platforms" },
+  { src: CategoryImg3, title: "Power Tools" },
+  { src: CategoryImg4, title: "Front Loaders & Mini Loaders" },
+  { src: CategoryImg5, title: "Compressors & Generators" },
+  { src: CategoryImg6, title: "Measuring Equipment" },
+  { src: CategoryImg7, title: "Concrete Mixers & Concrete Pumps" },
+  { src: CategoryImg8, title: "Rollers & Compaction Equipment" },
+  { src: CategoryImg9, title: "Welding Equipment" },
+  { src: CategoryImg10, title: "Cranes & Manipulators" },
+  { src: CategoryImg11, title: "Garden & Landscaping Tools" },
+  { src: CategoryImg12, title: "Lighting Equipment & Spotlights" },
 ];
 
 function Home() {
@@ -64,8 +64,12 @@ function Home() {
   ))
   return (
     <PageWrapper>
+      <CategoryContainer>
       <PageTitle>RentifyTools Category</PageTitle>
       <PageContainer>{imageContainers}</PageContainer>
+      </CategoryContainer>
+      <CardsContainer>
+      </CardsContainer>
     </PageWrapper>
   )
 }
