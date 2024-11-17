@@ -31,10 +31,6 @@ export const AppHeader = styled.header`
   margin-bottom: 10px;
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
-
-  &:hover {
-    box-shadow: 0px 4px 12px ${colors.SHADOW};
-  }
 `
 export const AppTitle = styled.span`
   font-size: 24px;

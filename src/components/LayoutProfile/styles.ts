@@ -33,11 +33,12 @@ export const Sidebar = styled.header`
   bottom: 100px;
 `
 
-export const UserProfile = styled.div`
+export const UserProfile = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  cursor: pointer;
 `
 
 export const UserPhoto = styled.img`
