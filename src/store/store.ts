@@ -8,13 +8,20 @@ const rootReducer = combineSlices(registerUser)
 
 export type RootState = ReturnType<typeof rootReducer>
 
-const store = configureStore({
-  reducer: {
-    user: userReducer, 
-  },
-});
+export const makeStore = (preloadedState?: Partial<RootState>) => {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  })
+  return store
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-export default store;
+export const store = makeStore()
+export type AppStore = typeof store
+export type AppDispatch = AppStore['dispatch']
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
+>
