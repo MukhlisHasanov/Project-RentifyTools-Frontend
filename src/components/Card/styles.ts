@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 import { colors } from 'styles/colors'
 
-export const CardWrapper = styled.span`
+export const CardWrapper = styled.div`
   width: 450px;
   height: 250px;
   display: flex;
@@ -10,7 +10,6 @@ export const CardWrapper = styled.span`
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #4d4d4dc7;
-  cursor: pointer;
 `
 
 export const CardImage = styled.img`
@@ -22,6 +21,7 @@ export const CardImage = styled.img`
   padding: 5px 7px;
   border-radius: 15px;
   align-self: center;
+  cursor: pointer;
 `
 
 export const CardContent = styled.div`
@@ -40,6 +40,7 @@ export const CardTitle = styled.h2`
   text-align: center;
   margin-bottom: 10px;
   color: ${colors.WHITE};
+  cursor: pointer;
 `
 
 export const CardPrice = styled.p`

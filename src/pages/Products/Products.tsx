@@ -27,7 +27,7 @@ function Products() {
           <Button name="〈" isTransparent onClick={prevImage} />
         </ButtonControl>
         <PhotoFrame>
-          <ProductImageControl src="https://dwt.com.ua/wa-data/public/shop/img/1-17.png" />
+          <ProductImageControl src='https://mrt.az/storage/products/March2021/S8DPLEBP2gCdUI3f7pgS.jpg' />
         </PhotoFrame>
         <ButtonControl>
           <Button name="〉" isTransparent onClick={nextImage} />
