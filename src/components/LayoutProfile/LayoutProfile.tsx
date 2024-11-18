@@ -17,7 +17,6 @@ import { UserImg } from "assets";
 function LayoutProfile() {
   const navigate = useNavigate();
 
-
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE);
   };

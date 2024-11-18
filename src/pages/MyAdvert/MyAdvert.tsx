@@ -36,7 +36,7 @@ function MyAdvert() {
     <PageWrapper>
       {advertData ? (
       <CardsContainer>
-        <Card
+        <Card 
           imageUrl={advertData.image}
           title={advertData.title}
           price={advertData.price}
