@@ -4,7 +4,9 @@ import { Provider } from "react-redux"
 import GlobalStyles from "styles/GlobalStyles"
 
 import App from "./App"
-import store from "./store/store"
+import { store } from "store/store"
+import { start } from "repl"
+
 
 
 const container = document.getElementById("root")
