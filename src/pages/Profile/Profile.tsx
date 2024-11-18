@@ -1,31 +1,39 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { UserProps } from './types'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserProps } from './types';
 import {
   PageWrapper,
   ProfileContainer,
   ProfileItem,
   ProfileTitle,
-} from './styles'
+} from './styles';
 
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null)
-  const navigate = useNavigate()
-  const [users, setUsers] = useState([])
-
+  const [userData, setUserData] = useState<UserProps | null>(null);
+  const navigate = useNavigate();
+  
   async function fetchUserProfile() {
-    const res = await fetch('/api/users/13')
-    const userData = await res.json()
-    setUserData(userData)
+    const userId = 123; 
+    try {
+      const res = await fetch(`/api/users/${userId}`);
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+      }
+      const userData = await res.json();
+      setUserData(userData);
+    } catch (error) {
+      console.error("Fehler beim Laden des Benutzerprofils:", error);
+    }
   }
+  
 
   useEffect(() => {
-    fetchUserProfile()
-  }, [])
+    fetchUserProfile();
+  }, []);
 
   const goToEditProfile = () => {
-    navigate('/edit-profile')
-  }
+    navigate('/edit-profile');
+  };
 
   return (
     <PageWrapper>
@@ -42,7 +50,7 @@ function Profile() {
         <p>Profil wird geladen...</p>
       )}
     </PageWrapper>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

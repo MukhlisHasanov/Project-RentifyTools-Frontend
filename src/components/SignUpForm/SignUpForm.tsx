@@ -3,13 +3,13 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { ChangeEvent } from 'react'
 
-// import { EMPLOYEE_APP_ROUTES } from "constants/routes"
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 
 import { useAppDispatch } from 'store/hooks'
 import { SignUpFormProps } from './types'
 
+import { createUser } from '../../store/redux/userSlice/userSlice' 
 import {
   SignUpFormContainer,
   Title,
@@ -19,17 +19,10 @@ import {
   ButtonControl,
 } from './styles'
 import { SIGNUP_FORM_NAMES } from './types'
-import { InputComponent } from 'components/Input/styles'
 
 function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
-
   const navigate = useNavigate()
-  const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault()
-
-    onSwitchToSignIn()
-  }
 
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
@@ -71,11 +64,28 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values, helpers) => {
-      console.log(values)
-      //   helpers.resetForm()
+    onSubmit: async (values, helpers) => {
+        
+      
+                                       //v171124  Versenden die Aktion „createUser“ mit Formularwerten
+         dispatch(                 //v171124 zwar zeigt fehler in website try catch aber nur weil er da immoment ist, tatsächlich ist fehler bei dispatch
+          createUser({
+            firstname: values.firstname,
+            lastname: values.lastname,
+            email: values.email,
+            password: values.password,
+            phone: values.phone,
+          })
+        );
+        
+        
+        helpers.resetForm();//v171124   Formular nach dem Absenden zurücksetzen
+        
+        
+        navigate('/profile'); //v171124  nach erfolgreicher Anmeldung der weg ist profile
+      
     },
-  })
+  });
 
   return (
     <SignUpFormContainer onSubmit={formik.handleSubmit}>
@@ -91,18 +101,18 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           label="First name:"
           name={SIGNUP_FORM_NAMES.FIRST_NAME}
           type="text"
-          value={formik.values.firstName}
+          value={formik.values.firstname}
           onChange={formik.handleChange}
-          error={formik.errors.firstName}
+          error={formik.errors.firstname}
         />
         <Input
           id="signupform-surname"
           label="Last name:"
           name={SIGNUP_FORM_NAMES.LAST_NAME}
           type="text"
-          value={formik.values.lastName}
+          value={formik.values.lastname}
           onChange={formik.handleChange}
-          error={formik.errors.lastName}
+          error={formik.errors.lastname}
         />
         <Input
           id="signupform-email"
@@ -112,7 +122,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.errors.email}
-          isSmallInput={false}
         />
         <Input
           id="signupform-phone"
@@ -122,7 +131,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           value={formik.values.phone}
           onChange={formik.handleChange}
           error={formik.errors.phone}
-          isSmallInput={false}
         />
         <Input
           id="signupform-password"
@@ -153,4 +161,5 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
     </SignUpFormContainer>
   )
 }
+
 export default SignUpForm
