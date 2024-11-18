@@ -42,7 +42,7 @@ export const PageContainer = styled.div`
 
 export const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   justify-content: center;
   align-items: center;

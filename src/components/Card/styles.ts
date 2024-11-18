@@ -1,6 +1,6 @@
-import styled from "@emotion/styled"
+import styled from '@emotion/styled'
 
-import { colors } from "styles/colors"
+import { colors } from 'styles/colors'
 
 export const CardWrapper = styled.span`
   width: 450px;
@@ -17,6 +17,11 @@ export const CardImage = styled.img`
   flex: 1;
   background-size: cover;
   background-position: center;
+  height: 240px;
+  width: 200px;
+  padding: 5px 7px;
+  border-radius: 15px;
+  align-self: center;
 `
 
 export const CardContent = styled.div`
@@ -26,6 +31,7 @@ export const CardContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: ${colors.WHITE};
+  overflow: hidden;
 `
 
 export const CardTitle = styled.h2`
@@ -43,10 +49,16 @@ export const CardPrice = styled.p`
   margin-bottom: 10px;
 `
 
-export const CardDescription = styled.p`
-  font-size: 16px;
+export const CardDescription = styled.div`
+   font-size: 16px;
   color: ${colors.WHITE};
   margin-bottom: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5; 
+  max-height: calc(1.5em * 4); 
+  display: block; 
+  word-break: break-word; 
 `
 
 export const CardIcons = styled.div`

@@ -13,6 +13,7 @@ import {
 import { CardProps } from "./types"
 
 function Card({
+  imageUrl,
   title,
   price,
   description,
@@ -21,7 +22,7 @@ function Card({
 }: CardProps) {
   return (
     <CardWrapper>
-      <CardImage src="https://dwt.com.ua/wa-data/public/shop/img/1-17.png" />
+      <CardImage src={imageUrl} />
       <CardContent>
         <CardTitle>{title}</CardTitle>
         <CardPrice>Price:{price}</CardPrice>
