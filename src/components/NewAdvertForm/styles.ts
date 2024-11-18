@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 
 import { colors } from "styles/colors"
 
-export const SignInFormContainer = styled.form`
+export const NewAdvertFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;

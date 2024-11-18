@@ -1,7 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 
-const rootReducer = combineSlices()
+import { addAdvertSlice } from "./addAdvert/addadvertSlice"
+
+const rootReducer = combineSlices(addAdvertSlice)
 export type RootState = ReturnType<typeof rootReducer>
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {

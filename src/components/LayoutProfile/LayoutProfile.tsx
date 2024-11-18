@@ -16,7 +16,11 @@ import { UserImg } from "assets"
 
 function LayoutProfile() {
   const navigate = useNavigate()
-
+  
+  const onProfilePage = () => {
+    navigate(TOOLS_APP_ROUTES.PROFILE);
+  };
+  
   const profileLinks = {
     [TOOLS_APP_ROUTES.MESSAGES]: "Messages",
     [TOOLS_APP_ROUTES.MY_ADVERTS]: "My Adverts",
@@ -36,7 +40,7 @@ function LayoutProfile() {
     <ProfileWrapper>
       <Sidebar>
         <UserProfile>
-          <UserPhoto src={UserImg} alt="User Photo" />
+          <UserPhoto src={UserImg} alt="User Photo" onClick={onProfilePage}/>
           <UserName>John Doe</UserName>
         </UserProfile>
         <SidebarNav>{sidebarLinks}</SidebarNav>

@@ -9,22 +9,22 @@ import Button from "components/Button/Button"
 import { useAppDispatch } from "store/hooks"
 
 import {
-  SignInFormContainer,
+  NewAdvertFormContainer,
   Title,
   InputLabel,
   InputsContainer,
   TitleContainer,
   DescriptionContainer,
 } from "./styles"
-import { NEWADVERT_FORM_NAMES } from "./types"
+import { NEWADVERT_FORM_NAMES, AdvertFormProps } from "./types"
 import { ButtonControl } from "components/SignUpForm/styles"
 
-function NewAdvertForm() {
+function NewAdvertForm({onSave}:AdvertFormProps) {
   //   const dispatch = useAppDispatch()
 
   //   const navigate = useNavigate()
 
-  const addImageFunction = () => {}
+  const addImageFunction = () => {} //здесь прописать функцию на добавление картинки!!!
   
   const validationSchema = Yup.object().shape({
     [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
@@ -64,7 +64,7 @@ function NewAdvertForm() {
   })
 
   return (
-    <SignInFormContainer onSubmit={formik.handleSubmit}>
+    <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
       <TitleContainer>
         <Title>New Advert</Title>
       </TitleContainer>
@@ -89,7 +89,7 @@ function NewAdvertForm() {
         />
         <Input
           id="advertform-price"
-          label="Price (EUR):"
+          label="Price (USD):"
           name={NEWADVERT_FORM_NAMES.PRICE}
           type="number"
           value={formik.values.price}
@@ -102,16 +102,15 @@ function NewAdvertForm() {
           value={formik.values.description}
           name={NEWADVERT_FORM_NAMES.DESCRIPTION}
           onChange={formik.handleChange}
-          
         />
       </InputsContainer>
       <ButtonControl>
         <Button onClick={addImageFunction} name="Add the photos" />
       </ButtonControl>
       <ButtonControl>
-        <Button type="submit" name="Create new advert" />
+        <Button type="submit" name="Create new advert" onClick={onSave}/>
       </ButtonControl>
-    </SignInFormContainer>
+    </NewAdvertFormContainer>
   )
 }
 export default NewAdvertForm

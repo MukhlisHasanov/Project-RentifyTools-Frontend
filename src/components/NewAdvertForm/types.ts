@@ -4,3 +4,8 @@ export enum NEWADVERT_FORM_NAMES {
     PRICE = "price",
     DESCRIPTION = "description",
   }
+
+  export interface AdvertFormProps {
+    onSave?: ()=> void
+    isProductsPage?: boolean
+  }
