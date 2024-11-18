@@ -20,8 +20,8 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // Адрес вашего backend
-        changeOrigin: true, // Изменяет Origin-заголовок на целевой сервер
+        target: 'http://localhost:8080', 
+        changeOrigin: true, 
       },
     },
   },

@@ -15,7 +15,7 @@ export const registerUser = createAppSlice({
     createUser: create.asyncThunk(
       async (userData: UserRequestDto, { rejectWithValue }) => {
         try {
-          const response = await fetch('http://localhost:8080/api/users', {
+          const response = await fetch('/api/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData),
