@@ -8,18 +8,18 @@ import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 import {
-  NewAdvertFormContainer,
+  ChangeAdvertFormContainer,
   Title,
   InputLabel,
   InputsContainer,
   TitleContainer,
   DescriptionContainer,
 } from './styles'
-import { NEWADVERT_FORM_NAMES, AdvertFormProps } from './types'
+import { CHANGE_ADVERT_FORM_NAMES, ChangeAdvertFormProps } from './types'
 import { ButtonControl } from 'components/SignUpForm/styles'
 import { addAdvertSliceAction, addAdvertSliceSelectors } from 'store/redux/addAdvert/addAdvertSlice'
 
-function NewAdvertForm({ onCreate }: AdvertFormProps) {
+function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
   const dispatch = useAppDispatch()
   const {dataAdv,error, isLoading} = useAppSelector(addAdvertSliceSelectors.adverts)
 
@@ -40,20 +40,20 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
     }
   };
   const validationSchema = Yup.object().shape({
-    [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
+    [CHANGE_ADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
       .min(5, 'The minimum title length is 5')
       .max(50, 'The maximum title length is 50'),
-    [NEWADVERT_FORM_NAMES.STATUS]: Yup.string()
+    [CHANGE_ADVERT_FORM_NAMES.STATUS]: Yup.string()
       .required('Status is required field')
       .min(2, 'The minimum status length is 2')
       .max(70, 'The maximum status length is 70'),
-    [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
+    [CHANGE_ADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError('Price must be a number')
       .required('Price is required field')
       .min(0, 'Price must be at least 0')
       .max(500000, 'Price can not exceed 500,000'),
-    [NEWADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
+    [CHANGE_ADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
       .required('Description is required field')
       .min(5, 'The minimum description length is 5')
       .max(2000, 'The maximum description length is 2000'),
@@ -61,11 +61,11 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
 
   const formik = useFormik({
     initialValues: {
-      [NEWADVERT_FORM_NAMES.TITLE]: '',
-      [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
-      [NEWADVERT_FORM_NAMES.STATUS]: '',
-      [NEWADVERT_FORM_NAMES.IMAGE]: '',
-      [NEWADVERT_FORM_NAMES.PRICE]: '',
+      [CHANGE_ADVERT_FORM_NAMES.TITLE]: '',
+      [CHANGE_ADVERT_FORM_NAMES.DESCRIPTION]: '',
+      [CHANGE_ADVERT_FORM_NAMES.STATUS]: '',
+      [CHANGE_ADVERT_FORM_NAMES.IMAGE]: '',
+      [CHANGE_ADVERT_FORM_NAMES.PRICE]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
@@ -80,48 +80,39 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           navigate('/profile/my-adverts')
         })
         .catch(() => {
-          console.error('Creation failed')
+          console.error('Saving failed')
         })
     },
   })
 
   return (
-    <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
+    <ChangeAdvertFormContainer onSubmit={formik.handleSubmit}>
       <TitleContainer>
-        <Title>New Advert</Title>
+        <Title>My Advert</Title>
       </TitleContainer>
       <InputsContainer>
         <Input
           id="advertform-title"
           label="Title:"
-          name={NEWADVERT_FORM_NAMES.TITLE}
+          name={CHANGE_ADVERT_FORM_NAMES.TITLE}
           type="title"
           value={formik.values.title}
           onChange={formik.handleChange}
           error={formik.errors.title}
         />
-        {/* <Input
+        <Input
           id="advertform-category"
-          label="Category:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
-          type="text"
-          value={formik.values.status}
-          onChange={formik.handleChange}
-          error={formik.errors.status}
-        /> */}
-        {/* <Input
-          id="advertform-status"
           label="Status:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
+          name={CHANGE_ADVERT_FORM_NAMES.STATUS}
           type="text"
           value={formik.values.status}
           onChange={formik.handleChange}
           error={formik.errors.status}
-        /> */}
+        />
         <Input
           id="advertform-price"
           label="Price (USD):"
-          name={NEWADVERT_FORM_NAMES.PRICE}
+          name={CHANGE_ADVERT_FORM_NAMES.PRICE}
           type="number"
           value={formik.values.price}
           onChange={formik.handleChange}
@@ -131,22 +122,19 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
         <DescriptionContainer
           id="advertform-description"
           value={formik.values.description}
-          name={NEWADVERT_FORM_NAMES.DESCRIPTION}
+          name={CHANGE_ADVERT_FORM_NAMES.DESCRIPTION}
           onChange={formik.handleChange}
         />
       </InputsContainer>
       <ButtonControl>
-        <Button type="submit" name="Add the photos" />
-      </ButtonControl>
-      <ButtonControl>
         <Button
           type="submit"
-          name={isLoading ? 'Loading advert...' : 'Create new advert'}
-          onClick={onCreate}
+          name={isLoading ? 'Saving advert...' : 'Save'}
+          onClick={onSave}
           disabled={isLoading}
         />
       </ButtonControl>
-    </NewAdvertFormContainer>
+    </ChangeAdvertFormContainer>
   )
 }
-export default NewAdvertForm
+export default ChangeAdvertForm

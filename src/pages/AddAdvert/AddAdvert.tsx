@@ -1,25 +1,31 @@
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+import { useState, ChangeEvent, useEffect } from 'react'
 
-import NewAdvertForm from "components/NewAdvertForm/NewAdvertForm"
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 
-import { PageWrapper, SuccessMessage } from "./styles"
+import {
+  addAdvertSliceSelectors,
+  addAdvertSliceAction,
+} from 'store/redux/addAdvert/addAdvertSlice'
+import { AdvertRequestDto } from 'store/redux/addAdvert/types'
+import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
+import { PageWrapper, SuccessMessage } from './styles'
 
 function AddAdvert() {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { dataAdv, error, isLoading } = useAppSelector(
+    addAdvertSliceSelectors.adverts,
+  )
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
-  //   const goBack = () => {
-  //     navigate(-1);
-  //   };
-  const [isCreated, setIsCreated] = useState<boolean>(false)
-
-  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false)
-
-  const createAdvertSuccess = () => {
-    setIsCreated(true) // Меняем состояние, чтобы показать форму объявления
+  const onSubmit = (values: AdvertRequestDto) => {
+    // dispatch(addAdvertSliceAction.saveAdvertData(values))
     setShowSuccessMessage(true)
     setTimeout(() => setShowSuccessMessage(false), 3000)
+    navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
   }
   return (
     <PageWrapper>

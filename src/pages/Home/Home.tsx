@@ -47,7 +47,7 @@ function Home() {
   return (
     <PageWrapper>
       <CategoryContainer>
-      <PageTitle>RentifyTools Category</PageTitle>
+      <PageTitle>RentifyTools Categories</PageTitle>
       <PageContainer>{imageContainers}</PageContainer>
       </CategoryContainer>
       <CardsContainer>
