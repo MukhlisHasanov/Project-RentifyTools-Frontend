@@ -84,7 +84,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate('/')
+          navigate('/profile')
         })
         .catch(() => {
           console.error('Registration failed')
