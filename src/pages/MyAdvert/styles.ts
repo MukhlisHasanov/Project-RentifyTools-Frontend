@@ -1,19 +1,18 @@
 
 import styled from "@emotion/styled"
 
-const AdvertContainer = styled.div`
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
 `
-
-const Title = styled.h2`
-  font-size: 18px;
-  color: #333;
-`
-
-const Description = styled.p`
-  font-size: 14px;
-  color: #666;
-`
+export const CardsContainer = styled.div`
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+`;

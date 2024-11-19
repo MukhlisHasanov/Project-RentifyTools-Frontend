@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-//141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
+//v141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
 import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
@@ -42,7 +42,7 @@ export const PageContainer = styled.div`
 
 export const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   justify-content: center;
   align-items: center;

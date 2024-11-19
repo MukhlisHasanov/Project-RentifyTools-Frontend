@@ -1,69 +1,64 @@
-//v141124  import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
-//v141124  import { fetchAdverts } from "redux/thunks";
-//v141124  import { RootState } from "redux/store";
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { MyAdvertsProps } from './types'
+import { UserProps } from 'pages/Profile/types'
+import {
+  PageWrapper,
+  CardsContainer,
+} from './styles'
+import Card from 'components/Card/Card'
 
-//v141124    const MyAdvert: React.FC = () => {
-//v141124      const dispatch = useDispatch();
-//v141124  const { adverts, loading, error } = useSelector((state: RootState) => state.advert);
+function MyAdvert() {
+  const [advertData, setAdvertData] = useState<MyAdvertsProps | null>(null)
+  const [users, setUsers] = useState<UserProps[]>([])
+  const navigate = useNavigate()
 
-//v141124  useEffect(() => {
-//v141124    dispatch(fetchAdverts());
-//v141124  }, [dispatch]);
+  async function fetchUsers() {
+    const res = await fetch('/api/tools')
+    const userArr = await res.json()
+    setUsers(userArr)
+  }
 
-//v141124  if (loading) return <p>Laden...</p>;
-//v141124  if (error) return <p>Fehler: {error}</p>;
-
-//v141124  return (
-//v141124      <div>
-//v141124        <h1>Meine Anzeigen</h1>
-//v141124        {adverts.map((advert) => (
-//v141124          <div key={advert.id}>
-//v141124            <h2>{advert.title}</h2>
-//v141124            <p>{advert.description}</p>
-//v141124          </div>
-//v141124        ))}
-//v141124      </div>
-//v141124    )
-//v141124  };
-
-//v141124  export default MyAdvert;
-
-
-import React, { useEffect, useState } from "react"
-
-
-const mockAdverts = [
-  { id: 1, title: "Anzeige 1", description: "Beschreibung der Anzeige 1" },
-  { id: 2, title: "Anzeige 2", description: "Beschreibung der Anzeige 2" },
-  { id: 3, title: "Anzeige 3", description: "Beschreibung der Anzeige 3" },
-]
-
-const MyAdvert: React.FC = () => {
-  const [adverts, setAdverts] = useState(mockAdverts)
-
-  //v141124text Effekt für spätere API-Aufrufe 
   useEffect(() => {
-    //v141124text Hier könnte ein API-Aufruf 
+    const MyAdverTest: MyAdvertsProps = {
+      title: 'Beispiel Titel',
+      price: '100',
+      description: 'dadasdadsadadsadadasdadadasdasdad',
+      image:
+        'https://mrt.az/storage/products/March2021/S8DPLEBP2gCdUI3f7pgS.jpg',
+    }
+
+    setAdvertData(MyAdverTest)
+    fetchUsers()
   }, [])
 
   return (
-    <div>
-      <h1>Meine Anzeigen</h1>
-      {adverts.map(advert => (
-        <div
-          key={advert.id}
-          style={{
-            marginBottom: "10px",
-            padding: "10px",
-            border: "1px solid #ddd",
-          }}
-        >
-          <h2>{advert.title}</h2>
-          <p>{advert.description}</p>
-        </div>
-      ))}
-    </div>
+    <PageWrapper>
+      {advertData ? (
+      <CardsContainer>
+        <Card 
+          imageUrl={advertData.image}
+          title={advertData.title}
+          price={advertData.price}
+          description={advertData.description}
+        />
+        <Card
+          imageUrl={advertData.image}
+          title={advertData.title}
+          price={advertData.price}
+          description={advertData.description}
+        />
+        <Card
+          imageUrl={advertData.image}
+          title={advertData.title}
+          price={advertData.price}
+          description={advertData.description}
+        />
+        </CardsContainer>
+      ) : (
+        <p>Anzeige wird geladen...</p>
+      )}
+    </PageWrapper>
   )
 }
 
