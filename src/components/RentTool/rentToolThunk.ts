@@ -8,7 +8,7 @@ interface RentData {
 }
 
 export const rentTool = createAsyncThunk(
-    'rent/rentTool',  // action type
+    'rent/rentTool', 
     async (rentData: RentData, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:8080/api/rents/${rentData.toolId}`, {
@@ -26,13 +26,13 @@ export const rentTool = createAsyncThunk(
 
             if (!response.ok) {
                 const errorData = await response.json();
-                return rejectWithValue(errorData);  // Fehlerbehandlung
+                return rejectWithValue(errorData); 
             }
 
             const result = await response.json();
-            return result;  // Erfolgreiches Resultat
+            return result;  
         } catch (error) {
-            return rejectWithValue('Es ist ein Fehler aufgetreten');  // Fehler bei der Anfrage
+            return rejectWithValue('Es ist ein Fehler aufgetreten');  
         }
     }
 );
