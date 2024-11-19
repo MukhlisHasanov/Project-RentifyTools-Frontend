@@ -60,7 +60,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
     [SIGNUP_FORM_NAMES.PASSWORD]: Yup.string()
       .required('Password is required field')
       .min(8, 'The minimum password length is 5')
-      .max(30, 'The max password length is 30'),
+      .max(30, 'The maximum password length is 30'),
     [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
       .required('Repeat password is required field')
       .oneOf([Yup.ref(SIGNUP_FORM_NAMES.PASSWORD)], 'Passwords must match'),

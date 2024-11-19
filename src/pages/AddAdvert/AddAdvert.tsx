@@ -7,7 +7,7 @@ import {
   addAdvertSliceSelectors,
   addAdvertSliceAction,
 } from 'store/redux/addAdvert/addAdvertSlice'
-import { AdvertData } from 'store/redux/addAdvert/types'
+import { AdvertRequestDto } from 'store/redux/addAdvert/types'
 import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
@@ -21,8 +21,8 @@ function AddAdvert() {
   )
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
-  const onSubmit = (values: AdvertData) => {
-    dispatch(addAdvertSliceAction.addAdvert(values))
+  const onSubmit = (values: AdvertRequestDto) => {
+    // dispatch(addAdvertSliceAction.saveAdvertData(values))
     setShowSuccessMessage(true)
     setTimeout(() => setShowSuccessMessage(false), 3000)
     navigate(TOOLS_APP_ROUTES.MY_ADVERTS)

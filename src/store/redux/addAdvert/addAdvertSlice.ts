@@ -1,44 +1,40 @@
-import { createAppSlice } from 'store/createAppSlice'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { v4 } from 'uuid'
 
-import { AdvertData, AdvertInitialState } from './types'
+import { createAppSlice } from 'store/createAppSlice'
+
+import {
+  AdvertRequestDto,
+  AdvertInitialState,
+  AdvertResponseDto,
+} from './types'
 
 const advertDataInitialState: AdvertInitialState = {
   adverts: [],
   dataAdv: undefined,
+  images:[],
   error: undefined,
   isLoading: false,
 }
 export const addAdvertSlice = createAppSlice({
-  name: 'ADVERT',
+  name: 'ADD_ADVERT',
   initialState: advertDataInitialState,
   reducers: create => ({
-    getAdvertData: create.asyncThunk(
-      async (
-        {
-          title,
-          categoty,
-          price,
-          description,
-          imageUrl,
-        }: {
-          title: string
-          categoty: string
-          price: string
-          description: string
-          imageUrl: string
-        },
-        { rejectWithValue },
-      ) => {
-        const ADVERT_API_URL: string = `/api/products/${title}${categoty}${price}${description}${imageUrl}`
-        const response = await fetch(ADVERT_API_URL)
-        const result = await response.json()
+    createAdvert: create.asyncThunk(
+      async (advertData: AdvertRequestDto, { rejectWithValue }) => {
+        try {
+          const response = await fetch('/api/tools', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(advertData),
+          })
 
-        if (response.ok) {
+          const result = await response.json()
+          if (!response.ok) {
+            return rejectWithValue(result.message || 'Failed to create advert')
+          }
           return result
-        } else {
-          return rejectWithValue(result.message)
+        } catch (error) {
+          return rejectWithValue('Network error or server is unavailable')
         }
       },
       {
@@ -50,12 +46,12 @@ export const addAdvertSlice = createAppSlice({
         fulfilled: (state: AdvertInitialState, action) => {
           state.isLoading = false
           state.dataAdv = {
-            id: v4(),
+            id: action.payload.id,
             title: action.payload.title,
-            category: action.payload.category,
-            price: action.payload.price,
             description: action.payload.description,
-            imageUrl: action.payload.imageUrl,
+            status: action.payload.status,
+            image: action.payload.image,
+            price: action.payload.price,
           }
         },
         rejected: (state: AdvertInitialState, action) => {
@@ -71,16 +67,16 @@ export const addAdvertSlice = createAppSlice({
       state.dataAdv = undefined
     }),
     addAdvert: create.reducer(
-      (state: AdvertInitialState, action: PayloadAction<AdvertData>) => {
+      (state: AdvertInitialState, action: PayloadAction<AdvertResponseDto>) => {
         state.adverts = [
           ...state.adverts,
           {
-            id: v4(),
+            id: action.payload.id,
             title: action.payload.title,
-            category: action.payload.category,
-            price: action.payload.price,
             description: action.payload.description,
-            imageUrl: action.payload.imageUrl,
+            status: action.payload.status,
+            image: action.payload.image,
+            price: action.payload.price,
           },
         ]
       },
@@ -88,12 +84,12 @@ export const addAdvertSlice = createAppSlice({
     deleteAdvert: create.reducer(
       (state: AdvertInitialState, action: PayloadAction<string>) => {
         state.adverts = [...state.adverts].filter(
-          (advert: AdvertData) => advert.id !== action.payload,
+          (advert: AdvertResponseDto) => advert.id !== action.payload,
         )
       },
     ),
     updateAdvert: create.reducer(
-      (state: AdvertInitialState, action: PayloadAction<AdvertData>) => {
+      (state: AdvertInitialState, action: PayloadAction<AdvertResponseDto>) => {
         const index = state.adverts.findIndex(
           advert => advert.id === action.payload.id,
         )
@@ -115,6 +111,14 @@ export const addAdvertSlice = createAppSlice({
         }
       },
     ),
+    addImage: create.reducer(
+      (state: AdvertInitialState, action: PayloadAction<string>) => {
+        state.images.push(action.payload);
+      }
+    ),
+    clearImages: create.reducer((state: AdvertInitialState) => {
+      state.images = []; 
+    }),
   }),
   selectors: {
     adverts: (state: AdvertInitialState) => state,

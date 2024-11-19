@@ -1,15 +1,25 @@
-export interface AdvertData {
+export interface AdvertRequestDto {
+  title: string
+  description: string
+  // category: string
+  image: string
+  price: string
+  // category: string
+}
+
+export interface AdvertResponseDto {
   id: string
   title: string
-  category: string
-  price: string
   description: string
-  imageUrl: string
+  status: string
+  image: string
+  price: string
 }
 
 export interface AdvertInitialState {
-  adverts: AdvertData[]
-  dataAdv: AdvertData | undefined
+  adverts: AdvertResponseDto[]
+  dataAdv: AdvertResponseDto | undefined
+  images: string[]
   error: undefined | string
   isLoading: boolean
 }
