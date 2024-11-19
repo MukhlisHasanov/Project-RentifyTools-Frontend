@@ -19,11 +19,20 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      "/api": {
-        target: "http://localhost:8080",
+      '/api': {
+        target: 'http://localhost:8080', 
+        changeOrigin: true, 
       },
     },
   },
+  // server: {
+  //   open: true,
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:8080",
+  //     },
+  //   },
+  // },
   test: {
     globals: true,
     environment: "jsdom",

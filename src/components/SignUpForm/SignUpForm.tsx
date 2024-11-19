@@ -3,12 +3,16 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { ChangeEvent } from 'react'
 
-// import { EMPLOYEE_APP_ROUTES } from "constants/routes"
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 
-import { useAppDispatch } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { SignUpFormProps } from './types'
+
+import {
+  signUpSliceAction,
+  signUpSliceSelectors,
+} from 'store/redux/signUpSlice/signUpSlice'
 
 import {
   SignUpFormContainer,
@@ -19,17 +23,20 @@ import {
   ButtonControl,
 } from './styles'
 import { SIGNUP_FORM_NAMES } from './types'
-import { InputComponent } from 'components/Input/styles'
 
 function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
 
-  const navigate = useNavigate()
-  const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault()
+  const { userObj, error, isLoading } = useAppSelector(
+    signUpSliceSelectors.register_user,
+  )
 
-    onSwitchToSignIn()
-  }
+  const navigate = useNavigate()
+  // const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
+  //   event.preventDefault()
+
+  //   onSwitchToSignIn()
+  // }
 
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
@@ -55,9 +62,8 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
       .min(8, 'The minimum password length is 5')
       .max(30, 'The max password length is 30'),
     [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
-      .required('Password is required field')
-      .min(8, 'The minimum password length is 5')
-      .max(30, 'The max password length is 30'),
+      .required('Repeat password is required field')
+      .oneOf([Yup.ref(SIGNUP_FORM_NAMES.PASSWORD)], 'Passwords must match'),
   })
 
   const formik = useFormik({
@@ -65,15 +71,24 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
       [SIGNUP_FORM_NAMES.FIRST_NAME]: '',
       [SIGNUP_FORM_NAMES.LAST_NAME]: '',
       [SIGNUP_FORM_NAMES.EMAIL]: '',
-      [SIGNUP_FORM_NAMES.PHONE]: '',
       [SIGNUP_FORM_NAMES.PASSWORD]: '',
+      [SIGNUP_FORM_NAMES.PHONE]: '',
       [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
       console.log(values)
-      //   helpers.resetForm()
+      const { repeatPassword, ...userData } = values
+      dispatch(signUpSliceAction.createUser(userData))
+        .unwrap()
+        .then(() => {
+          helpers.resetForm()
+          navigate('/')
+        })
+        .catch(() => {
+          console.error('Registration failed')
+        })
     },
   })
 
@@ -91,18 +106,18 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           label="First name:"
           name={SIGNUP_FORM_NAMES.FIRST_NAME}
           type="text"
-          value={formik.values.firstName}
+          value={formik.values.firstname}
           onChange={formik.handleChange}
-          error={formik.errors.firstName}
+          error={formik.errors.firstname}
         />
         <Input
           id="signupform-surname"
           label="Last name:"
           name={SIGNUP_FORM_NAMES.LAST_NAME}
           type="text"
-          value={formik.values.lastName}
+          value={formik.values.lastname}
           onChange={formik.handleChange}
-          error={formik.errors.lastName}
+          error={formik.errors.lastname}
         />
         <Input
           id="signupform-email"
@@ -144,12 +159,25 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         />
       </InputsContainer>
       <ButtonControl>
-        <Button type="submit" name="Sign Up" />
+        <Button
+          type="submit"
+          name={isLoading ? 'Signing Up...' : 'Sign Up'}
+          disabled={isLoading}
+        />
       </ButtonControl>
-      <Text>
-        By signing up, you accept our Terms and Conditions and acknowledge our
-        Privacy Policy
-      </Text>
+      <div>
+        {error ? (
+          <div>
+            <p style={{ color: 'red' }}>{error}</p>
+            {/* <button onClick={() => dispatch(clearError())}>Dismiss</button> */}
+          </div>
+        ) : (
+          <Text>
+            By signing up, you accept our Terms and Conditions and acknowledge
+            our Privacy Policy
+          </Text>
+        )}
+      </div>
     </SignUpFormContainer>
   )
 }
