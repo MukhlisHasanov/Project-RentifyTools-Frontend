@@ -31,10 +31,10 @@ function NewAdvertForm() {
       .required("Title is required field")
       .min(5, "The minimum title length is 5")
       .max(50, "The maximum title length is 50"),
-    [NEWADVERT_FORM_NAMES.CATEGORY]: Yup.string()
-      .required("Category is required field")
-      .min(5, "The minimum category length is 5")
-      .max(70, "The maximum category length is 70"),
+    // [NEWADVERT_FORM_NAMES.CATEGORY]: Yup.string()
+    //   .required("Category is required field")
+    //   .min(5, "The minimum category length is 5")
+    //   .max(70, "The maximum category length is 70"),
     [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError("Price must be a number")
       .required("Price is required field")
@@ -51,7 +51,7 @@ function NewAdvertForm() {
   const formik = useFormik({
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: "",
-      [NEWADVERT_FORM_NAMES.CATEGORY]: "",
+      // [NEWADVERT_FORM_NAMES.CATEGORY]: "",
       [NEWADVERT_FORM_NAMES.PRICE]: "",
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: "",
     },
@@ -78,7 +78,7 @@ function NewAdvertForm() {
           onChange={formik.handleChange}
           error={formik.errors.title}
         />
-        <Input
+        {/* <Input
           id="advertform-category"
           label="Category:"
           name={NEWADVERT_FORM_NAMES.CATEGORY}
@@ -86,7 +86,7 @@ function NewAdvertForm() {
           value={formik.values.category}
           onChange={formik.handleChange}
           error={formik.errors.category}
-        />
+        /> */}
         <Input
           id="advertform-price"
           label="Price (EUR):"

@@ -39,7 +39,7 @@ function Profile() {
           <button onClick={goToEditProfile}>Change information</button>
         </ProfileContainer>
       ) : (
-        <p>Profil wird geladen...</p>
+        <p>Profile is loading...</p>
       )}
     </PageWrapper>
   )
