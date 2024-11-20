@@ -1,6 +1,6 @@
 export enum SIGNUP_FORM_NAMES {
-  FIRST_NAME = "firstName",
-  LAST_NAME = "lastName",
+  FIRST_NAME = "firstname",
+  LAST_NAME = "lastname",
   EMAIL = "email",
   PHONE = "phone",
   PASSWORD = "password",
