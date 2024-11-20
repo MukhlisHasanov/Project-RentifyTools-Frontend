@@ -127,7 +127,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.errors.email}
-          // isSmallInput={false}
         />
         <Input
           id="signupform-phone"
@@ -137,7 +136,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           value={formik.values.phone}
           onChange={formik.handleChange}
           error={formik.errors.phone}
-          // isSmallInput={false}
         />
         <Input
           id="signupform-password"

@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { ChangeEvent } from 'react'
+
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { AdvertResponseDto } from 'store/redux/addAdvert/types'
+import {
+  addAdvertSliceAction,
+  addAdvertSliceSelectors,
+} from 'store/redux/addAdvert/addAdvertSlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { ButtonControl } from 'components/SignUpForm/styles'
 
 import {
   ChangeAdvertFormContainer,
@@ -16,29 +22,15 @@ import {
   DescriptionContainer,
 } from './styles'
 import { CHANGE_ADVERT_FORM_NAMES, ChangeAdvertFormProps } from './types'
-import { ButtonControl } from 'components/SignUpForm/styles'
-import { addAdvertSliceAction, addAdvertSliceSelectors } from 'store/redux/addAdvert/addAdvertSlice'
 
-function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
+function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
   const dispatch = useAppDispatch()
-  const {dataAdv,error, isLoading} = useAppSelector(addAdvertSliceSelectors.adverts)
+  const { dataAdv, error, isLoading } = useAppSelector(
+    addAdvertSliceSelectors.adverts,
+  )
 
   const navigate = useNavigate()
 
-  const addImageFunction = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-  
-      // Преобразование файла в Base64 (или можно использовать FileReader)
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          dispatch(addAdvertSliceAction.addImage(reader.result as string));
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   const validationSchema = Yup.object().shape({
     [CHANGE_ADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
@@ -47,7 +39,7 @@ function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
     [CHANGE_ADVERT_FORM_NAMES.STATUS]: Yup.string()
       .required('Status is required field')
       .min(2, 'The minimum status length is 2')
-      .max(70, 'The maximum status length is 70'),
+      .max(20, 'The maximum status length is 20'),
     [CHANGE_ADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError('Price must be a number')
       .required('Price is required field')
@@ -61,6 +53,7 @@ function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
 
   const formik = useFormik({
     initialValues: {
+      [CHANGE_ADVERT_FORM_NAMES.ID]: '',
       [CHANGE_ADVERT_FORM_NAMES.TITLE]: '',
       [CHANGE_ADVERT_FORM_NAMES.DESCRIPTION]: '',
       [CHANGE_ADVERT_FORM_NAMES.STATUS]: '',
@@ -69,19 +62,11 @@ function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values, helpers) => {
+    onSubmit: (values: AdvertResponseDto, helpers) => {
       console.log(values)
-     
-      const {...advertData } = values
-      dispatch(addAdvertSliceAction.createAdvert(advertData))
-        .unwrap()
-        .then(() => {
-          helpers.resetForm()
-          navigate('/profile/my-adverts')
-        })
-        .catch(() => {
-          console.error('Saving failed')
-        })
+      dispatch(addAdvertSliceAction.updateAdvert(values))
+      helpers.resetForm()
+      navigate('/profile/my-adverts')
     },
   })
 
@@ -104,7 +89,7 @@ function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
           id="advertform-category"
           label="Status:"
           name={CHANGE_ADVERT_FORM_NAMES.STATUS}
-          type="text"
+          type="status"
           value={formik.values.status}
           onChange={formik.handleChange}
           error={formik.errors.status}
@@ -129,8 +114,8 @@ function ChangeAdvertForm({ onSave }: ChangeAdvertFormProps) {
       <ButtonControl>
         <Button
           type="submit"
-          name={isLoading ? 'Saving advert...' : 'Save'}
-          onClick={onSave}
+          name="Change"
+          onClick={onChange}
           disabled={isLoading}
         />
       </ButtonControl>

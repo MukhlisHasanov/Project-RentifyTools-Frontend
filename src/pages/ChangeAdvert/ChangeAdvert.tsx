@@ -7,25 +7,30 @@ import {
   addAdvertSliceSelectors,
   addAdvertSliceAction,
 } from 'store/redux/addAdvert/addAdvertSlice'
-import { AdvertRequestDto } from 'store/redux/addAdvert/types'
-import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
+import { AdvertResponseDto } from 'store/redux/addAdvert/types'
+import ChangeAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import { PageWrapper, SuccessMessage } from './styles'
 
-function AddAdvert() {
-  const navigate = useNavigate()
+function ChangeAdvert() {
+  const dispatch = useAppDispatch()
+  const { dataAdv, error, isLoading } = useAppSelector(
+    addAdvertSliceSelectors.adverts,
+  )
+  
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
   
   return (
     <PageWrapper>
       {/* {showSuccessMessage && (
         <SuccessMessage>
-          New advertisement was successfully created!
+          New advertisement was successfully changed!
         </SuccessMessage>
       )} */}
-      <NewAdvertForm />
+      <ChangeAdvertForm />
     </PageWrapper>
   )
 }
-
-export default AddAdvert
+export default ChangeAdvert

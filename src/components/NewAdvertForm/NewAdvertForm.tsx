@@ -6,6 +6,7 @@ import { ChangeEvent } from 'react'
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { AdvertRequestDto } from 'store/redux/addAdvert/types'
 
 import {
   NewAdvertFormContainer,
@@ -25,7 +26,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
 
   const navigate = useNavigate()
 
-  const addImageFunction = async (event: ChangeEvent<HTMLInputElement>) => {
+  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
   
@@ -42,12 +43,8 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const validationSchema = Yup.object().shape({
     [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
-      .min(5, 'The minimum title length is 5')
+      .min(2, 'The minimum title length is 2')
       .max(50, 'The maximum title length is 50'),
-    [NEWADVERT_FORM_NAMES.STATUS]: Yup.string()
-      .required('Status is required field')
-      .min(2, 'The minimum status length is 2')
-      .max(70, 'The maximum status length is 70'),
     [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError('Price must be a number')
       .required('Price is required field')
@@ -63,27 +60,19 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
-      [NEWADVERT_FORM_NAMES.STATUS]: '',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values, helpers) => {
+    onSubmit: (values: AdvertRequestDto, helpers) => {
       console.log(values)
-     
-      const {...advertData } = values
-      dispatch(addAdvertSliceAction.createAdvert(advertData))
-        .unwrap()
-        .then(() => {
-          helpers.resetForm()
-          navigate('/profile/my-adverts')
-        })
-        .catch(() => {
-          console.error('Creation failed')
-        })
+      dispatch(addAdvertSliceAction.saveAdvertData())
+      helpers.resetForm()
+      navigate('/profile/my-adverts')
     },
-  })
+    })
+
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
@@ -136,8 +125,23 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
         />
       </InputsContainer>
       <ButtonControl>
-        <Button type="submit" name="Add the photos" />
-      </ButtonControl>
+  {/* Скрытый input для выбора файла */}
+  <input
+    type="file"
+    id="image-upload"
+    style={{ display: 'none' }}
+    onChange={addImageTool} // Обработка выбора файла
+  />
+  {/* Кнопка для вызова окна выбора файлов */}
+  <Button
+    type="button"
+    name="Add the photos"
+    onClick={() => document.getElementById('image-upload')?.click()}
+  />
+</ButtonControl>
+      {/* <ButtonControl>
+        <Button type="submit" name="Add the photos" onClick={addImageTool} />
+      </ButtonControl> */}
       <ButtonControl>
         <Button
           type="submit"
