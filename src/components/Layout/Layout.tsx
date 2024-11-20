@@ -1,7 +1,7 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom"
-import { v4 } from "uuid"
-import { useState, useEffect, ChangeEvent } from "react"
-import Search from "components/Search/Search"
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { v4 } from 'uuid'
+import { useState, useEffect, ChangeEvent } from 'react'
+import Search from 'components/Search/Search'
 
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
@@ -22,10 +22,10 @@ function Layout() {
   const [toolName, setToolName] = useState<string>('')
   const navigate = useNavigate()
   const location = useLocation()
-
+  const isLogin = localStorage.getItem('accessToken')
 
   useEffect(() => {
-    setToolName("")
+    setToolName('')
   }, [location.pathname])
 
   const getToolData = () => {
@@ -43,12 +43,6 @@ function Layout() {
     navigate(TOOLS_APP_ROUTES.HOME)
   }
 
-  const appLinksHeader = {
-    [TOOLS_APP_ROUTES.HOME]: 'Home',
-    [TOOLS_APP_ROUTES.ADD_ADVERTS]: 'Add Adverts',
-    [TOOLS_APP_ROUTES.LOGIN]: 'Login',
-  }
-
   const appLinksFooter = {
     [TOOLS_APP_ROUTES.HELP]: 'Help',
     [TOOLS_APP_ROUTES.ADVERTISING]: 'Advertising',
@@ -59,12 +53,6 @@ function Layout() {
     [TOOLS_APP_ROUTES.IMPRINT]: 'Imprint',
     [TOOLS_APP_ROUTES.SOCIAL_MEDIA]: 'Social media',
   }
-
-  const headerLinks = Object.keys(appLinksHeader).map((link: string) => (
-    <HeaderLink key={v4()} to={link}>
-      {appLinksHeader[link as keyof typeof appLinksHeader]}
-    </HeaderLink>
-  ))
 
   const footerLinks = Object.keys(appLinksFooter).map((link: string) => (
     <FooterLink key={v4()} to={link}>
@@ -83,7 +71,15 @@ function Layout() {
             onSearch={getToolData}
           />
         </SearchContainer>
-        <HeaderNav>{headerLinks}</HeaderNav>
+        <HeaderNav>
+          <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
+          <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Advert</HeaderLink>
+          {isLogin ? (
+            <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
+          ) : (
+            <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink>
+          )}
+        </HeaderNav>
       </AppHeader>
       <AppMain>
         <Outlet />
