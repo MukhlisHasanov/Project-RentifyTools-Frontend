@@ -13,8 +13,11 @@ import {
 import { CardProps } from './types';
 import { useNavigate } from 'react-router-dom';
 import { TOOLS_APP_ROUTES } from 'constants/routes';
+import Button from 'components/Button/Button';
+import { ButtonComponent } from 'components/Button/styles';
 
 function Card({
+  toolId,
   imageUrl,
   title,
   price,
@@ -24,10 +27,12 @@ function Card({
 }: CardProps) {
   const navigate = useNavigate();
 
-  // Функція для переходу на сторінку оголошення
+  
   const goAdvertPage = () => {
     navigate(TOOLS_APP_ROUTES.PRODUCTS);
   };
+ 
+
   return (
     <CardWrapper onClick={goAdvertPage}>
       <CardImage src={imageUrl} />
@@ -39,9 +44,19 @@ function Card({
           <CardIcon> 
             <img src={ShopIcon} alt="Add to cart" />
           </CardIcon>
+          <CardIcons>
+          <Button name="Edit" onClick={() => navigate(`/tool/${toolId}/edit`)} />
+
+          </CardIcons>
+          <CardIcons>
+          <Button name="Delete" onClick={() => (title)} />
+          </CardIcons>
+          
+          
           <CardIcon >
             <img src={FavIcon} alt="Add to favorites" />
           </CardIcon>
+          
         </CardIcons>
       </CardContent>
     </CardWrapper>

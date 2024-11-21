@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserProps } from './types';
+import { UserCardProps } from './types';
 import {
   PageWrapper,
   ProfileContainer,
@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null);
+  const [userData, setUserData] = useState<UserCardProps | null>(null);
   const navigate = useNavigate();
   
   async function fetchUserProfile() {
