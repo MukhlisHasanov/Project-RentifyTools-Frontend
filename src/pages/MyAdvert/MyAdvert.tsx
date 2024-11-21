@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { MyAdvertsProps } from './types'
-import { UserProps } from 'pages/Profile/types'
-import { PageWrapper, CardsContainer } from './styles'
-import ToolCard from 'components/ToolCard/ToolCard'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MyAdvertsProps } from './types'; 
+import { UserCardProps } from 'pages/Profile/types'; 
+import {
+  PageWrapper,
+  CardsContainer,
+} from './styles';
+import ToolCard from 'components/ToolCard/ToolCard';
+
 
 function MyAdvert() {
   const [advertData, setAdvertData] = useState<MyAdvertsProps | null>(null);  
@@ -28,24 +32,30 @@ function MyAdvert() {
     <PageWrapper>
       {advertData ? (
         <CardsContainer>
-          <ToolCard
+        
+          <ToolCard 
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
             description={advertData.description}
+            
           />
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
+
+      
+          {tools.length > 0 ? (
+            tools.map((tool) => (
+              <ToolCard
+                key={tool.id}  
+                imageUrl={tool.imageUrl} 
+                title={tool.title}
+                price={tool.price}
+                description={tool.description}
+                
+              />
+            ))
+          ) : (
+            <p>No tools found</p>
+          )}
         </CardsContainer>
       ) : (
         <p>Anzeige wird geladen...</p>
