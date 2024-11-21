@@ -84,7 +84,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate('/profile')
+          navigate('/login')
         })
         .catch(() => {
           console.error('Registration failed')
@@ -165,11 +165,9 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           disabled={isLoading}
         />
       </ButtonControl>
-      <div>
         {error ? (
           <div>
             <p style={{ color: 'red' }}>{error}</p>
-            {/* <button onClick={() => dispatch(clearError())}>Dismiss</button> */}
           </div>
         ) : (
           <Text>
@@ -177,7 +175,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
             our Privacy Policy
           </Text>
         )}
-      </div>
     </SignUpFormContainer>
   )
 }

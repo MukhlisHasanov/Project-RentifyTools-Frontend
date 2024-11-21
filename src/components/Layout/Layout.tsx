@@ -1,9 +1,13 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom"
-import { v4 } from "uuid"
-import { useState, useEffect, ChangeEvent } from "react"
-import Search from "components/Search/Search"
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { v4 } from 'uuid';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import Search from 'components/Search/Search';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-import { TOOLS_APP_ROUTES } from 'constants/routes'
+import { signInOutSliceAction } from 'store/redux/signInSlice/signInSlice';
+
+import { TOOLS_APP_ROUTES } from 'constants/routes';
 
 import {
   LayoutWrapper,
@@ -16,38 +20,41 @@ import {
   FooterNav,
   FooterLink,
   SearchContainer,
-} from './styles'
+  
+} from './styles';
+import { Button} from '@mui/material';
+import { colors } from 'styles/colors';
 
 function Layout() {
-  const [toolName, setToolName] = useState<string>('')
-  const navigate = useNavigate()
-  const location = useLocation()
-
+  const [toolName, setToolName] = useState<string>('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const isLogin = Boolean(localStorage.getItem('accessToken'));
 
   useEffect(() => {
-    setToolName("")
-  }, [location.pathname])
+    setToolName('');
+  }, [location.pathname]);
 
   const getToolData = () => {
     if (!toolName.trim()) {
-      alert('Please enter a tool`s title')
-      return
+      alert('Please enter a tool`s title');
+      return;
     }
-  }
+  };
 
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setToolName(event.target.value)
-  }
+    setToolName(event.target.value);
+  };
 
   const goToHomePage = () => {
-    navigate(TOOLS_APP_ROUTES.HOME)
-  }
+    navigate(TOOLS_APP_ROUTES.HOME);
+  };
 
-  const appLinksHeader = {
-    [TOOLS_APP_ROUTES.HOME]: 'Home',
-    [TOOLS_APP_ROUTES.ADD_ADVERTS]: 'Add Adverts',
-    [TOOLS_APP_ROUTES.LOGIN]: 'Login',
-  }
+  const handleLogout = () => {
+    dispatch(signInOutSliceAction.logoutUser());
+    navigate(TOOLS_APP_ROUTES.HOME);
+  };
 
   const appLinksFooter = {
     [TOOLS_APP_ROUTES.HELP]: 'Help',
@@ -58,19 +65,13 @@ function Layout() {
     [TOOLS_APP_ROUTES.CONDITIONS]: 'Conditions of use',
     [TOOLS_APP_ROUTES.IMPRINT]: 'Imprint',
     [TOOLS_APP_ROUTES.SOCIAL_MEDIA]: 'Social media',
-  }
-
-  const headerLinks = Object.keys(appLinksHeader).map((link: string) => (
-    <HeaderLink key={v4()} to={link}>
-      {appLinksHeader[link as keyof typeof appLinksHeader]}
-    </HeaderLink>
-  ))
+  };
 
   const footerLinks = Object.keys(appLinksFooter).map((link: string) => (
     <FooterLink key={v4()} to={link}>
       {appLinksFooter[link as keyof typeof appLinksFooter]}
     </FooterLink>
-  ))
+  ));
 
   return (
     <LayoutWrapper>
@@ -83,7 +84,27 @@ function Layout() {
             onSearch={getToolData}
           />
         </SearchContainer>
-        <HeaderNav>{headerLinks}</HeaderNav>
+        <HeaderNav>
+          <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
+          <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Advert</HeaderLink>
+          {isLogin ? (
+            <>
+              <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
+              <Button
+        sx={{
+          backgroundColor: colors.TRANSPARENT,
+          height: "100%",
+        }}
+        variant="contained"
+        onClick={handleLogout}
+      >
+      <LogoutIcon/>
+      </Button>
+            </>
+          ) : (
+            <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink>
+          )}
+        </HeaderNav>
       </AppHeader>
       <AppMain>
         <Outlet />
@@ -92,7 +113,7 @@ function Layout() {
         <FooterNav>{footerLinks}</FooterNav>
       </AppFooter>
     </LayoutWrapper>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
