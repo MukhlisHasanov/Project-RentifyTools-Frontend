@@ -8,9 +8,10 @@ import {
   ButtonControl,
   ProductImageControl,
   ProfileImageControl,
+  BackButtonControl,
+  // BackButtonWrapper,
 } from './styles'
 import Button from 'components/Button/Button'
-import Card from 'components/Card/Card'
 
 import { UserImg } from 'assets'
 import { useState, useEffect } from 'react'
@@ -23,7 +24,7 @@ function Products() {
   const [tools, setTools] = useState([])
 
   async function fetchAdvert() {
-    const res = await fetch('/api/products/18')
+    const res = await fetch('/api/tools/findById/11')
     const userData = await res.json()
     setUserData(userData)
   }
@@ -40,6 +41,10 @@ function Products() {
     <PageWrapper>
       {userData ? (
         <>
+          {/* <BackButtonWrapper> */}
+          <BackButtonControl>
+            <Button name="Back" onClick={() => navigate(-1)} />
+          </BackButtonControl>
           <PhotoWrapper>
             <ButtonControl>
               <Button name="〈" isTransparent onClick={prevImage} />
@@ -51,6 +56,7 @@ function Products() {
               <Button name="〉" isTransparent onClick={nextImage} />
             </ButtonControl>
           </PhotoWrapper>
+          {/* </BackButtonWrapper> */}
           <DescriptionFrame>
             <ToolInfo>
               <p>Title: {userData.title} </p>

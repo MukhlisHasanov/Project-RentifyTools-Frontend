@@ -9,6 +9,19 @@ export const PageWrapper = styled.div`
   flex: 1;
   gap: 50px;
 `
+// export const BackButtonWrapper = styled.div`
+// display: flex;
+// flex-direction: row;
+// gap: ;
+// `
+export const BackButtonControl = styled.div`
+  width: 80px;
+  position: fixed;
+  left: 100px;
+  top: 100px;
+
+`
+
 
 export const PhotoWrapper = styled.div`
   display: flex;
@@ -25,14 +38,14 @@ export const PhotoWrapper = styled.div`
 `
 
 export const ProductImageControl = styled.img`
-width: 400px;
+  width: 400px;
 `
 
 export const ProfileImageControl = styled.img`
   width: 100px;
   /* height: 100px; */
   border-radius: 50%;
- /* align-items: center; */
+  /* align-items: center; */
 `
 
 export const PhotoFrame = styled.div``
@@ -52,30 +65,27 @@ export const DescriptionFrame = styled.div`
 `
 
 export const ToolInfo = styled.div`
-display: flex;
-flex-direction: column;
-color: white;
-display: flex;
-margin-top: 30px;
-padding: 10px;
-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  display: flex;
+  margin-top: 30px;
+  padding: 10px;
+  gap: 10px;
 
-/* background-color: yellow; */
-
+  /* background-color: yellow; */
 `
 
 export const UserInfo = styled.div`
-display: flex;
-flex-direction: column;
-padding: 20px;
-/* background-color: green; */
-align-items: center;
-gap: 20px;
-border-left: 2px solid white;
-
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  /* background-color: green; */
+  align-items: center;
+  gap: 20px;
+  border-left: 2px solid white;
 `
 
 export const ButtonControl = styled.div`
-border: none;
-
+  border: none;
 `

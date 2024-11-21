@@ -12,6 +12,7 @@ function Profile() {
   const [userData, setUserData] = useState<UserProps | null>(null)
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
+  
 
   async function fetchUserProfile() {
     const res = await fetch('/api/users/13')
