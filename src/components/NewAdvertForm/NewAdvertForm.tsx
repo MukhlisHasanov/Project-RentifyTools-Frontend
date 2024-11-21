@@ -96,7 +96,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           type="text"
           value={formik.values.status}
           onChange={formik.handleChange}
-          error={formik.errors.status}
+         error={formik.errors.status}
         /> */}
         {/* <Input
           id="advertform-status"
@@ -106,6 +106,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           value={formik.values.status}
           onChange={formik.handleChange}
           error={formik.errors.status}
+
         /> */}
         <Input
           id="advertform-price"

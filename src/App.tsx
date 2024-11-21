@@ -11,8 +11,8 @@ import NewAdvertForm from "components/NewAdvertForm/NewAdvertForm"
 import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from "pages/AddAdvert/AddAdvert"
 import SignInForm from "components/SignInForm/SignInForm"
+import Products from 'pages/Advert/Advert'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
-import Products from 'pages/Products/Products'
 import HomePlug from 'pages/HomePlug/HomePlug'
 
 function App() {
