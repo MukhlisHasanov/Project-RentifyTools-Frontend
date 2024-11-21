@@ -2,59 +2,78 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MyAdvertsProps } from './types'; 
 import { UserCardProps } from 'pages/Profile/types'; 
-import {
-  PageWrapper,
-  CardsContainer,
-} from './styles';
+import { PageWrapper, CardsContainer } from './styles';
 import ToolCard from 'components/ToolCard/ToolCard';
-
 
 function MyAdvert() {
   const [advertData, setAdvertData] = useState<MyAdvertsProps | null>(null);  
   const [tools, setTools] = useState<UserCardProps[]>([]); 
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
   async function fetchTools() {
+    setIsLoading(true);
     try {
-      const res = await fetch('/api/tools'); 
+      const res = await fetch('/api/tools');
+      if (!res.ok) {
+        throw new Error(`Fehler: ${res.status}`);
+      }
       const toolArr = await res.json();
       setTools(toolArr);  
-    } catch (error) {
-      console.error('Error fetching tools:', error);
+    } catch (err) {
+      console.error('Error fetching tools:', err);
+      setError('Fehler beim Laden der Werkzeuge. Bitte versuchen Sie es später erneut.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
+  async function fetchAdvertData() {
+    try {
+      const res = await fetch('/api/advert');
+      if (!res.ok) {
+        throw new Error(`Fehler: ${res.status}`);
+      }
+      const advert = await res.json();
+      setAdvertData(advert);
+    } catch (error) {
+      console.error('Error fetching advert data:', error);
+      setError('Fehler beim Laden der Anzeige.');
+    }
+  }
 
- 
+  useEffect(() => {
+    fetchTools();
+    fetchAdvertData();
+  }, []);
 
   return (
     <PageWrapper>
       {advertData ? (
         <CardsContainer>
-        
-          <ToolCard 
+    
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
             description={advertData.description}
-            
-          />
-
-      
-          {tools.length > 0 ? (
+           
+          {error ? (
+            <p>{error}</p>
+          ) : isLoading ? (
+            <p>Werkzeuge werden geladen...</p>
+          ) : tools.length > 0 ? (
             tools.map((tool) => (
               <ToolCard
-                key={tool.id}  
-                imageUrl={tool.imageUrl} 
+            
+                imageUrl={tool.imageUrl}
                 title={tool.title}
                 price={tool.price}
-                description={tool.description}
-                
+                description={tool.description} toolId={''}             
               />
             ))
           ) : (
-            <p>No tools found</p>
+            <p>Keine Werkzeuge gefunden</p>
           )}
         </CardsContainer>
       ) : (
