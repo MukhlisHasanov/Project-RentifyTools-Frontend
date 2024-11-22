@@ -20,7 +20,7 @@ import {
   CategoryImg12,
 } from "assets"
 
-import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer } from "./styles"
+import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer, TextContainer } from "./styles"
 
 const imagesWithTitles = [
   { src: CategoryImg1, title: "Excavators & Mini Excavators" },
@@ -70,9 +70,10 @@ function Home() {
   return (
     <PageWrapper>
       <CategoryContainer>
-        <PageTitle>RentifyTools Category</PageTitle>
+        <PageTitle>RentifyTools Categories</PageTitle>
         <PageContainer>{imageContainers}</PageContainer>
       </CategoryContainer>
+      <TextContainer>Last Adverts</TextContainer>
       <CardsContainer>
         {toolCards}
       </CardsContainer>
