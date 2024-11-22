@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react'
 import { ToolProps } from './types'
 import { useNavigate } from 'react-router-dom'
 
-function Products() {
+function Advert() {
   const [userData, setUserData] = useState<ToolProps | null>(null)
   const navigate = useNavigate()
   const [tools, setTools] = useState([])
@@ -81,4 +81,4 @@ function Products() {
   )
 }
 
-export default Products
+export default Advert

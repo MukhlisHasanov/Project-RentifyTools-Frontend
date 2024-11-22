@@ -32,11 +32,11 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   )
 
   const navigate = useNavigate()
-  // const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-  //   event.preventDefault()
+  const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
 
-  //   onSwitchToSignIn()
-  // }
+    onSwitchToSignIn()
+  }
 
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()

@@ -17,5 +17,5 @@ export enum TOOLS_APP_ROUTES {
   IMPRINT = '/imprint',
   SOCIAL_MEDIA = '/medias',
   NOT_FOUND = '*',
-  PRODUCTS = '/products',
+  TOOLS = '/tools',
 }

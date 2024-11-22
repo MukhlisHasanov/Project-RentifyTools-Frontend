@@ -10,7 +10,7 @@ const loginDataInitialState: LoginInitialState = {
   error: undefined,
 }
 
-export const signInSlice = createAppSlice({
+export const signInOutSlice = createAppSlice({
   name: 'LOGIN_USER',
   initialState: loginDataInitialState,
   reducers: create => ({
@@ -69,5 +69,5 @@ export const signInSlice = createAppSlice({
   },
 })
 
-export const signInOutSliceAction = signInSlice.actions
-export const signInOutSliceSelectors = signInSlice.selectors
+export const signInOutSliceAction = signInOutSlice.actions
+export const signInOutSliceSelectors = signInOutSlice.selectors

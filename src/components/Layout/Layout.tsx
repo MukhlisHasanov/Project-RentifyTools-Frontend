@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import Search from 'components/Search/Search'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInSlice'
+import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
 
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 

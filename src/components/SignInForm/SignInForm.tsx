@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInSlice'
+} from 'store/redux/signInSlice/signInOutSlice'
 
 import {
   SignInFormContainer,
