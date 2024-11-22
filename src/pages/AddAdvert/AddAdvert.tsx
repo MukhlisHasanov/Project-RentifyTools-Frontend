@@ -1,40 +1,35 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, ChangeEvent, useEffect } from 'react'
+import { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-
-import {
-  addAdvertSliceSelectors,
-  addAdvertSliceAction,
-} from 'store/redux/addAdvert/addAdvertSlice'
-import { AdvertRequestDto } from 'store/redux/addAdvert/types'
-import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
+import Modal from 'components/Modal/Modal'
+import Button from 'components/Button/Button'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
-import { PageWrapper, SuccessMessage } from './styles'
+import {
+  PageWrapper,
+  ModalInfoContainer,
+  ModalInfo,
+  ButtonControl,
+} from './styles'
 
 function AddAdvert() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const { dataAdv, error, isLoading } = useAppSelector(
-    addAdvertSliceSelectors.adverts,
-  )
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-
-  const onSubmit = (values: AdvertRequestDto) => {
-    // dispatch(addAdvertSliceAction.saveAdvertData(values))
-    setShowSuccessMessage(true)
-    setTimeout(() => setShowSuccessMessage(false), 3000)
-    navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const closeModal = () => {
+    setIsOpen(false)
+    navigate(TOOLS_APP_ROUTES.LOGIN)
   }
+
   return (
     <PageWrapper>
-      {/* {showSuccessMessage && (
-        <SuccessMessage>
-          New advertisement was successfully created!
-        </SuccessMessage>
-      )} */}
-      <NewAdvertForm />
+      <Modal isModalOpened={true}>
+        <ModalInfoContainer>
+          <ModalInfo>{'Please sign up to add an advert !'}</ModalInfo>
+          <ButtonControl>
+            <Button name="Close" onClick={closeModal} />
+          </ButtonControl>
+        </ModalInfoContainer>
+      </Modal>
     </PageWrapper>
   )
 }

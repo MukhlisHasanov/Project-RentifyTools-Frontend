@@ -2,8 +2,8 @@ import { createAppSlice } from 'store/createAppSlice'
 import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
 
 const toolDataInitialState: ToolInitialState = {
-  tools: [], // Масив інструментів
-  toolObj: undefined, // Останній доданий або окремий інструмент
+  tools: [], 
+  toolObj: undefined, 
   isLoading: false,
   error: undefined,
 }

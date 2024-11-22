@@ -9,9 +9,11 @@ import {
 } from './styles';
 
 function Profile() {
-  const [userData, setUserData] = useState<UserCardProps | null>(null);
-  const navigate = useNavigate();
+  const [userData, setUserData] = useState<UserProps | null>(null)
+  const navigate = useNavigate()
+  const [users, setUsers] = useState([])
   
+
   async function fetchUserProfile() {
     const userId = 1; 
     try {
@@ -47,7 +49,7 @@ function Profile() {
           <button onClick={goToEditProfile}>Change information</button>
         </ProfileContainer>
       ) : (
-        <p>Profil wird geladen...</p>
+        <p>Profile is loading...</p>
       )}
     </PageWrapper>
   );

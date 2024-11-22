@@ -57,24 +57,43 @@ function MyAdvert() {
             title={advertData.title}
             price={advertData.price}
             description={advertData.description}
-           
-          {error ? (
-            <p>{error}</p>
-          ) : isLoading ? (
-            <p>Werkzeuge werden geladen...</p>
-          ) : tools.length > 0 ? (
-            tools.map((tool) => (
+          />
+          <ToolCard
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
+          <ToolCard
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
               <ToolCard
-            
-                imageUrl={tool.imageUrl}
-                title={tool.title}
-                price={tool.price}
-                description={tool.description} toolId={''}             
-              />
-            ))
-          ) : (
-            <p>Keine Werkzeuge gefunden</p>
-          )}
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
+              <ToolCard
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
+                     <ToolCard
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
+                     <ToolCard
+            imageUrl={advertData.image}
+            title={advertData.title}
+            price={advertData.price}
+            description={advertData.description}
+          />
         </CardsContainer>
       ) : (
         <p>Anzeige wird geladen...</p>
