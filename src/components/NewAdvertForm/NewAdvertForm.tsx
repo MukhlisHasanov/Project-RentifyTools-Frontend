@@ -109,6 +109,25 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
           error={formik.errors.title}
         />
+        {/* <Input
+          id="advertform-category"
+          label="Category:"
+          name={NEWADVERT_FORM_NAMES.STATUS}
+          type="text"
+          value={formik.values.status}
+          onChange={formik.handleChange}
+         error={formik.errors.status}
+        /> */}
+        {/* <Input
+          id="advertform-status"
+          label="Status:"
+          name={NEWADVERT_FORM_NAMES.STATUS}
+          type="text"
+          value={formik.values.status}
+          onChange={formik.handleChange}
+          error={formik.errors.status}
+
+        /> */}
         <Input
           id="advertform-price"
           label="Price (USD):"

@@ -3,12 +3,12 @@ export interface LoginRequestDto {
   password: string
 }
 
-export interface TokenResponceDto {
-  accessToken: string
-  refreshToken: string
+export interface TokenPayLoad {
+  sub: number;
 }
 
 export interface LoginInitialState {
+  userId:number | null
   isLoading:boolean
   isAuthenticated: boolean
   error: string | undefined
