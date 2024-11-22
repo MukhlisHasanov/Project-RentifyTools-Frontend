@@ -13,7 +13,7 @@ function Profile() {
   const navigate = useNavigate();
   
   async function fetchUserProfile() {
-    const userId = 123; 
+    const userId = 1; 
     try {
       const res = await fetch(`/api/users/${userId}`);
       if (!res.ok) {
