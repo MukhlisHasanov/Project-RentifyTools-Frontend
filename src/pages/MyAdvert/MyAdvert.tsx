@@ -31,7 +31,7 @@ function MyAdvert() {
 
   async function fetchAdvertData() {
     try {
-      const res = await fetch('/api/advert');
+      const res = await fetch('/api/toolsId');
       if (!res.ok) {
         throw new Error(`Fehler: ${res.status}`);
       }
