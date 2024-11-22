@@ -1,8 +1,10 @@
 import { createAppSlice } from 'store/createAppSlice'
+import {jwtDecode} from "jwt-decode";
 
-import { LoginInitialState, LoginRequestDto, TokenResponceDto } from './types'
+import { LoginInitialState, LoginRequestDto, TokenPayLoad } from './types'
 
 const loginDataInitialState: LoginInitialState = {
+  userId: null,
   isLoading: false,
   isAuthenticated: false,
   error: undefined,
@@ -39,8 +41,10 @@ export const signInOutSlice = createAppSlice({
           state.error = undefined
         },
         fulfilled: (state: LoginInitialState, action) => {
+          const decoded = jwtDecode<TokenPayLoad>(action.payload.accessToken)
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
+          localStorage.setItem("userId", decoded.sub.toString())
           state.isLoading = false
           state.isAuthenticated = true
           state.error = undefined
@@ -55,6 +59,7 @@ export const signInOutSlice = createAppSlice({
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
+      localStorage.removeItem("userId")
       state.isAuthenticated = false
       state.error = undefined
     }),

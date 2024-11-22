@@ -1,4 +1,5 @@
-export enum NEWADVERT_FORM_NAMES {
+export enum CHANGE_ADVERT_FORM_NAMES {
+    ID = "id",
     TITLE = "title",
     DESCRIPTION = "description",
     STATUS = "status",
@@ -7,7 +8,6 @@ export enum NEWADVERT_FORM_NAMES {
     // CATEGORY = "category",
   }
 
-  export interface AdvertFormProps {
-    onCreate?: ()=> void
-    isProductsPage?: boolean
+  export interface ChangeAdvertFormProps {
+    onChange?: ()=> void
   }
