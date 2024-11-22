@@ -18,28 +18,46 @@ import {
 } from './styles'
 import { NEWADVERT_FORM_NAMES, AdvertFormProps } from './types'
 import { ButtonControl } from 'components/SignUpForm/styles'
-import { addAdvertSliceAction, addAdvertSliceSelectors } from 'store/redux/addAdvert/addAdvertSlice'
+import {
+  addAdvertSliceAction,
+  addAdvertSliceSelectors,
+} from 'store/redux/addAdvert/addAdvertSlice'
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()
-  const {dataAdv,error, isLoading} = useAppSelector(addAdvertSliceSelectors.adverts)
+  const { dataAdv, error, isLoading } = useAppSelector(
+    addAdvertSliceSelectors.adverts,
+  )
 
   const navigate = useNavigate()
 
-  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
+  const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-  
-      // Преобразование файла в Base64 (или можно использовать FileReader)
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          dispatch(addAdvertSliceAction.addImage(reader.result as string));
-        }
-      };
-      reader.readAsDataURL(file);
+      const file = event.target.files[0]
+
+      // Создаем локальный превью для отображения
+      const imageURL = URL.createObjectURL(file)
+
+      // Устанавливаем превью изображения
+      const previewElement = document.getElementById(
+        'image-preview',
+      ) as HTMLImageElement
+      if (previewElement) {
+        previewElement.src = imageURL
+      }
+
+      // Заглушка: используем вашу ссылку на папку Google Drive
+      const googleDriveLink =
+        'https://drive.google.com/drive/u/0/folders/1MNjvF2M6-QciidHp_i5l3VFtiv--U-Js'
+
+      // Здесь вы можете настроить получение ссылки на файл, если используете API Google Drive
+      formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE, googleDriveLink)
+
+      // Очищение локального URL после загрузки превью
+      previewElement.onload = () => URL.revokeObjectURL(imageURL)
     }
-  };
+  }
+
   const validationSchema = Yup.object().shape({
     [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
@@ -54,6 +72,9 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .required('Description is required field')
       .min(5, 'The minimum description length is 5')
       .max(2000, 'The maximum description length is 2000'),
+    [NEWADVERT_FORM_NAMES.IMAGE]: Yup.string()
+      .url('Image must be a valid URL')
+      .required('Image is required field'),
   })
 
   const formik = useFormik({
@@ -71,8 +92,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       helpers.resetForm()
       navigate('/profile/my-adverts')
     },
-    })
-
+  })
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
@@ -84,7 +104,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           id="advertform-title"
           label="Title:"
           name={NEWADVERT_FORM_NAMES.TITLE}
-          type="title"
+          type="text"
           value={formik.values.title}
           onChange={formik.handleChange}
           error={formik.errors.title}
@@ -125,24 +145,48 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
         />
       </InputsContainer>
+
+      {/* Image Upload and Preview */}
       <ButtonControl>
-  {/* Скрытый input для выбора файла */}
-  <input
-    type="file"
-    id="image-upload"
-    style={{ display: 'none' }}
-    onChange={addImageTool} // Обработка выбора файла
-  />
-  {/* Кнопка для вызова окна выбора файлов */}
-  <Button
-    type="button"
-    name="Add the photos"
-    onClick={() => document.getElementById('image-upload')?.click()}
-  />
-</ButtonControl>
-      {/* <ButtonControl>
-        <Button type="submit" name="Add the photos" onClick={addImageTool} />
-      </ButtonControl> */}
+        {/* Превью загруженного изображения */}
+        <img
+          id="image-preview"
+          src=""
+          alt="Preview"
+          style={{
+            maxWidth: '100px',
+            maxHeight: '100px',
+            display: formik.values.image ? 'block' : 'none',
+          }}
+        />
+
+        {/* Ссылка на Google Drive */}
+        {formik.values.image && (
+          <div>
+            <a
+              href={formik.values.image}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Image on Google Drive
+            </a>
+          </div>
+        )}
+
+        {/* Скрытый input для загрузки файла */}
+        <input
+          type="file"
+          id="image-upload"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={addImageTool}
+        />
+        <Button
+          type="button"
+          name="Add the photos"
+          onClick={() => document.getElementById('image-upload')?.click()}
+        />
+      </ButtonControl>
       <ButtonControl>
         <Button
           type="submit"

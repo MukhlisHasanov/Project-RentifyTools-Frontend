@@ -1,4 +1,4 @@
-import { ShopIcon, FavIcon } from 'assets';
+import { ShopIcon, FavIcon } from 'assets'
 
 import {
   CardContent,
@@ -7,45 +7,48 @@ import {
   CardIcons,
   CardImage,
   CardPrice,
+  CardStatus,
   CardTitle,
   CardWrapper,
-} from './styles';
-import { CardProps } from './types';
-import { useNavigate } from 'react-router-dom';
-import { TOOLS_APP_ROUTES } from 'constants/routes';
+} from './styles'
+import { CardProps } from './types'
+import { useNavigate } from 'react-router-dom'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function ToolCard({
   imageUrl,
   title,
   price,
+  status,
   description,
   onAddToCard,
   onAddToFavourites,
 }: CardProps) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  // Функція для переходу на сторінку оголошення
   const goAdvertPage = () => {
-    navigate(TOOLS_APP_ROUTES.PRODUCTS);
-  };
+    navigate(TOOLS_APP_ROUTES.PRODUCTS)
+  }
+
   return (
-    <CardWrapper onClick={goAdvertPage}>
-      <CardImage src={imageUrl} />
+    <CardWrapper>
+      <CardImage onClick={goAdvertPage} src={imageUrl} alt={title} />
       <CardContent>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle onClick={goAdvertPage}>{title}</CardTitle>
         <CardPrice>Price: {price}</CardPrice>
+        <CardStatus>Status: {status}</CardStatus>
         <CardDescription>Description: {description}</CardDescription>
         <CardIcons>
-          <CardIcon> 
+          <CardIcon onClick={onAddToCard}>
             <img src={ShopIcon} alt="Add to cart" />
           </CardIcon>
-          <CardIcon >
+          <CardIcon onClick={onAddToFavourites}>
             <img src={FavIcon} alt="Add to favorites" />
           </CardIcon>
         </CardIcons>
       </CardContent>
     </CardWrapper>
-  );
+  )
 }
 
-export default ToolCard;
+export default ToolCard

@@ -10,6 +10,7 @@ export interface Colors {
   BLACK: string
   SHADOW: string
   FOOTER: string
+  MODAL: string
 }
 export const colors: Colors = {
   ERROR: "rgb(206, 44, 44)",
@@ -23,4 +24,5 @@ export const colors: Colors = {
   BUTTON: "#F69320",
   BLACK: "#000000",
   SHADOW: "rgba(0, 0, 0, 0.2)",
+  MODAL:"rgba(0, 0, 0, 0.5)",
 }

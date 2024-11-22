@@ -61,6 +61,12 @@ export const CardDescription = styled.div`
   display: block; 
   word-break: break-word; 
 `
+export const CardStatus = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${colors.WHITE};
+  margin-bottom: 10px;
+`
 
 export const CardIcons = styled.div`
   display: flex;

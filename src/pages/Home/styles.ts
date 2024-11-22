@@ -1,5 +1,4 @@
 import styled from "@emotion/styled"
-//v141124  import { CategoryImg1,CategoryImg2,CategoryImg3 } from "assets"
 import { colors } from "styles/colors"
 
 export const PageWrapper = styled.div`
@@ -28,6 +27,7 @@ export const CategoryContainer = styled.div`
   background-color: ${colors.HEADER};
   gap: 10px;
   border-radius: 7px;
+  border: 1px solid ${colors.WHITE};
 `
 
 export const PageContainer = styled.div`
@@ -80,4 +80,14 @@ export const ImageTitle = styled.span`
   font-size: 14px;
   font-weight: normal;
   color: ${colors.WHITE};
+`
+export const TextContainer = styled.h2`
+  font-weight: bold;
+  color: ${colors.WHITE};
+  margin: 10px;
+  background:  ${colors.HEADER};
+  height: fit-content;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 7px;
 `
