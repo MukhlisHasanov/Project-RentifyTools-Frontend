@@ -25,6 +25,7 @@ function App() {
           <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
+            <Route path="/profile/add-adverts" element={<NewAdvertForm />} />
             <Route path="/profile/messages" element={<HomePlug />} />
             <Route path="/profile/my-adverts" element={<MyAdvert />} />
             <Route path="/profile/change-adverts" element={<ChangeAdvertForm />} />

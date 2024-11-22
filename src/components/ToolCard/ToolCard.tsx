@@ -14,7 +14,7 @@ import { CardProps } from './types';
 import { useNavigate } from 'react-router-dom';
 import { TOOLS_APP_ROUTES } from 'constants/routes';
 
-function Card({
+function ToolCard({
   imageUrl,
   title,
   price,
@@ -48,4 +48,4 @@ function Card({
   );
 }
 
-export default Card;
+export default ToolCard;

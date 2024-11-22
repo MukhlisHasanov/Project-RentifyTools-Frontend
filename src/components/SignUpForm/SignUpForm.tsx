@@ -49,7 +49,11 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
     [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
       .required('Email is required field')
       .min(5, 'The minimum email length is 5')
-      .max(30, 'The maximum email length is 30'),
+      .max(30, 'The maximum email length is 30')
+      .matches(
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        'Enter a valid email address (must include @)',
+      ),
     [SIGNUP_FORM_NAMES.PHONE]: Yup.string()
       .required('Phone number is a required field')
       .matches(
@@ -59,8 +63,12 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
       .max(15, 'The maximum phone number length is 15'),
     [SIGNUP_FORM_NAMES.PASSWORD]: Yup.string()
       .required('Password is required field')
-      .min(8, 'The minimum password length is 5')
-      .max(30, 'The maximum password length is 30'),
+      .min(8, 'The minimum password length is 8')
+      .max(30, 'The maximum password length is 30')
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        'Password must include at least one uppercase letter, one number, and one special character',
+      ),
     [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
       .required('Repeat password is required field')
       .oneOf([Yup.ref(SIGNUP_FORM_NAMES.PASSWORD)], 'Passwords must match'),
@@ -84,7 +92,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate('/')
+          navigate('/login')
         })
         .catch(() => {
           console.error('Registration failed')
@@ -163,19 +171,16 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           disabled={isLoading}
         />
       </ButtonControl>
-      <div>
-        {error ? (
-          <div>
-            <p style={{ color: 'red' }}>{error}</p>
-            {/* <button onClick={() => dispatch(clearError())}>Dismiss</button> */}
-          </div>
-        ) : (
-          <Text>
-            By signing up, you accept our Terms and Conditions and acknowledge
-            our Privacy Policy
-          </Text>
-        )}
-      </div>
+      {error ? (
+        <div>
+          <p style={{ color: 'red' }}>{error}</p>
+        </div>
+      ) : (
+        <Text>
+          By signing up, you accept our Terms and Conditions and acknowledge our
+          Privacy Policy
+        </Text>
+      )}
     </SignUpFormContainer>
   )
 }

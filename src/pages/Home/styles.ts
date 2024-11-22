@@ -28,6 +28,7 @@ export const CategoryContainer = styled.div`
   background-color: ${colors.HEADER};
   gap: 10px;
   border-radius: 7px;
+  border: 1px solid ${colors.WHITE};
 `
 
 export const PageContainer = styled.div`

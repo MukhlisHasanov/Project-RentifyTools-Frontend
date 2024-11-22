@@ -10,10 +10,8 @@ import {
   ProfileImageControl,
 } from './styles'
 import Button from 'components/Button/Button'
-import Card from 'components/Card/Card'
 
-import { UserImg } from "assets"
-
+import { UserImg } from 'assets'
 
 function Products() {
   const nextImage = () => {}
@@ -27,7 +25,7 @@ function Products() {
           <Button name="〈" isTransparent onClick={prevImage} />
         </ButtonControl>
         <PhotoFrame>
-          <ProductImageControl src='https://mrt.az/storage/products/March2021/S8DPLEBP2gCdUI3f7pgS.jpg' />
+          <ProductImageControl src="https://mrt.az/storage/products/March2021/S8DPLEBP2gCdUI3f7pgS.jpg" />
         </PhotoFrame>
         <ButtonControl>
           <Button name="〉" isTransparent onClick={nextImage} />
@@ -39,9 +37,10 @@ function Products() {
           <p>Category: </p>
           <p>Price: </p>
           <p>Description: </p>
-          {/* <Card /> */}</ToolInfo>
+          {/* <Card /> */}
+        </ToolInfo>
         <UserInfo>
-          <ProfileImageControl src={UserImg}/>
+          <ProfileImageControl src={UserImg} />
           <p>Username</p>
           {/* <ProfileCard /> */}
           <Button name="Send message" />
