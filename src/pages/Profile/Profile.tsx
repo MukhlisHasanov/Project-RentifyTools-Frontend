@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null)
+  const [userData, setUserData] = useState<UserCardProps | null>(null)
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
   
