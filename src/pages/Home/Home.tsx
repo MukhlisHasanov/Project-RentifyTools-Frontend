@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { toolSliceAction, toolSliceSelectors } from "store/redux/ToolSlice/toolSlice"
+import ToolCard from "components/ToolCard/ToolCard"
 
 import {
   CategoryImg1,
@@ -17,7 +21,6 @@ import {
 } from "assets"
 
 import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer } from "./styles"
-import { Card } from "@mui/material";
 
 const imagesWithTitles = [
   { src: CategoryImg1, title: "Excavators & Mini Excavators" },
@@ -36,6 +39,13 @@ const imagesWithTitles = [
 
 function Home() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { tools, isLoading, error } = useAppSelector(toolSliceSelectors.tools_data)
+
+  useEffect(() => {
+    dispatch(toolSliceAction.fetchTools())
+  }, [dispatch])
+
   const imageContainers = imagesWithTitles.map((image, index) => (
     <ImageWrapper key={index}>
       <CategoryImg>
@@ -44,6 +54,19 @@ function Home() {
       <ImageTitle>{image.title}</ImageTitle>
     </ImageWrapper>
   ))
+
+  const toolCards = tools.map(tool => (
+    <ToolCard
+      key={tool.id}
+      imageUrl={tool.imageUrl}
+      title={tool.title}
+      price={tool.price}
+      description={tool.description}
+      onAddToCard={() => {}}
+      onAddToFavourites={() => {}}
+    />
+  ))
+
   return (
     <PageWrapper>
       <CategoryContainer>
@@ -51,6 +74,7 @@ function Home() {
       <PageContainer>{imageContainers}</PageContainer>
       </CategoryContainer>
       <CardsContainer>
+        {toolCards}
       </CardsContainer>
     </PageWrapper>
   )

@@ -3,10 +3,10 @@ import { combineReducers, combineSlices, configureStore } from '@reduxjs/toolkit
 
 import { registerUser } from 'store/redux/signUpSlice/signUpSlice'
 import { signInOutSlice } from 'store/redux/signInSlice/signInSlice'
-import { addAdvertSlice } from './redux/addAdvert/addAdvertSlice'
+import { toolSlice } from './redux/ToolSlice/toolSlice'
 // import { userSlice } from 'store/redux/userSlice/userSlice'
 
-const rootReducer = combineSlices(registerUser, signInOutSlice, addAdvertSlice,  )
+const rootReducer = combineSlices(registerUser, signInOutSlice, toolSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 
