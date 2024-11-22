@@ -1,5 +1,5 @@
 import { createAppSlice } from 'store/createAppSlice'
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from 'jwt-decode'
 
 import { LoginInitialState, LoginRequestDto, TokenPayLoad } from './types'
 
@@ -10,7 +10,7 @@ const loginDataInitialState: LoginInitialState = {
   error: undefined,
 }
 
-export const signInOutSlice = createAppSlice({
+export const signInSlice = createAppSlice({
   name: 'LOGIN_USER',
   initialState: loginDataInitialState,
   reducers: create => ({
@@ -44,7 +44,7 @@ export const signInOutSlice = createAppSlice({
           const decoded = jwtDecode<TokenPayLoad>(action.payload.accessToken)
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
-          localStorage.setItem("userId", decoded.sub.toString())
+          localStorage.setItem('userId', decoded.sub.toString())
           state.isLoading = false
           state.isAuthenticated = true
           state.error = undefined
@@ -59,7 +59,7 @@ export const signInOutSlice = createAppSlice({
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
-      localStorage.removeItem("userId")
+      localStorage.removeItem('userId')
       state.isAuthenticated = false
       state.error = undefined
     }),
@@ -69,5 +69,5 @@ export const signInOutSlice = createAppSlice({
   },
 })
 
-export const signInOutSliceAction = signInOutSlice.actions
-export const signInOutSliceSelectors = signInOutSlice.selectors
+export const signInOutSliceAction = signInSlice.actions
+export const signInOutSliceSelectors = signInSlice.selectors

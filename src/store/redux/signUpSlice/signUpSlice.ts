@@ -8,7 +8,7 @@ const userDataInitialState: UserInitialState = {
   error: undefined,
 }
 
-export const registerUser = createAppSlice({
+export const signUpSlice = createAppSlice({
   name: 'REGISTER_USER',
   initialState: userDataInitialState,
   reducers: create => ({
@@ -58,5 +58,5 @@ export const registerUser = createAppSlice({
   },
 })
 
-export const signUpSliceAction = registerUser.actions
-export const signUpSliceSelectors = registerUser.selectors
+export const signUpSliceAction = signUpSlice.actions
+export const signUpSliceSelectors = signUpSlice.selectors
