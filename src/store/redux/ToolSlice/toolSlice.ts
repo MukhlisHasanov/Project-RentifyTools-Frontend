@@ -2,11 +2,14 @@ import { createAppSlice } from 'store/createAppSlice'
 import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
 
 const toolDataInitialState: ToolInitialState = {
-  tools: [], 
-  toolObj: undefined, 
+  userTools: [],
+  tools: [],
+  toolObj: undefined,
   isLoading: false,
   error: undefined,
 }
+
+const token = localStorage.getItem('accessToken')
 
 export const toolSlice = createAppSlice({
   name: 'TOOLS_DATA',
@@ -102,10 +105,63 @@ export const toolSlice = createAppSlice({
         },
       },
     ),
+
+    fetchUserTools: create.asyncThunk(
+      async (_, { rejectWithValue }) => {
+        try {
+          const response = await fetch('/api/tools/me', {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              Authorization: 'Bearer ' + token,
+            },
+          })
+
+          const result = await response.json()
+          if (!response.ok) {
+            return rejectWithValue(
+              result.message || 'Failed to fetch user tools',
+            )
+          }
+          console.log(result)
+          return result as ToolResponseDto[]
+        } catch (error) {
+          return rejectWithValue('Network error or server is unavailable')
+        }
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.userTools = action.payload.map(tool => ({
+            id: tool.id,
+            title: tool.title,
+            description: tool.description,
+            price: tool.price,
+            status: tool.status,
+            imageUrl: tool.imageUrl,
+          }))
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
   }),
   selectors: {
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
+      isLoading: state.isLoading,
+      error: state.error,
+    }),
+
+    userTools_data: (state: ToolInitialState) => ({
+      userTools: state.userTools,
       isLoading: state.isLoading,
       error: state.error,
     }),
