@@ -1,52 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserCardProps } from './types';
-import {
-  PageWrapper,
-  ProfileContainer,
-  ProfileItem,
-  ProfileTitle,
-} from './styles';
+import { CategoryImg, ImageTitle, ImageWrapper } from "pages/Home/styles";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { registerUser, signUpSliceAction, signUpSliceSelectors } from "store/redux/signUpSlice/signUpSlice";
+import { UserInitialState } from "store/redux/signUpSlice/types";
+import { toolSlice } from "store/redux/ToolSlice/toolSlice";
+import { PageWrapper, ProfileContainer, ProfileItem, ProfileTitle } from "./styles";
+//import userSlice from "store/redux/userSlice/userSlice";
+
+
+
 
 function Profile() {
-  const [userData, setUserData] = useState<UserCardProps | null>(null)
   const navigate = useNavigate()
-  const [users, setUsers] = useState([])
-  
-
-  async function fetchUserProfile() {
-    const userId = 1; 
-    try {
-      const res = await fetch(`/api/users/${userId}`);
-      if (!res.ok) {
-        throw new Error(`Error ${res.status}: ${res.statusText}`);
-      }
-      const userData = await res.json();
-      setUserData(userData);
-    } catch (error) {
-      console.error("Fehler beim Laden des Benutzerprofils:", error);
-    }
-  }
-  
+  const dispatch = useAppDispatch()
+  const { userObj, isLoading, error } = useAppSelector(signUpSliceSelectors.register_user);
 
   useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
-  const goToEditProfile = () => {
-    navigate('/edit-profile');
-  };
+    
+  }, )
 
   return (
     <PageWrapper>
-      {userData ? (
+      {userObj ? (
         <ProfileContainer>
           <ProfileTitle>Profil</ProfileTitle>
-          <ProfileItem>Name: {userData.firstname}</ProfileItem>
-          <ProfileItem>Surname: {userData.lastname}</ProfileItem>
-          <ProfileItem>Email: {userData.email}</ProfileItem>
-          <ProfileItem>Phone: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Change information</button>
+          <ProfileItem>Name: {userObj.firstname}</ProfileItem>
+          <ProfileItem>LastName: {userObj.lastname}</ProfileItem>
+          <ProfileItem>Email: {userObj.email}</ProfileItem>
+          <ProfileItem>Phone: {userObj.phone}</ProfileItem>
+          
         </ProfileContainer>
       ) : (
         <p>Profile is loading...</p>
@@ -54,5 +37,4 @@ function Profile() {
     </PageWrapper>
   );
 }
-
-export default Profile;
+ export default Profile();

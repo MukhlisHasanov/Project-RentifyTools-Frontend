@@ -1,5 +1,5 @@
 export interface CardProps {
-  toolId:string
+ 
   title: string
   price: string
   description?: string

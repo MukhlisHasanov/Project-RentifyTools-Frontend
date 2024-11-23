@@ -57,43 +57,37 @@ function MyAdvert() {
             title={advertData.title}
             price={advertData.price}
             description={advertData.description}
-          />
+          
           <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}           />
           <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}          />
               <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}          />
               <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}           />
                      <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}          />
                      <ToolCard
             imageUrl={advertData.image}
             title={advertData.title}
             price={advertData.price}
-            description={advertData.description}
-          />
+            description={advertData.description}          />
         </CardsContainer>
       ) : (
         <p>Anzeige wird geladen...</p>
