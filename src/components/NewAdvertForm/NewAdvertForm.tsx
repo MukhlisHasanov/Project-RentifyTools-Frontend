@@ -7,6 +7,7 @@ import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { AdvertRequestDto } from 'store/redux/addAdvert/types'
+import { TOOL_STATUS } from 'constants/toolStatuses'
 
 import {
   NewAdvertFormContainer,
@@ -77,16 +78,20 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .required('Image is required field'),
   })
 
+
   const formik = useFormik({
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
+      [NEWADVERT_FORM_NAMES.STATUS]: '', 
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values: AdvertRequestDto, helpers) => {
+    onSubmit:
+     (values: AdvertRequestDto, helpers) => {
+
       console.log(values)
       dispatch(addAdvertSliceAction.saveAdvertData())
       helpers.resetForm()
