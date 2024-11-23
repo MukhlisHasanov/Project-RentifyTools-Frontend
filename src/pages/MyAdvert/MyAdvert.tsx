@@ -1,84 +1,37 @@
-import { useEffect, useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
-import { MyAdvertsProps } from './types'
-import { UserProps } from 'pages/Profile/types'
 import { PageWrapper, CardsContainer } from './styles'
 import ToolCard from 'components/ToolCard/ToolCard'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { toolSliceAction, toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import { useEffect } from 'react'
 
 function MyAdvert() {
-  const [advertData, setAdvertData] = useState<MyAdvertsProps | null>(null)
-  const [users, setUsers] = useState<UserProps[]>([])
   const navigate = useNavigate()
-
-  async function fetchUsers() {
-    const res = await fetch('/api/tools')
-    const userArr = await res.json()
-    setUsers(userArr)
-  }
+  const dispatch = useAppDispatch()
+  const { userTools, isLoading, error } = useAppSelector(toolSliceSelectors.userTools_data)
 
   useEffect(() => {
-    const MyAdverTest: MyAdvertsProps = {
-      title: 'Beispiel Titel',
-      price: '100',
-      description: 'dadasdadsadadsadadasdadadasdasdad',
-      image:
-        'https://mrt.az/storage/products/March2021/S8DPLEBP2gCdUI3f7pgS.jpg',
-    }
+    dispatch(toolSliceAction.fetchUserTools())
+  }, [dispatch])
 
-    setAdvertData(MyAdverTest)
-    fetchUsers()
-  }, [])
+  const userToolCards = userTools.map(tool => (
+    <ToolCard
+      key={tool.id}
+      imageUrl={tool.imageUrl}
+      title={tool.title}
+      price={tool.price}
+      description={tool.description}
+      onAddToCard={() => {}}
+      onAddToFavourites={() => {}}
+    />
+  ))
 
   return (
     <PageWrapper>
-      {advertData ? (
-        <CardsContainer>
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-              <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-              <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-                     <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-                     <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          />
-        </CardsContainer>
-      ) : (
-        <p>Anzeige wird geladen...</p>
-      )}
+      <CardsContainer>
+        {userToolCards}
+      </CardsContainer>
     </PageWrapper>
   )
 }

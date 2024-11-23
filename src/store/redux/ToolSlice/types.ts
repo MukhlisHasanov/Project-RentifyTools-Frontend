@@ -17,6 +17,7 @@ export interface ToolResponseDto {
 
 export interface ToolInitialState {
   tools: ToolResponseDto[]
+  userTools: ToolResponseDto[]
   toolObj: ToolResponseDto | undefined
   isLoading: boolean
   error: string | undefined
