@@ -23,6 +23,7 @@ import {
   ButtonControl,
 } from './styles'
 import { SIGNUP_FORM_NAMES } from './types'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
@@ -92,7 +93,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate('/login')
+          navigate(TOOLS_APP_ROUTES.LOGIN)
         })
         .catch(() => {
           console.error('Registration failed')
