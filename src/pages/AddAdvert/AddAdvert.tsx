@@ -6,7 +6,7 @@ import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import { useAppSelector } from 'store/hooks'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInSlice'
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 import {
   PageWrapper,
@@ -18,18 +18,23 @@ import {
 function AddAdvert() {
   const navigate = useNavigate()
 
-  const { isAuthenticated, userId } = useAppSelector(
-    signInOutSliceSelectors.login_user,
-  )
-  const isLoggedIn = isAuthenticated && userId
+  const isLogin = Boolean(localStorage.getItem('accessToken'))
 
+  // const { isAuthenticated, userId } = useAppSelector(
+  //   signInOutSliceSelectors.login_user,
+  // )
+  // const isLoggedIn = isAuthenticated && userId
+  // console.log(isAuthenticated)
+
+  // console.log(userId)
+  // console.log(isLoggedIn)
   const closeModal = () => {
     navigate(TOOLS_APP_ROUTES.LOGIN)
   }
 
   return (
     <PageWrapper>
-      {isLoggedIn ? (
+      {isLogin ? (
         <NewAdvertForm />
       ) : (
         <Modal isModalOpened={true}>

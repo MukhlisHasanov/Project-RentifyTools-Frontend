@@ -22,6 +22,7 @@ function Advert() {
   const [userData, setUserData] = useState<ToolProps | null>(null)
   const navigate = useNavigate()
   const [tools, setTools] = useState([])
+  
 
   async function fetchAdvert() {
     const res = await fetch('/api/tools/findById/11')

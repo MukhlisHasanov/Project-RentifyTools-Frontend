@@ -23,7 +23,6 @@ import {
   addAdvertSliceAction,
   addAdvertSliceSelectors,
 } from 'store/redux/addAdvert/addAdvertSlice'
-import {TOOL_STATUS} from "constants/toolStatuses"
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()
@@ -79,7 +78,6 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .required('Image is required field'),
   })
 
-
   const formik = useFormik({
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
@@ -87,13 +85,10 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       [NEWADVERT_FORM_NAMES.STATUS]: '',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
-      [NEWADVERT_FORM_NAMES.STATUS]: '', 
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit:
-     (values: AdvertRequestDto, helpers) => {
-
+    onSubmit: (values: AdvertRequestDto, helpers) => {
       console.log(values)
       dispatch(addAdvertSliceAction.saveAdvertData())
       helpers.resetForm()
