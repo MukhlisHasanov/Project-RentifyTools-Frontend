@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField, Box } from "@mui/material";
 import { colors } from "styles/colors";
-import { toolSliceAction, toolSliceSelectors } from "store/redux/ToolSlice/toolSlice";// Замінити на правильний шлях
+import { toolSliceAction, toolSliceSelectors } from "store/redux/ToolSlice/toolSlice";
 
 interface SearchProps {
   toolName: string;
