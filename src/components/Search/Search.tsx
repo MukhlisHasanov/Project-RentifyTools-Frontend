@@ -1,14 +1,23 @@
-import { ChangeEvent } from "react"
-import { Button, TextField, Box } from "@mui/material"
-import { colors } from "styles/colors"
+import { ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, TextField, Box } from "@mui/material";
+import { colors } from "styles/colors";
+import { toolSliceAction, toolSliceSelectors } from "store/redux/ToolSlice/toolSlice";// Замінити на правильний шлях
 
 interface SearchProps {
-  toolName: string
-  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void
-  onSearch: () => void
+  toolName: string;
+  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function Search({ toolName, onChangeValue, onSearch }: SearchProps) {
+function Search({ toolName, onChangeValue }: SearchProps) {
+  const dispatch = useDispatch();
+
+  const onSearch = () => {
+    if (toolName.trim() !== "") {
+      dispatch(toolSliceAction.searchTools(toolName));
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -47,7 +56,7 @@ function Search({ toolName, onChangeValue, onSearch }: SearchProps) {
         Search
       </Button>
     </Box>
-  )
+  );
 }
 
-export default Search
+export default Search;
