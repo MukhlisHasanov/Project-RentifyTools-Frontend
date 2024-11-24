@@ -1,99 +1,39 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MyAdvertsProps } from './types'; 
-import { UserCardProps } from 'pages/Profile/types'; 
-import { PageWrapper, CardsContainer } from './styles';
-import ToolCard from 'components/ToolCard/ToolCard';
+
+import { useNavigate } from 'react-router-dom'
+import { PageWrapper, CardsContainer } from './styles'
+import ToolCard from 'components/ToolCard/ToolCard'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { toolSliceAction, toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import { useEffect } from 'react'
 
 function MyAdvert() {
-  const [advertData, setAdvertData] = useState<MyAdvertsProps | null>(null);  
-  const [tools, setTools] = useState<UserCardProps[]>([]); 
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
-  async function fetchTools() {
-    setIsLoading(true);
-    try {
-      const res = await fetch('/api/tools');
-      if (!res.ok) {
-        throw new Error(`Fehler: ${res.status}`);
-      }
-      const toolArr = await res.json();
-      setTools(toolArr);  
-    } catch (err) {
-      console.error('Error fetching tools:', err);
-      setError('Fehler beim Laden der Werkzeuge. Bitte versuchen Sie es später erneut.');
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchAdvertData() {
-    try {
-      const res = await fetch('/api/toolsId');
-      if (!res.ok) {
-        throw new Error(`Fehler: ${res.status}`);
-      }
-      const advert = await res.json();
-      setAdvertData(advert);
-    } catch (error) {
-      console.error('Error fetching advert data:', error);
-      setError('Fehler beim Laden der Anzeige.');
-    }
-  }
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { userTools, isLoading, error } = useAppSelector(toolSliceSelectors.userTools_data)
 
   useEffect(() => {
-    fetchTools();
-    fetchAdvertData();
-  }, []);
+    dispatch(toolSliceAction.fetchUserTools())
+  }, [dispatch])
+
+  const userToolCards = userTools.map(tool => (
+    <ToolCard
+      key={tool.id}
+      imageUrl={tool.imageUrl}
+      title={tool.title}
+      price={tool.price}
+      description={tool.description}
+      onAddToCard={() => {}}
+      onAddToFavourites={() => {}}
+    />
+  ))
 
   return (
     <PageWrapper>
-      {advertData ? (
-        <CardsContainer>
-    
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}
-          
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}           />
-          <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}          />
-              <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}          />
-              <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}           />
-                     <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}          />
-                     <ToolCard
-            imageUrl={advertData.image}
-            title={advertData.title}
-            price={advertData.price}
-            description={advertData.description}          />
-        </CardsContainer>
-      ) : (
-        <p>Anzeige wird geladen...</p>
-      )}
+      <CardsContainer>
+        {userToolCards}
+      </CardsContainer>
     </PageWrapper>
   );
 }
 
-export default MyAdvert;
+export default MyAdvert

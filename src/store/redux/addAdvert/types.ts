@@ -1,9 +1,10 @@
 export interface AdvertRequestDto {
   title: string
   description: string
-  // category: string
+  status:string
   image: string
   price: string
+  status: string
   // category: string
 }
 
