@@ -39,12 +39,8 @@ function ToolCard({
       //v241124 hier muss ich noch logik machen
     };
     const handleDelete = () => {
-      const DeleteIcon = window.confirm("Bist du sicher das du es Löschen willst?")
-      if (DeleteIcon) {
-        fetch(`/api/tools/${toolId}`,{method: 'DELETE'})
-      }
-
-      
+      console.log('Delete button clicked');
+      //v241124 hier muss ich noch logik machen
     };
 
   return (
