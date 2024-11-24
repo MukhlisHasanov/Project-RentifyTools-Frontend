@@ -8,7 +8,6 @@ import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { AdvertRequestDto } from 'store/redux/addAdvert/types'
 
-
 import {
   NewAdvertFormContainer,
   Title,
@@ -23,6 +22,8 @@ import {
   addAdvertSliceAction,
   addAdvertSliceSelectors,
 } from 'store/redux/addAdvert/addAdvertSlice'
+
+
 
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
