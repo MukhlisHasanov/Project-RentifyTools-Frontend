@@ -7,7 +7,7 @@ import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { AdvertRequestDto } from 'store/redux/addAdvert/types'
-import { TOOL_STATUS } from 'constants/toolStatuses'
+
 
 import {
   NewAdvertFormContainer,
@@ -23,7 +23,7 @@ import {
   addAdvertSliceAction,
   addAdvertSliceSelectors,
 } from 'store/redux/addAdvert/addAdvertSlice'
-import {TOOL_STATUS} from "constants/toolStatuses"
+
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()
@@ -87,7 +87,6 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       [NEWADVERT_FORM_NAMES.STATUS]: '',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
-      [NEWADVERT_FORM_NAMES.STATUS]: '', 
     },
     validationSchema: validationSchema,
     validateOnChange: false,

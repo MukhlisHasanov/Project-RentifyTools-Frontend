@@ -5,8 +5,6 @@ import Button from 'components/Button/Button'
 import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 
 import { TOOLS_APP_ROUTES } from 'constants/routes'
-import { useAppSelector } from 'store/hooks'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInSlice'
 
 import {
   PageWrapper,
@@ -17,11 +15,7 @@ import {
 
 function AddAdvert() {
   const navigate = useNavigate()
-
-  const { isAuthenticated, userId } = useAppSelector(
-    signInOutSliceSelectors.login_user,
-  )
-  const isLoggedIn = isAuthenticated && userId
+  const isLogin = Boolean(localStorage.getItem('accessToken'))
 
   const closeModal = () => {
     navigate(TOOLS_APP_ROUTES.LOGIN)
@@ -29,12 +23,12 @@ function AddAdvert() {
 
   return (
     <PageWrapper>
-      {isLoggedIn ? (
+      {isLogin ? (
         <NewAdvertForm />
       ) : (
         <Modal isModalOpened={true}>
           <ModalInfoContainer>
-            <ModalInfo>{'Please sign in to add an advert!'}</ModalInfo>
+            <ModalInfo>{'Please sign in to add an advert !'}</ModalInfo>
             <ButtonControl>
               <Button name="Close" onClick={closeModal} />
             </ButtonControl>

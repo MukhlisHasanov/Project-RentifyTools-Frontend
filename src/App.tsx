@@ -11,7 +11,6 @@ import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
-import Advert from 'pages/Advert/Advert'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 
