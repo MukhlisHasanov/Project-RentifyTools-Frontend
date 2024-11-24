@@ -7,7 +7,6 @@ import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { AdvertRequestDto } from 'store/redux/addAdvert/types'
-import { TOOL_STATUS } from 'constants/toolStatuses'
 
 import {
   NewAdvertFormContainer,
@@ -23,6 +22,9 @@ import {
   addAdvertSliceAction,
   addAdvertSliceSelectors,
 } from 'store/redux/addAdvert/addAdvertSlice'
+
+
+
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()

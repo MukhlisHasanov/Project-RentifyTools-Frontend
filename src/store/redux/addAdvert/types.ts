@@ -4,7 +4,6 @@ export interface AdvertRequestDto {
   status:string
   image: string
   price: string
-  status: string
   // category: string
 }
 
