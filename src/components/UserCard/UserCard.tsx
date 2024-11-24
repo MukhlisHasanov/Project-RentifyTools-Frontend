@@ -1,32 +1,60 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
+
+import {
+  UserContainer,
+  UserDetails,
+ 
+  UserActions,
+} from './styles';
 import { UserProps } from './type';
-import { UserContainer, UserRolesList, UserRoleItem } from './styles'; 
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react';
+import { UserName } from 'components/LayoutProfile/styles';
+import { UserInfo } from 'pages/Advert/styles';
 
-interface UserComponentProps {
-  userData: UserProps;
-}
+function UserCard({
+  userId,
+  firstname,
+  lastname,
+  email,
+  phone,
+  roles,
+}: UserProps) {
+  const navigate = useNavigate();
 
-function UserCard({userData}: UserComponentProps) {
+  const handleEdit = () => {
+    console.log('Edit button clicked');
+    navigate(`/users/edit/${userId}`);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      fetch(`/api/users/${userId}`, { method: 'DELETE' })
+        .then(() => console.log('Delete request sent'))
+        .catch((error) => console.error('Error deleting user:', error));
+    }
+  };
+
   return (
     <UserContainer>
-      <h2>Profile</h2>
-      <p><strong>FirstName:</strong> {userData.firstname}</p>
-      <p><strong>LastName:</strong> {userData.lastname}</p>
-      <p><strong>E-Mail:</strong> {userData.email}</p>
-      <p><strong>Phone:</strong> {userData.phone}</p>
-      <h3>Role:</h3>
-      <UserRolesList>
-  {userData.roles.length > 0 ? (
-    userData.roles.map((role) => (
-      <UserRoleItem key={role.id}>{role.name}</UserRoleItem>
-    ))
-  ) : (
-    <p>No roles assigned</p>
-  )}
-</UserRolesList>
-
+      <UserDetails>
+        <UserName>{`${firstname} ${lastname}`}</UserName>
+        <UserInfo>Email: {email}</UserInfo>
+        <UserInfo>Phone: {phone}</UserInfo>
+      </UserDetails>
+      <UserActions>
+        <IconButton onClick={handleEdit} color="warning" aria-label="edit">
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={handleDelete} color="warning" aria-label="delete">
+          <DeleteIcon />
+        </IconButton>
+      </UserActions>
     </UserContainer>
   );
-};
+}
 
-export default UserCard;    //v241124 hier hab ich auch was verändert aber ich weis es nicht mehr was ich denke es war die 9 zeile
+export default UserCard;
+ //v241124 hier hab ich auch was verändert aber ich weis es nicht mehr was ich denke es war die 9 zeile

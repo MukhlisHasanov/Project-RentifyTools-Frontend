@@ -61,9 +61,8 @@ function Home() {
       title={tool.title}
       price={tool.price}
       description={tool.description}
-      onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
-    />
+      onAddToCard={() => { } }
+      onAddToFavourites={() => { } } toolId={""}    />
   ))
 
   return (

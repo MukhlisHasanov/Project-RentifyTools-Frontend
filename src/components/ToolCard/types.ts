@@ -1,5 +1,6 @@
 export interface CardProps {
  
+  toolId: string; //v241124 eingefügt
   title: string
   price: string
   description?: string

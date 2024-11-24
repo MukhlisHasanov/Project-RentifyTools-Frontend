@@ -6,7 +6,7 @@ export interface UserRolleProps {
   }
   
   export interface UserProps {
-    id: number;
+    userId: number;
     firstname: string;
     lastname: string;
     email: string;

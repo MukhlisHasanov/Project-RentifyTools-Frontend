@@ -19,6 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';  //v241124 von mir importir
 import { IconButton } from '@mui/material'            //v241124 von mir importirt
 
 function ToolCard({
+  toolId,
   imageUrl,
   title,
   price,
@@ -36,11 +37,13 @@ function ToolCard({
  
     const handleEdit = () => {
       console.log('Edit button clicked');
-      //v241124 hier muss ich noch logik machen
+    navigate(`profile/edit/${toolId}`);
     };
     const handleDelete = () => {
-      console.log('Delete button clicked');
-      //v241124 hier muss ich noch logik machen
+      if (window.confirm('Sicher?')) {
+        fetch(`/api/tools/${toolId}`, { method: 'DELETE' });
+        console.log('Delete request sent');
+      }
     };
 
   return (
@@ -55,10 +58,10 @@ function ToolCard({
           <CardIcon onClick={onAddToCard}>
             <img src={ShopIcon} alt="Add to cart" />
           </CardIcon>         
-      <IconButton onClick={handleEdit} color="primary" aria-label="edit">
+      <IconButton onClick={handleEdit} color="warning" aria-label="edit">
         <EditIcon />
       </IconButton>
-      <IconButton onClick={handleDelete} color="secondary" aria-label="delete">
+      <IconButton onClick={handleDelete} color="warning" aria-label="delete">
         <DeleteIcon />
       </IconButton>
           <CardIcon onClick={onAddToFavourites}>
