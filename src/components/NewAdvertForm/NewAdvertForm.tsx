@@ -23,6 +23,7 @@ import {
   addAdvertSliceAction,
   addAdvertSliceSelectors,
 } from 'store/redux/addAdvert/addAdvertSlice'
+import {TOOL_STATUS} from "constants/toolStatuses"
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()
@@ -83,6 +84,7 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
+      [NEWADVERT_FORM_NAMES.STATUS]: '',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
       [NEWADVERT_FORM_NAMES.STATUS]: '', 
