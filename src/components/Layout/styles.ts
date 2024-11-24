@@ -31,17 +31,17 @@ export const AppHeader = styled.header`
   background: ${colors.HEADER};
 `
 export const AppTitle = styled.span`
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;   //v241124 hier verändert uhrspung 24
+  font-weight: 700;   
   line-height: 29.05px;
-  margin-left: 30px;
+  margin-left: 10px;    //v241124 hier verändert uhrspung 30
   color: ${colors.WHITE};
   cursor: pointer;
 `
 
 export const HeaderNav = styled.nav`
   display: flex;
-  gap: 30px;
+  gap: 40px;     //v241124 abstände uhrspung 30
   height: 100%;
   align-items: center;
 `

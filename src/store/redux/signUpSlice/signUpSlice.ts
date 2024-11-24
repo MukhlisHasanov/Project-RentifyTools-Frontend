@@ -44,6 +44,7 @@ export const registerUser = createAppSlice({
             lastname: action.payload.lastname,
             email: action.payload.email,
             phone: action.payload.phone,
+            roles: action.payload.roles
           }
         },
         rejected: (state: UserInitialState, action) => {

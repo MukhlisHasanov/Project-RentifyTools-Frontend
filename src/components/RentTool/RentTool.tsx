@@ -64,7 +64,7 @@ const RentToolComponent: React.FC<RentToolProps> = ({ toolId }) => {
           onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
         />
       </div>
-      <button onClick={handleRent}>Tool mieten</button>
+      <button onClick={handleRent}>Tool mieten</button> (/)
     </div>
   )
 }
