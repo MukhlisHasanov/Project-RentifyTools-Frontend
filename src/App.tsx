@@ -24,8 +24,11 @@ function App() {
           <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
           <Route path={TOOLS_APP_ROUTES.ADD_ADVERTS} element={<AddAdvert />} />
           <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
-          <Route path={TOOLS_APP_ROUTES.SEARCH_RESULTS} element={<SearchResults />} />
-          <Route path={TOOLS_APP_ROUTES.PRODUCTS} element={<Advert />} />
+          <Route
+            path={TOOLS_APP_ROUTES.SEARCH_RESULTS}
+            element={<SearchResults />}
+          />
+          <Route path={TOOLS_APP_ROUTES.TOOLS} element={<Advert />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
             <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
@@ -35,7 +38,10 @@ function App() {
               element={<ChangeAdvertForm />}
             />
             <Route path={TOOLS_APP_ROUTES.FAVOURITES} element={<HomePlug />} />
-            <Route path={TOOLS_APP_ROUTES.RENTED_TOOLS} element={<HomePlug />} />
+            <Route
+              path={TOOLS_APP_ROUTES.RENTED_TOOLS}
+              element={<HomePlug />}
+            />
           </Route>
         </Route>
       </Routes>
