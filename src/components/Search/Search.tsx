@@ -1,34 +1,36 @@
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Button, TextField, Box } from "@mui/material";
-import { colors } from "styles/colors";
-import { toolSliceAction } from "store/redux/ToolSlice/toolSlice";
-import { TOOLS_APP_ROUTES } from "constants/routes";
+import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Button, TextField, Box } from '@mui/material'
+import { colors } from 'styles/colors'
+import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 interface SearchProps {
-  toolName: string;
-  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => {}
+  toolName: string
+  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void
+  onSearch: () => void
 }
 
 function Search({ toolName, onChangeValue }: SearchProps) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onSearch = () => {
-    if (toolName.trim() !== "") {
-      dispatch(toolSliceAction.searchTools(toolName));
-      navigate(TOOLS_APP_ROUTES.SEARCH_RESULTS, { state: { searchTerm: toolName } });
-      onChangeValue({ target: { value: "" } } as ChangeEvent<HTMLInputElement>);
+    if (toolName.trim() !== '') {
+      dispatch(toolSliceAction.searchTools(toolName))
+      navigate(TOOLS_APP_ROUTES.SEARCH_RESULTS, {
+        state: { searchTerm: toolName },
+      })
+      onChangeValue({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     }
-  };
+  }
 
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
         backgroundColor: colors.WHITE,
         borderRadius: 2,
         width: 550,
@@ -45,7 +47,7 @@ function Search({ toolName, onChangeValue }: SearchProps) {
           style: {
             color: colors.BLACK,
             height: 50,
-            paddingLeft: "10px",
+            paddingLeft: '10px',
           },
         }}
         sx={{ flex: 1 }}
@@ -53,8 +55,8 @@ function Search({ toolName, onChangeValue }: SearchProps) {
       <Button
         sx={{
           backgroundColor: colors.BUTTON,
-          height: "100%",
-          borderRadius: "0 8px 8px 0",
+          height: '100%',
+          borderRadius: '0 8px 8px 0',
         }}
         variant="contained"
         onClick={onSearch}
@@ -62,7 +64,7 @@ function Search({ toolName, onChangeValue }: SearchProps) {
         Search
       </Button>
     </Box>
-  );
+  )
 }
 
-export default Search;
+export default Search

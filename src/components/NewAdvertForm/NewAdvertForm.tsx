@@ -4,7 +4,6 @@ import * as Yup from 'yup'
 import { ChangeEvent } from 'react'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { AdvertRequestDto } from 'store/redux/addAdvert/types'
 import {
   toolSliceAction,
   toolSliceSelectors,
@@ -26,40 +25,24 @@ import {
 import { NEWADVERT_FORM_NAMES, AdvertFormProps } from './types'
 import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 
-function NewAdvertForm({ onCreate }: AdvertFormProps) {
+function NewAdvertForm() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { tools,error, isLoading } = useAppSelector(
-    toolSliceSelectors.tools_data,
-  )
+  const { isLoading, error } = useAppSelector(toolSliceSelectors.tools_data)
 
-
-  
-  const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
+  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-
-      // Создаем локальный превью для отображения
-      const imageURL = URL.createObjectURL(file)
-
-      // Устанавливаем превью изображения
-      const previewElement = document.getElementById(
-        'image-preview',
-      ) as HTMLImageElement
-      if (previewElement) {
-        previewElement.src = imageURL
+      try {
+        const resultAction = await dispatch(toolSliceAction.uploadImage(file))
+        if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
+          const imageUrl = resultAction.payload
+          formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE, imageUrl)
+        }
+      } catch (error) {
+        console.error('Failed to upload image:', error)
       }
-
-      // Заглушка: используем вашу ссылку на папку Google Drive
-      const googleDriveLink =
-        'https://drive.google.com/drive/u/0/folders/1MNjvF2M6-QciidHp_i5l3VFtiv--U-Js'
-
-      // Здесь вы можете настроить получение ссылки на файл, если используете API Google Drive
-      formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE, googleDriveLink)
-
-      // Очищение локального URL после загрузки превью
-      previewElement.onload = () => URL.revokeObjectURL(imageURL)
     }
   }
 
@@ -77,9 +60,9 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .required('Description is required field')
       .min(5, 'The min description length is 5 characters')
       .max(2000, 'The max description length is 2000 characters'),
-    [NEWADVERT_FORM_NAMES.IMAGE]: Yup.string()
-      .url('Image must be a valid URL')
-      .required('Image is required field'),
+    [NEWADVERT_FORM_NAMES.IMAGE]: Yup.string().required(
+      'Image is required field',
+    ),
   })
 
   const formik = useFormik({
@@ -92,19 +75,22 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values: ToolRequestDto, helpers) => {
-      console.log(values)
-      dispatch(
-        toolSliceAction.createTool({
-          title: values.title,
-          description: values.description,
-          status: values.status,
-          imageUrl: values.imageUrl,
-          price: values.price,
-        }),
-      )
-      helpers.resetForm()
-      navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
+    onSubmit: async (values: ToolRequestDto, helpers) => {
+      try {
+        await dispatch(
+          toolSliceAction.createTool({
+            title: values.title,
+            description: values.description,
+            status: values.status,
+            imageUrl: values.imageUrl,
+            price: values.price,
+          }),
+        )
+        helpers.resetForm()
+        navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
+      } catch (error) {
+        console.error('Failed to create advert:', error)
+      }
     },
   })
 
@@ -123,25 +109,6 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
           error={formik.errors.title}
         />
-        {/* <Input
-          id="advertform-category"
-          label="Category:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
-          type="text"
-          value={formik.values.status}
-          onChange={formik.handleChange}
-         error={formik.errors.status}
-        /> */}
-        {/* <Input
-          id="advertform-status"
-          label="Status:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
-          type="text"
-          value={formik.values.status}
-          onChange={formik.handleChange}
-          error={formik.errors.status}
-
-        /> */}
         <Input
           id="advertform-price"
           label="Price (USD):"
@@ -159,35 +126,31 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
         />
       </InputsContainer>
-
-      {/* Image Upload and Preview */}
       <ButtonControl>
-        {/* Превью загруженного изображения */}
-        <img
-          id="image-preview"
-          src=""
-          alt="Preview"
-          style={{
-            maxWidth: '100px',
-            maxHeight: '100px',
-            display: formik.values.imageUrl ? 'block' : 'none',
-          }}
-        />
-
-        {/* Ссылка на Google Drive */}
         {formik.values.imageUrl && (
-          <div>
-            <a
-              href={formik.values.imageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Image on Google Drive
-            </a>
-          </div>
+          <>
+            <img
+              id="image-preview"
+              src={formik.values.imageUrl}
+              alt="Preview"
+              style={{
+                maxWidth: '100px',
+                maxHeight: '100px',
+                display: formik.values.imageUrl ? 'block' : 'none',
+              }}
+            />
+            <div>
+              <a
+                href={formik.values.imageUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Image
+              </a>
+            </div>
+          </>
         )}
 
-        {/* Скрытый input для загрузки файла */}
         <input
           type="file"
           id="image-upload"
@@ -205,11 +168,11 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
         <Button
           type="submit"
           name={isLoading ? 'Loading advert...' : 'Create new advert'}
-          onClick={onCreate}
           disabled={isLoading}
         />
       </ButtonControl>
     </NewAdvertFormContainer>
   )
 }
+
 export default NewAdvertForm
