@@ -27,10 +27,7 @@ function App() {
             <Route path="/profile/add-adverts" element={<NewAdvertForm />} />
             <Route path="/profile/messages" element={<HomePlug />} />
             <Route path="/profile/my-adverts" element={<MyAdvert />} />
-            <Route
-              path="/profile/change-adverts"
-              element={<ChangeAdvertForm />}
-            />
+            <Route path="/profile/my-adverts" element={<ChangeAdvertForm />} />
             <Route path="/profile/favourites" element={<HomePlug />} />
             <Route path="/profile/rented-tools" element={<HomePlug />} />
           </Route>

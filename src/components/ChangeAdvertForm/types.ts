@@ -3,7 +3,7 @@ export enum CHANGE_ADVERT_FORM_NAMES {
     TITLE = "title",
     DESCRIPTION = "description",
     STATUS = "status",
-    IMAGE = "image",
+    IMAGE = "imageUrl",
     PRICE = "price",
     // CATEGORY = "category",
   }
