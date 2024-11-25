@@ -1,5 +1,6 @@
 import { createAppSlice } from 'store/createAppSlice'
 import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
+import { useParams } from 'react-router-dom'
 
 const toolDataInitialState: ToolInitialState = {
   userTools: [],
@@ -69,6 +70,7 @@ export const toolSlice = createAppSlice({
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         try {
+          // const { id } = useParams();
           const response = await fetch('/api/tools', {
             method: 'GET',
           })
@@ -156,6 +158,12 @@ export const toolSlice = createAppSlice({
   selectors: {
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
+      isLoading: state.isLoading,
+      error: state.error,
+    }),
+
+    toolObj_data: (state: ToolInitialState) => ({
+      toolObj: state.toolObj,
       isLoading: state.isLoading,
       error: state.error,
     }),

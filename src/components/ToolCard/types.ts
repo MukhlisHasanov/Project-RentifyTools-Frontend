@@ -1,4 +1,5 @@
 export interface CardProps {
+  id?: string | undefined
   title: string
   price: string
   description?: string

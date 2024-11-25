@@ -12,6 +12,7 @@ import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
+import Advert from 'pages/Advert/Advert'
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
             <Route path="/profile/favourites" element={<HomePlug />} />
             <Route path="/profile/rented-tools" element={<HomePlug />} />
           </Route>
-          <Route path="/products" element={<Advert />} />
+          <Route path="/tools/:id" element={<Advert />} />
         </Route>
       </Routes>
     </BrowserRouter>
