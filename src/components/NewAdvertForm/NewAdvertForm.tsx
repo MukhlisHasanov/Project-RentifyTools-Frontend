@@ -3,10 +3,17 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { ChangeEvent } from 'react'
 
-import Input from 'components/Input/Input'
-import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { AdvertRequestDto } from 'store/redux/addAdvert/types'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
+
+import Input from 'components/Input/Input'
+import Button from 'components/Button/Button'
+import { ButtonControl } from 'components/SignUpForm/styles'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   NewAdvertFormContainer,
@@ -17,23 +24,18 @@ import {
   DescriptionContainer,
 } from './styles'
 import { NEWADVERT_FORM_NAMES, AdvertFormProps } from './types'
-import { ButtonControl } from 'components/SignUpForm/styles'
-import {
-  addAdvertSliceAction,
-  addAdvertSliceSelectors,
-} from 'store/redux/addAdvert/addAdvertSlice'
-
-
-
+import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 
 function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const dispatch = useAppDispatch()
-  const { dataAdv, error, isLoading } = useAppSelector(
-    addAdvertSliceSelectors.adverts,
-  )
-
   const navigate = useNavigate()
 
+  const { tools,error, isLoading } = useAppSelector(
+    toolSliceSelectors.tools_data,
+  )
+
+
+  
   const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
@@ -64,8 +66,8 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
   const validationSchema = Yup.object().shape({
     [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
-      .min(2, 'The minimum title length is 2')
-      .max(50, 'The maximum title length is 50'),
+      .min(2, 'The min title length is 2 characters')
+      .max(50, 'The max title length is 50 characters'),
     [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError('Price must be a number')
       .required('Price is required field')
@@ -73,8 +75,8 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .max(500000, 'Price can not exceed 500,000'),
     [NEWADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
       .required('Description is required field')
-      .min(5, 'The minimum description length is 5')
-      .max(2000, 'The maximum description length is 2000'),
+      .min(5, 'The min description length is 5 characters')
+      .max(2000, 'The max description length is 2000 characters'),
     [NEWADVERT_FORM_NAMES.IMAGE]: Yup.string()
       .url('Image must be a valid URL')
       .required('Image is required field'),
@@ -84,17 +86,25 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
-      [NEWADVERT_FORM_NAMES.STATUS]: '',
+      [NEWADVERT_FORM_NAMES.STATUS]: 'AVAILABLE',
       [NEWADVERT_FORM_NAMES.IMAGE]: '',
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values: AdvertRequestDto, helpers) => {
+    onSubmit: (values: ToolRequestDto, helpers) => {
       console.log(values)
-      dispatch(addAdvertSliceAction.saveAdvertData())
+      dispatch(
+        toolSliceAction.createTool({
+          title: values.title,
+          description: values.description,
+          status: values.status,
+          imageUrl: values.imageUrl,
+          price: values.price,
+        }),
+      )
       helpers.resetForm()
-      navigate('/profile/my-adverts')
+      navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
     },
   })
 
@@ -160,15 +170,15 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           style={{
             maxWidth: '100px',
             maxHeight: '100px',
-            display: formik.values.image ? 'block' : 'none',
+            display: formik.values.imageUrl ? 'block' : 'none',
           }}
         />
 
         {/* Ссылка на Google Drive */}
-        {formik.values.image && (
+        {formik.values.imageUrl && (
           <div>
             <a
-              href={formik.values.image}
+              href={formik.values.imageUrl}
               target="_blank"
               rel="noopener noreferrer"
             >

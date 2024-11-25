@@ -1,145 +1,125 @@
-//v231124  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAppSlice } from 'store/createAppSlice'
 
-//v231124  interface UserState {//v231124  
-//v231124    data: any
-//v231124    error: string | undefined
-//v231124    isFetching: boolean
-//v231124  }
+import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
 
-//v231124  const initialState: UserState = {//v231124  
-//v231124    data: null,
-//v231124    error: undefined,
-//v231124    isFetching: false,
-//v231124  }
+const userDataInitialState: UserInitialState = {
+  userObj: undefined,
+  isLoading: false,
+  error: undefined,
+}
 
-//v181124 POST-Anfrage an  Backend, um einen Benutzer zu registrieren
-//v231124  export const createUser = createAsyncThunk(//v231124  
-//v231124    'user/createUser',
-//v231124    async (
-//v231124      userData: {
-//v231124        firstname: string
-//v231124        lastname: string
-//v231124        email: string
-//v231124        phone: string
-//v231124        password: string
-//v231124      },
-//v231124      { rejectWithValue },
-//v231124    ) => {
-//v231124      try {
-//v231124        const response = await fetch('http://localhost:8080/api/users/', {//v171124 <--- hier  zeigt  website fehler '/article/fetch/post/user',
-//v231124          
-//v231124          method: 'POST',
-//v231124          headers: {
-//v231124            'Content-Type': 'application/json',
-//v231124          },
-//v231124          body: JSON.stringify(userData),
-//v231124        })
+export const userSlice = createAppSlice({
+  name: 'REGISTER_USER',
+  initialState: userDataInitialState,
+  reducers: create => ({
+    createUser: create.asyncThunk(
+      async (userData: UserRequestDto, { rejectWithValue }) => {
+        const response = await fetch('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData),
+        })
 
-//v231124        if (!response.ok) {
-//v231124          const errorData = await response.json()
-//v231124          return rejectWithValue(errorData)
-//v231124        }
-//v231124  
-//v231124        const result = await response.json()
-//v231124        return result
-//v231124      } catch (error) {
-//v231124        return rejectWithValue('An error occurred during registration')
-//v231124      }
-//v231124    },
-//v231124  )
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to register user')
+        }
+        return result
+      },
+      {
+        pending: (state: UserInitialState) => {
+          state.userObj = undefined
+          state.error = undefined
+          state.isLoading = true
+        },
+        fulfilled: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.userObj = {
+            id: action.payload.id,
+            firstname: action.payload.firstname,
+            lastname: action.payload.lastname,
+            email: action.payload.email,
+            phone: action.payload.phone,
+          }
+        },
+        rejected: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
 
-//v231124  export const creatTools = createAsyncThunk(
-//v231124    'tools/creatTools',
-//v231124    async (//v181124 <---- muss status besprochen werden
-//v231124      toolData: {//v231124  
-//v231124        titel: string
-//v231124        description: string
-//v231124        status: any
-//v231124        image: string
-//v231124        password: string
-//v231124      },
-//v231124      { rejectWithValue },
-//v231124    ) => {
-    
-//v231124      try {
-//v231124        const response = await fetch('http://localhost:8080/api/tools/', {
-//v231124          method: 'POST',
-//v231124          headers: {
-//v231124            'Content-Type': 'application/json',
-//v231124          },
-//v231124          body: JSON.stringify(toolData),
-//v231124        })
-//v231124  
-//v231124        if (!response.ok) {
-//v231124          const errorData = await response.json()
-//v231124          return rejectWithValue(errorData)
-//v231124        }
-//v231124  
-//v231124        const result = await response.json()
-//v231124        return result
-//v231124      } catch (error) {
-//v231124        return rejectWithValue('Bei einfügen ich ein fehler aufgetreten')
-//v231124      }
-//v231124    },
-//v231124  )
+    updateUser: create.asyncThunk(
+      async (userData: UserRequestDto, { rejectWithValue }) => {
+        const response = await fetch('/api/users/{userId}', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
 
-//v231124  export const RentTool = createAsyncThunk(
-//v231124  'rents/rentTool',
-//v231124  async (
-//v231124    rentData: {
-//v231124      id: any
-//v231124      firstname: string
-//v231124      lastname: string
-//v231124      email: string
-//v231124      phone: string
-//v231124      password: string
-//v231124    },
-//v231124    { rejectWithValue },
-//v231124  ) => {
-//v231124    try {
-//v231124      const response = await fetch(
-//v231124        `http://localhost:8080/api/tools/${rentData.id}`,
-//v231124        {
-//v231124          method: 'POST',
-//v231124          headers: {
-//v231124            'Content-Type': 'application/json',
-//v231124          },
-//v231124          body: JSON.stringify(rentData),
-//v231124        },
-//v231124      )
-//v231124
-//v231124      if (!response.ok) {
-//v231124        const errorData = await response.json()
-//v231124        return rejectWithValue(errorData)
-//v231124      }
-//v231124
-//v231124      const result = await response.json()
-//v231124      return result
-//v231124    } catch (error) {
-//v231124      return rejectWithValue('An error occurred during registration')
-//v231124    }
-//v231124  },
-//v231124  )
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to update user data')
+        }
+        return result
+      },
+      {
+        pending: (state: UserInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.userObj = {
+            id: action.payload.id,
+            firstname: action.payload.firstname,
+            lastname: action.payload.lastname,
+            email: action.payload.email,
+            phone: action.payload.phone,
+          }
+        },
+        rejected: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
 
-//v231124  const userSlice = createSlice({
-//v231124  name: 'user',
-//v231124  initialState,
-//v231124  reducers: {},
-//v231124  extraReducers: builder => {
-//v231124    builder
-//v231124      .addCase(createUser.pending, state => {
-//v231124   //v231124          state.isFetching = true
-//v231124   //v231124          state.error = undefined
-//v231124      })
-//v231124      .addCase(createUser.fulfilled, (state, action) => {
-//v231124   //v231124          state.isFetching = false
-//v231124   //v231124          state.data = action.payload
-//v231124      })
-//v231124      .addCase(createUser.rejected, (state, action) => {
-//v231124   //v231124          state.isFetching = false
-//v231124   //v231124          state.error = action.payload as string
-//v231124      })
-//v231124  },
-//v231124  })
+    deleteUser: create.asyncThunk(
+      async (_, { rejectWithValue }) => {
+        const response = await fetch('/api/users/{userId}', {
+          method: 'DELETE',
+        })
 
-//v231124  export default userSlice.reducer 
+        if (!response.ok) {
+          const result = await response.json()
+          return rejectWithValue(result.message || 'Failed to delete user')
+        }
+        return 'User deleted successfully'
+      },
+      {
+        pending: (state: UserInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: UserInitialState) => {
+          state.isLoading = false
+          state.userObj = undefined
+          state.error = undefined
+        },
+        rejected: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+  }),
+  selectors: {
+    user_data: (state: UserInitialState) => state,
+  },
+})
+
+export const signUpSliceAction = userSlice.actions
+export const signUpSliceSelectors = userSlice.selectors

@@ -24,6 +24,7 @@ export const InputComponent = styled.input<InputComponentStyleProps>`
   height: ${({ $isSmallInput }) => ($isSmallInput ? "100px" : "50px")};
   border: 1px solid black;
   border-radius: 7px;
+  padding-left: 10px;
   background-color: ${colors.WHITE};
   color: ${colors.BLACK};
 

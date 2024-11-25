@@ -9,26 +9,22 @@ import {
 } from 'store/redux/addAdvert/addAdvertSlice'
 import { AdvertResponseDto } from 'store/redux/addAdvert/types'
 import ChangeAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
-import { PageWrapper, SuccessMessage } from './styles'
+
+import { PageWrapper } from './styles'
+import { toolSliceAction, toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
 
 function ChangeAdvert() {
   const dispatch = useAppDispatch()
-  const { dataAdv, error, isLoading } = useAppSelector(
-    addAdvertSliceSelectors.adverts,
+  const { userAdverts, error, isLoading } = useAppSelector(
+    addAdvertSliceSelectors.userAdverts_data,
   )
-  
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
-  
+  // const changeAdvert = ()=>{
+  //   dispatch(toolSliceAction.updateTool())
+  // }
   return (
     <PageWrapper>
-      {/* {showSuccessMessage && (
-        <SuccessMessage>
-          New advertisement was successfully changed!
-        </SuccessMessage>
-      )} */}
       <ChangeAdvertForm />
     </PageWrapper>
   )
