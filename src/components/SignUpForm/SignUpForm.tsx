@@ -10,8 +10,8 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { SignUpFormProps } from './types'
 
 import {
-  signUpSliceAction,
-  signUpSliceSelectors,
+  userSliceAction,
+  userSliceSelectors,
 } from 'store/redux/userSlice/userSlice'
 
 import {
@@ -29,7 +29,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
 
   const { userObj, error, isLoading } = useAppSelector(
-    signUpSliceSelectors.user_data,
+    userSliceSelectors.user_data,
   )
 
   const navigate = useNavigate()
@@ -89,7 +89,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
     onSubmit: (values, helpers) => {
       console.log(values)
       const { repeatPassword, ...userData } = values
-      dispatch(signUpSliceAction.createUser(userData))
+      dispatch(userSliceAction.createUser(userData))
         .unwrap()
         .then(() => {
           helpers.resetForm()
