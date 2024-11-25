@@ -13,9 +13,13 @@ import {
   UserName,
 } from "./styles";
 import { UserImg } from "assets";
+import { useAppSelector } from "store/hooks"; //v241124 eingefügt
+import { signUpSliceSelectors } from "store/redux/signUpSlice/signUpSlice"; //v241124 eingefügt
 
 function LayoutProfile() {
   const navigate = useNavigate();
+  
+  const { userObj } = useAppSelector(signUpSliceSelectors.register_user);
 
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE);
@@ -42,7 +46,7 @@ function LayoutProfile() {
       <Sidebar>
         <UserProfile onClick={goToProfile}>
           <UserPhoto src={UserImg} alt="User Photo" />
-          <UserName>John Doe</UserName>
+          <UserName>{userObj && `${userObj.firstname} ${userObj.lastname}`}</UserName>
         </UserProfile>
         <SidebarNav>{sidebarLinks}</SidebarNav>
       </Sidebar>

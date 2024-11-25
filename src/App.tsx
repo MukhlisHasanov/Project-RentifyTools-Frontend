@@ -12,6 +12,8 @@ import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
+import Advert from 'pages/Advert/Advert'
+import Profile from 'pages/Profile/Profile'
 
 function App() {
   return (
@@ -22,7 +24,7 @@ function App() {
           <Route path={TOOLS_APP_ROUTES.ADD_ADVERTS} element={<AddAdvert />} />
           <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
-            <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Advert />} />
+            <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
             <Route path="/profile/add-adverts" element={<NewAdvertForm />} />
             <Route path="/profile/messages" element={<HomePlug />} />
             <Route path="/profile/my-adverts" element={<MyAdvert />} />

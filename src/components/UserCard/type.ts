@@ -1,16 +1,10 @@
 
+import {UserResponseDto} from "store/redux/signUpSlice/types"
 
-export interface UserRolleProps {
-    id: number;
-    name: string;
-  }
   
   export interface UserProps {
-    userId: number;
-    firstname: string;
-    lastname: string;
-    email: string;
-    phone: string;
-    roles: UserRolleProps[];
+    userData?: UserResponseDto
+    error?: string | undefined
+
   }
   
