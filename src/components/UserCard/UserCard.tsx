@@ -17,13 +17,6 @@ import { UserInfo } from 'pages/Advert/styles'
 
 function UserCard({ userData, error }: UserProps) {
   const navigate = useNavigate()
-  if (error) {
-    return <div>Error: {error}</div>
-  }
-
-  if (!userData) {
-    return <div>Loading user data...</div>
-  }
 
   return (
     <UserContainer>

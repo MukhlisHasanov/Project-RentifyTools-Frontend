@@ -17,12 +17,13 @@ import {
 } from './styles'
 //import userSlice from "store/redux/userSlice/userSlice";
 import UserCard from 'components/UserCard/UserCard'
+import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
 
 function Profile() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() //241124 Löschen?
   const { userObj, isLoading, error } = useAppSelector(
-    signUpSliceSelectors.register_user,
+    userSliceSelectors.user_data,
   )
  
 

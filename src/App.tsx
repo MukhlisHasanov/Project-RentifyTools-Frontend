@@ -14,6 +14,7 @@ import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
+import Advert from 'pages/Advert/Advert'
 
 function App() {
   return (

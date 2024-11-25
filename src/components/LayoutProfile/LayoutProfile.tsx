@@ -15,11 +15,12 @@ import {
 import { UserImg } from "assets";
 import { useAppSelector } from "store/hooks"; //v241124 eingefügt
 import { signUpSliceSelectors } from "store/redux/signUpSlice/signUpSlice"; //v241124 eingefügt
+import { userSliceSelectors } from "store/redux/userSlice/userSlice";
 
 function LayoutProfile() {
   const navigate = useNavigate();
   
-  const { userObj } = useAppSelector(signUpSliceSelectors.register_user);
+  const { userObj } = useAppSelector(userSliceSelectors.user_data);
 
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE);

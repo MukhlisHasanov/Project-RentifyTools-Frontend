@@ -1,5 +1,5 @@
 
-import {UserResponseDto} from "store/redux/signUpSlice/types"
+import {UserResponseDto} from "store/redux/userSlice/types"
 
   
   export interface UserProps {

@@ -121,5 +121,5 @@ export const userSlice = createAppSlice({
   },
 })
 
-export const signUpSliceAction = userSlice.actions
-export const signUpSliceSelectors = userSlice.selectors
+export const userSliceAction = userSlice.actions
+export const userSliceSelectors = userSlice.selectors
