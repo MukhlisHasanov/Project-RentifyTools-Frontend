@@ -1,14 +1,29 @@
-import { ChangeEvent } from "react"
-import { Button, TextField, Box } from "@mui/material"
-import { colors } from "styles/colors"
+import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Button, TextField, Box } from "@mui/material";
+import { colors } from "styles/colors";
+import { toolSliceAction } from "store/redux/ToolSlice/toolSlice";
+import { TOOLS_APP_ROUTES } from "constants/routes";
 
 interface SearchProps {
-  toolName: string
-  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void
-  onSearch: () => void
+  toolName: string;
+  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSearch: () => {}
 }
 
-function Search({ toolName, onChangeValue, onSearch }: SearchProps) {
+function Search({ toolName, onChangeValue }: SearchProps) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSearch = () => {
+    if (toolName.trim() !== "") {
+      dispatch(toolSliceAction.searchTools(toolName));
+      navigate(TOOLS_APP_ROUTES.SEARCH_RESULTS, { state: { searchTerm: toolName } });
+      onChangeValue({ target: { value: "" } } as ChangeEvent<HTMLInputElement>);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -47,7 +62,7 @@ function Search({ toolName, onChangeValue, onSearch }: SearchProps) {
         Search
       </Button>
     </Box>
-  )
+  );
 }
 
-export default Search
+export default Search;

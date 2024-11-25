@@ -1,9 +1,11 @@
 import { createAppSlice } from 'store/createAppSlice'
 import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
+import { PayloadAction } from '@reduxjs/toolkit'
 import { useParams } from 'react-router-dom'
 
 const toolDataInitialState: ToolInitialState = {
   userTools: [],
+  initialTools: [],
   tools: [],
   toolObj: undefined,
   isLoading: false,
@@ -18,21 +20,17 @@ export const toolSlice = createAppSlice({
   reducers: create => ({
     createTool: create.asyncThunk(
       async (toolData: ToolRequestDto, { rejectWithValue }) => {
-        try {
-          const response = await fetch('/api/tools', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(toolData),
-          })
+        const response = await fetch('/api/tools', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(toolData),
+        })
 
-          const result = await response.json()
-          if (!response.ok) {
-            return rejectWithValue(result.message || 'Failed to create advert')
-          }
-          return result as ToolResponseDto
-        } catch (error) {
-          return rejectWithValue('Network error or server is unavailable')
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to create advert')
         }
+        return result as ToolResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -42,22 +40,9 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.toolObj = {
-            id: action.payload.id,
-            title: action.payload.title,
-            description: action.payload.description,
-            price: action.payload.price,
-            status: action.payload.status,
-            imageUrl: action.payload.imageUrl,
-          }
-          state.tools.push({
-            id: action.payload.id,
-            title: action.payload.title,
-            description: action.payload.description,
-            price: action.payload.price,
-            status: action.payload.status,
-            imageUrl: action.payload.imageUrl,
-          })
+          state.toolObj = action.payload
+          state.tools.push(action.payload)
+          state.initialTools.push(action.payload)
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -69,20 +54,16 @@ export const toolSlice = createAppSlice({
 
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-        try {
           // const { id } = useParams();
-          const response = await fetch('/api/tools', {
-            method: 'GET',
-          })
+        const response = await fetch('/api/tools', {
+          method: 'GET',
+        })
 
-          const result = await response.json()
-          if (!response.ok) {
-            return rejectWithValue(result.message || 'Failed to fetch tools')
-          }
-          return result as ToolResponseDto[]
-        } catch (error) {
-          return rejectWithValue('Network error or server is unavailable')
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to fetch tools')
         }
+        return result as ToolResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -91,14 +72,8 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.tools = action.payload.map(tool => ({
-            id: tool.id,
-            title: tool.title,
-            description: tool.description,
-            price: tool.price,
-            status: tool.status,
-            imageUrl: tool.imageUrl,
-          }))
+          state.tools = action.payload
+          state.initialTools = action.payload 
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -110,26 +85,19 @@ export const toolSlice = createAppSlice({
 
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-        try {
-          const response = await fetch('/api/tools/me', {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + token,
-            },
-          })
+        const response = await fetch('/api/tools/me', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        })
 
-          const result = await response.json()
-          if (!response.ok) {
-            return rejectWithValue(
-              result.message || 'Failed to fetch user tools',
-            )
-          }
-          console.log(result)
-          return result as ToolResponseDto[]
-        } catch (error) {
-          return rejectWithValue('Network error or server is unavailable')
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to fetch user tools')
         }
+        return result as ToolResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -138,20 +106,84 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.userTools = action.payload.map(tool => ({
-            id: tool.id,
-            title: tool.title,
-            description: tool.description,
-            price: tool.price,
-            status: tool.status,
-            imageUrl: tool.imageUrl,
-          }))
+          state.userTools = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
           state.isLoading = false
           state.error = action.payload as string
         },
+      },
+    ),
+
+    updateTool: create.asyncThunk(
+      async (toolData: ToolResponseDto, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/${toolData.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(toolData),
+        })
+
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to update tool')
+        }
+        return result as ToolResponseDto
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = state.tools.map(tool =>
+            tool.id === action.payload.id ? action.payload : tool,
+          )
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
+    deleteTool: create.asyncThunk(
+      async (toolId: string, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/${toolId}`, {
+          method: 'DELETE',
+        })
+
+        if (!response.ok) {
+          const result = await response.json()
+          return rejectWithValue(result.message || 'Failed to delete tool')
+        }
+        return toolId
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = state.tools.filter(tool => tool.id !== action.payload)
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
+    searchTools: create.reducer(
+      (state: ToolInitialState, action: PayloadAction<string>) => {
+        const searchTerm = action.payload.toLowerCase()
+        state.tools = state.initialTools.filter(tool => {
+          return tool.title && tool.title.toLowerCase().includes(searchTerm)
+        })
       },
     ),
   }),
