@@ -3,15 +3,16 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { AdvertResponseDto } from 'store/redux/addAdvert/types'
+import { ToolResponseDto } from 'store/redux/ToolSlice/types'
 import {
-  addAdvertSliceAction,
-  addAdvertSliceSelectors,
-} from 'store/redux/addAdvert/addAdvertSlice'
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { ButtonControl } from 'components/SignUpForm/styles'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   ChangeAdvertFormContainer,
@@ -23,23 +24,23 @@ import {
 } from './styles'
 import { CHANGE_ADVERT_FORM_NAMES, ChangeAdvertFormProps } from './types'
 
+
 function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
   const dispatch = useAppDispatch()
-  const { dataAdv, error, isLoading } = useAppSelector(
-    addAdvertSliceSelectors.adverts,
-  )
-
   const navigate = useNavigate()
+  const { userTools,error, isLoading } = useAppSelector(
+    toolSliceSelectors.userTools_data,
+  )
 
   const validationSchema = Yup.object().shape({
     [CHANGE_ADVERT_FORM_NAMES.TITLE]: Yup.string()
       .required('Title is required field')
-      .min(5, 'The minimum title length is 5')
-      .max(50, 'The maximum title length is 50'),
+      .min(5, 'The min title length is 5 characters')
+      .max(50, 'The max title length is 50 characters'),
     [CHANGE_ADVERT_FORM_NAMES.STATUS]: Yup.string()
       .required('Status is required field')
-      .min(2, 'The minimum status length is 2')
-      .max(20, 'The maximum status length is 20'),
+      .min(2, 'The min status length is 2 characters')
+      .max(20, 'The max status length is 20 characters'),
     [CHANGE_ADVERT_FORM_NAMES.PRICE]: Yup.number()
       .typeError('Price must be a number')
       .required('Price is required field')
@@ -47,8 +48,11 @@ function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
       .max(500000, 'Price can not exceed 500,000'),
     [CHANGE_ADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
       .required('Description is required field')
-      .min(5, 'The minimum description length is 5')
-      .max(2000, 'The maximum description length is 2000'),
+      .min(5, 'The min description length is 5 characters')
+      .max(2000, 'The max description length is 2000 characters'),
+    [CHANGE_ADVERT_FORM_NAMES.IMAGE]: Yup.string()
+      .url('Image must be a valid URL')
+      .required('Image is required field'),
   })
 
   const formik = useFormik({
@@ -62,11 +66,13 @@ function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
     },
     validationSchema: validationSchema,
     validateOnChange: false,
-    onSubmit: (values: AdvertResponseDto, helpers) => {
+    onSubmit: (values: ToolResponseDto, helpers) => {
       console.log(values)
-      dispatch(addAdvertSliceAction.updateAdvert(values))
+      dispatch(
+        toolSliceAction.updateTool(values),
+      )
       helpers.resetForm()
-      navigate('/profile/my-adverts')
+      navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
     },
   })
 

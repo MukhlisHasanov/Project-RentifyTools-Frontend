@@ -1,7 +1,7 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineSlices, configureStore } from '@reduxjs/toolkit'
 
-import { registerUser } from 'store/redux/signUpSlice/signUpSlice'
+import { userSlice } from 'store/redux/userSlice/userSlice'
 import { signInOutSlice } from 'store/redux/signInSlice/signInSlice'
 
 import { toolSlice } from './redux/ToolSlice/toolSlice'
@@ -9,7 +9,7 @@ import { toolSlice } from './redux/ToolSlice/toolSlice'
 import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 // import { userSlice } from 'store/redux/userSlice/userSlice'
 
-const rootReducer = combineSlices(registerUser, signInOutSlice, addAdvertSlice, toolSlice)
+const rootReducer = combineSlices(userSlice, signInOutSlice, addAdvertSlice, toolSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 

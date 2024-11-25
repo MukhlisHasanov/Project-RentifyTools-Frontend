@@ -13,6 +13,8 @@ import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
+import SearchResults from 'pages/SearchResult/SearchResult'
+import Profile from 'pages/Profile/Profile'
 
 function App() {
   return (
@@ -22,19 +24,19 @@ function App() {
           <Route path={TOOLS_APP_ROUTES.HOME} element={<Home />} />
           <Route path={TOOLS_APP_ROUTES.ADD_ADVERTS} element={<AddAdvert />} />
           <Route path={TOOLS_APP_ROUTES.LOGIN} element={<SignUpForm />} />
+          <Route path={TOOLS_APP_ROUTES.SEARCH_RESULTS} element={<SearchResults />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
-            <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Advert />} />
-            <Route path="/profile/add-adverts" element={<NewAdvertForm />} />
-            <Route path="/profile/messages" element={<HomePlug />} />
-            <Route path="/profile/my-adverts" element={<MyAdvert />} />
+            <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
+            <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
+            <Route path={TOOLS_APP_ROUTES.MY_ADVERTS} element={<MyAdvert />} />
             <Route
-              path="/profile/change-adverts"
+              path={TOOLS_APP_ROUTES.CHANGE_ADVERTS}
               element={<ChangeAdvertForm />}
             />
-            <Route path="/profile/favourites" element={<HomePlug />} />
-            <Route path="/profile/rented-tools" element={<HomePlug />} />
+            <Route path={TOOLS_APP_ROUTES.FAVOURITES} element={<HomePlug />} />
+            <Route path={TOOLS_APP_ROUTES.RENTED_TOOLS} element={<HomePlug />} />
           </Route>
-          <Route path="/products" element={<Advert />} />
+          <Route path={TOOLS_APP_ROUTES.PRODUCTS} element={<Advert />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -12,7 +12,7 @@ import { SignUpFormProps } from './types'
 import {
   signUpSliceAction,
   signUpSliceSelectors,
-} from 'store/redux/signUpSlice/signUpSlice'
+} from 'store/redux/userSlice/userSlice'
 
 import {
   SignUpFormContainer,
@@ -29,7 +29,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
   const dispatch = useAppDispatch()
 
   const { userObj, error, isLoading } = useAppSelector(
-    signUpSliceSelectors.register_user,
+    signUpSliceSelectors.user_data,
   )
 
   const navigate = useNavigate()
