@@ -2,15 +2,16 @@ import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-// import { EMPLOYEE_APP_ROUTES } from "constants/routes"
-import Input from 'components/Input/Input'
-import Button from 'components/Button/Button'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
 } from 'store/redux/signInSlice/signInSlice'
+
+import { TOOLS_APP_ROUTES } from 'constants/routes'
+import Input from 'components/Input/Input'
+import Button from 'components/Button/Button'
+import { ButtonControl } from 'components/SignUpForm/styles'
 
 import {
   SignInFormContainer,
@@ -18,9 +19,9 @@ import {
   Text,
   InputsContainer,
   TitleContainer,
+  ErrorContainer,
 } from './styles'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
-import { ButtonControl } from 'components/SignUpForm/styles'
 
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   const dispatch = useAppDispatch()
@@ -33,13 +34,22 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
 
   const validationSchema = Yup.object().shape({
     [SIGNIN_FORM_NAMES.EMAIL]: Yup.string()
-      .required('Email is required field')
-      .min(5, 'The minimum email length is 5')
-      .max(30, 'The maximum email length is 30'),
+      .required('Email is required')
+      .min(5, 'At least 5 characters')
+      .max(30, 'Up to 30 characters')
+      .matches(
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        'Enter a valid email, e.g., example@mail.com',
+      ),
+
     [SIGNIN_FORM_NAMES.PASSWORD]: Yup.string()
-      .required('Password is required field')
-      .min(5, 'The minimum password length is 5')
-      .max(30, 'The max password length is 30'),
+      .required('Password is required')
+      .min(5, 'At least 5 characters')
+      .max(30, 'Up to 30 characters')
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        'Include 1 uppercase, 1 number, and 1 special character',
+      ),
   })
 
   const formik = useFormik({
@@ -55,10 +65,10 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate('/')
+          navigate(TOOLS_APP_ROUTES.HOME)
         })
         .catch(() => {
-          console.error('Registration failed')
+          console.error('Incorrect password or email address')
         })
     },
   })
@@ -99,9 +109,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
         />
       </ButtonControl>
       {error ? (
-        <div>
-          <p style={{ color: 'red' }}>{error}</p>
-        </div>
+        <ErrorContainer>{error}</ErrorContainer>
       ) : (
         <Text>By signing in, you agree to our Terms of Service</Text>
       )}

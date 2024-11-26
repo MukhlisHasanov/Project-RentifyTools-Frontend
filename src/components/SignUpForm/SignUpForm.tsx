@@ -34,37 +34,42 @@ function SignUpForm({
 
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
-      .required('First name is required field')
-      .min(2, 'The min first name length is 2 characters')
-      .max(50, 'The max first name length is 50 characters'),
+      .required('First name is required')
+      .min(2, 'At least 2 characters')
+      .max(50, 'Up to 50 characters'),
+
     [SIGNUP_FORM_NAMES.LAST_NAME]: Yup.string()
-      .required('Last name is required field')
-      .max(15, 'The max last name length is 15 characters'),
+      .required('Last name is required')
+      .max(15, 'Up to 15 characters'),
+
     [SIGNUP_FORM_NAMES.PHONE]: Yup.string()
-      .required('Phone number is a required field')
+      .required('Phone number is required')
       .matches(
         /^\+?[1-9]\d{1,14}$/,
-        'Enter a valid phone number, e.g., +1234567890',
+        'Use international format, e.g., +1234567890',
       )
-      .max(15, 'The max phone number length is 15 characters'),
+      .max(15, 'Up to 15 characters'),
+
     [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
-      .required('Email is required field')
-      .min(5, 'The min email length is 5 characters')
-      .max(30, 'The max email length is 30 characters')
+      .required('Email is required')
+      .min(5, 'At least 5 characters')
+      .max(30, 'Up to 30 characters')
       .matches(
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        'Enter a valid email address (must include @)',
+        'Enter a valid email, e.g., example@mail.com',
       ),
+
     [SIGNUP_FORM_NAMES.PASSWORD]: Yup.string()
-      .required('Password is required field')
-      .min(8, 'The min password length is 8 characters')
-      .max(30, 'The max password length is 30 characters')
+      .required('Password is required')
+      .min(8, 'At least 8 characters')
+      .max(30, 'Up to 30 characters')
       .matches(
         /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-        'Password must include at least one uppercase letter, one number, and one special character',
+        'Must include 1 uppercase, 1 number, and 1 special character',
       ),
+
     [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
-      .required('Repeat password is required field')
+      .required('Confirm your password')
       .oneOf([Yup.ref(SIGNUP_FORM_NAMES.PASSWORD)], 'Passwords must match'),
   })
 
