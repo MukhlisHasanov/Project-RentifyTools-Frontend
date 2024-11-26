@@ -1,19 +1,17 @@
-import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { ChangeEvent } from 'react'
-
-import Input from 'components/Input/Input'
-import Button from 'components/Button/Button'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { SignUpFormProps } from './types'
-
 import {
   userSliceAction,
   userSliceSelectors,
 } from 'store/redux/userSlice/userSlice'
 
+import Input from 'components/Input/Input'
+import Button from 'components/Button/Button'
+
+import { SignUpFormProps } from './types'
+import { SIGNUP_FORM_NAMES } from './types'
 import {
   SignUpFormContainer,
   Title,
@@ -21,51 +19,46 @@ import {
   TitleContainer,
   InputsContainer,
   ButtonControl,
+  ErrorContainer,
 } from './styles'
-import { SIGNUP_FORM_NAMES } from './types'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
-function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
+function SignUpForm({
+  onSwitchToSignIn,
+  onRegistrationSuccess,
+}: SignUpFormProps) {
   const dispatch = useAppDispatch()
 
   const { userObj, error, isLoading } = useAppSelector(
     userSliceSelectors.user_data,
   )
 
-  const navigate = useNavigate()
-  // const onSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-  //   event.preventDefault()
-
-  //   onSwitchToSignIn()
-  // }
-
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
       .required('First name is required field')
-      .min(2, 'The minimum first name length is 2')
-      .max(50, 'The maximum first name length is 50'),
+      .min(2, 'The min first name length is 2 characters')
+      .max(50, 'The max first name length is 50 characters'),
     [SIGNUP_FORM_NAMES.LAST_NAME]: Yup.string()
       .required('Last name is required field')
-      .max(15, 'The maximum last name length is 15'),
-    [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
-      .required('Email is required field')
-      .min(5, 'The minimum email length is 5')
-      .max(30, 'The maximum email length is 30')
-      .matches(
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        'Enter a valid email address (must include @)',
-      ),
+      .max(15, 'The max last name length is 15 characters'),
     [SIGNUP_FORM_NAMES.PHONE]: Yup.string()
       .required('Phone number is a required field')
       .matches(
         /^\+?[1-9]\d{1,14}$/,
         'Enter a valid phone number, e.g., +1234567890',
       )
-      .max(15, 'The maximum phone number length is 15'),
+      .max(15, 'The max phone number length is 15 characters'),
+    [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
+      .required('Email is required field')
+      .min(5, 'The min email length is 5 characters')
+      .max(30, 'The max email length is 30 characters')
+      .matches(
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        'Enter a valid email address (must include @)',
+      ),
     [SIGNUP_FORM_NAMES.PASSWORD]: Yup.string()
       .required('Password is required field')
-      .min(8, 'The minimum password length is 8')
-      .max(30, 'The maximum password length is 30')
+      .min(8, 'The min password length is 8 characters')
+      .max(30, 'The max password length is 30 characters')
       .matches(
         /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
         'Password must include at least one uppercase letter, one number, and one special character',
@@ -93,7 +86,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         .unwrap()
         .then(() => {
           helpers.resetForm()
-          navigate(TOOLS_APP_ROUTES.LOGIN)
+          onRegistrationSuccess()
         })
         .catch(() => {
           console.error('Registration failed')
@@ -129,15 +122,6 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           error={formik.errors.lastname}
         />
         <Input
-          id="signupform-email"
-          label="Email:"
-          name={SIGNUP_FORM_NAMES.EMAIL}
-          type="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.errors.email}
-        />
-        <Input
           id="signupform-phone"
           label="Phone:"
           name={SIGNUP_FORM_NAMES.PHONE}
@@ -145,6 +129,15 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
           value={formik.values.phone}
           onChange={formik.handleChange}
           error={formik.errors.phone}
+        />
+        <Input
+          id="signupform-email"
+          label="Email:"
+          name={SIGNUP_FORM_NAMES.EMAIL}
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.errors.email}
         />
         <Input
           id="signupform-password"
@@ -173,9 +166,7 @@ function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
         />
       </ButtonControl>
       {error ? (
-        <div>
-          <p style={{ color: 'red' }}>{error}</p>
-        </div>
+        <ErrorContainer>{error}</ErrorContainer>
       ) : (
         <Text>
           By signing up, you accept our Terms and Conditions and acknowledge our
