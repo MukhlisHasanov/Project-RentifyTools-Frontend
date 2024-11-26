@@ -48,3 +48,6 @@ export const ButtonControl = styled.div`
   width: 350px;
   height: 55px;
 `
+export const ErrorContainer = styled.div`
+  color: ${colors.ERROR};
+`

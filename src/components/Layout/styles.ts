@@ -30,6 +30,7 @@ export const AppHeader = styled.header`
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
 `
+
 export const AppTitle = styled.span`
   font-size: 24px;
   font-weight: 700;
@@ -48,8 +49,8 @@ export const HeaderNav = styled.nav`
 
 export const HeaderLink = styled(NavLink)`
   font-size: 20px;
-  text-decoration: none;
   font-weight: 400px;
+  text-decoration: none;
   line-height: 24.2px;
   color: ${colors.WHITE};
   margin-right: 50px;

@@ -1,5 +1,6 @@
+import {jwtDecode} from "jwt-decode"
+
 import { createAppSlice } from 'store/createAppSlice'
-import { jwtDecode } from 'jwt-decode'
 
 import { LoginInitialState, LoginRequestDto, TokenPayLoad } from './types'
 
@@ -26,12 +27,12 @@ export const signInOutSlice = createAppSlice({
           const result = await response.json()
           if (!response.ok) {
             return rejectWithValue(
-              result.message || 'Incorrect user password or email',
+              result.message || 'Incorrect password or email address',
             )
           }
           return result
         } catch (error) {
-          return rejectWithValue('Network error or server is unavailable')
+          return rejectWithValue('Incorrect password or email address')
         }
       },
       {
