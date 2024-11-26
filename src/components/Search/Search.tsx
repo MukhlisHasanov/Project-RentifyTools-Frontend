@@ -9,7 +9,7 @@ import { TOOLS_APP_ROUTES } from "constants/routes";
 interface SearchProps {
   toolName: string;
   onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => {}
+  // onSearch: () => {}
 }
 
 function Search({ toolName, onChangeValue }: SearchProps) {
