@@ -18,25 +18,24 @@ export const toolSlice = createAppSlice({
   initialState: toolDataInitialState,
   reducers: create => ({
     uploadImage: create.asyncThunk(
-      async (file: File, { rejectWithValue }) => {
+      async (files: File[], { rejectWithValue }) => {
         const formData = new FormData()
-        formData.append('file', file)
+        files.forEach(file => {
+          formData.append('images', file)
+        })
 
         const response = await fetch('/api/files/upload', {
           method: 'POST',
           headers: {
-            Accept: 'application/json',
             Authorization: 'Bearer ' + token,
           },
           body: formData,
         })
-
         if (!response.ok) {
           const result = await response.text()
-          return rejectWithValue(result || 'Failed to upload image')
+          return rejectWithValue(result || 'Failed to upload images')
         }
-
-        return await response.text()
+        return await response.json()
       },
       {
         pending: (state: ToolInitialState) => {
@@ -47,7 +46,7 @@ export const toolSlice = createAppSlice({
           state.isLoading = false
           state.toolObj = {
             ...state.toolObj,
-            imageUrl: action.payload,
+            imageUrls: action.payload,
           }
           state.error = undefined
         },
@@ -62,7 +61,10 @@ export const toolSlice = createAppSlice({
       async (toolData: ToolRequestDto, { rejectWithValue }) => {
         const response = await fetch('/api/tools', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(toolData),
         })
 

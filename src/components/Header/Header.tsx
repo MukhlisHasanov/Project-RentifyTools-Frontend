@@ -18,7 +18,7 @@ import {
 } from './styles'
 import { AppHeaderProps } from './types'
 
-function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
+function Header({ isLogin, toolName, onChangeValue, onSearch }: AppHeaderProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
@@ -35,7 +35,7 @@ function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
     <AppHeader>
       <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
       <SearchContainer>
-        <Search toolName={toolName} onChangeValue={onChangeValue} />
+        <Search onSearch={onSearch} toolName={toolName} onChangeValue={onChangeValue} />
       </SearchContainer>
       <HeaderNav>
         <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>

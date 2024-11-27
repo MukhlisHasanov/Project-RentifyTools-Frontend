@@ -2,16 +2,16 @@ export interface ToolRequestDto {
   title: string
   description: string
   price: string
-  imageUrl?: string
+  imageUrls?: string[] // Оновлено: масив URL-ів
   status?: string
 }
 
 export interface ToolResponseDto {
-  id?: string
+  id: string
   title: string
   description: string
   price: string
-  imageUrl: string
+  imageUrls: string[] 
   status: string
 }
 
@@ -22,5 +22,4 @@ export interface ToolInitialState {
   initialTools: ToolResponseDto[]
   isLoading: boolean
   error: string | undefined
-  uploadedImageUrl?: string
 }
