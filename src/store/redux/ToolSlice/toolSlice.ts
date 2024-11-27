@@ -71,7 +71,7 @@ export const toolSlice = createAppSlice({
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
           state.tools = action.payload
-          state.initialTools = action.payload 
+          state.initialTools = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {

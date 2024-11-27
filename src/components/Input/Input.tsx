@@ -1,16 +1,16 @@
-import { InputProps } from "./types"
+import { InputProps } from './types'
 import {
   InputWrapper,
   InputComponent,
   InputLabel,
   ErrorContainer,
-} from "./styles"
+} from './styles'
 
 function Input({
   id,
   name,
   label,
-  type = "text",
+  type = 'text',
   placeholder,
   disabled = false,
   error = undefined,

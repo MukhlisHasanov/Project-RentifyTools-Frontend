@@ -19,9 +19,7 @@ export const BackButtonControl = styled.div`
   position: fixed;
   left: 100px;
   top: 100px;
-
 `
-
 
 export const PhotoWrapper = styled.div`
   display: flex;

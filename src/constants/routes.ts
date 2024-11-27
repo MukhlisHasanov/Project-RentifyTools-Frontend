@@ -18,5 +18,5 @@ export enum TOOLS_APP_ROUTES {
   SOCIAL_MEDIA = '/medias',
   NOT_FOUND = '*',
   TOOLS = '/tools',
-  SEARCH_RESULTS = '/search-results'
+  SEARCH_RESULTS = '/search-results',
 }

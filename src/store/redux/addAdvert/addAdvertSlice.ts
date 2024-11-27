@@ -180,7 +180,7 @@ export const addAdvertSlice = createAppSlice({
             const result = await response.json()
             return rejectWithValue(result.message || 'Failed to delete advert')
           }
-          return id 
+          return id
         } catch (error) {
           return rejectWithValue('Network error or server is unavailable')
         }

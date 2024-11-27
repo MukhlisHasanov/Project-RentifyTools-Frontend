@@ -24,11 +24,10 @@ import {
 } from './styles'
 import { CHANGE_ADVERT_FORM_NAMES, ChangeAdvertFormProps } from './types'
 
-
 function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { userTools,error, isLoading } = useAppSelector(
+  const { userTools, error, isLoading } = useAppSelector(
     toolSliceSelectors.userTools_data,
   )
 
@@ -68,9 +67,7 @@ function ChangeAdvertForm({ onChange }: ChangeAdvertFormProps) {
     validateOnChange: false,
     onSubmit: (values: ToolResponseDto, helpers) => {
       console.log(values)
-      dispatch(
-        toolSliceAction.updateTool(values),
-      )
+      dispatch(toolSliceAction.updateTool(values))
       helpers.resetForm()
       navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
     },

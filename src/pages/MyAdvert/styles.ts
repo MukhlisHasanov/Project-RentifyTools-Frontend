@@ -1,5 +1,4 @@
-
-import styled from "@emotion/styled"
+import styled from '@emotion/styled'
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -15,4 +14,4 @@ export const CardsContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: fit-content;
-`;
+`
