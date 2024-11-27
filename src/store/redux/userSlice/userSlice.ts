@@ -1,9 +1,10 @@
 import { createAppSlice } from 'store/createAppSlice'
 
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
+import { stat } from 'fs'
 
 const userDataInitialState: UserInitialState = {
-  userObj: undefined,
+  user: undefined,
   isLoading: false,
   error: undefined,
 }
@@ -16,7 +17,9 @@ export const userSlice = createAppSlice({
       async (userData: UserRequestDto, { rejectWithValue }) => {
         const response = await fetch('/api/users', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(userData),
         })
 
@@ -28,19 +31,52 @@ export const userSlice = createAppSlice({
       },
       {
         pending: (state: UserInitialState) => {
-          state.userObj = undefined
+          state.user = undefined
           state.error = undefined
           state.isLoading = true
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
+          state.user = {
             id: action.payload.id,
             firstname: action.payload.firstname,
             lastname: action.payload.lastname,
             email: action.payload.email,
             phone: action.payload.phone,
           }
+        },
+        rejected: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
+    getCurrentUser: create.asyncThunk(
+      async (_: void, { rejectWithValue }) => {
+        const response = await fetch('/api/auth/profile', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        })
+
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to register user')
+        }
+        return result
+      },
+      {
+        pending: (state: UserInitialState) => {
+          state.user = undefined
+          state.error = undefined
+          state.isLoading = true
+        },
+        fulfilled: (state: UserInitialState, action) => {
+          state.isLoading = false
+          state.user = action.payload
         },
         rejected: (state: UserInitialState, action) => {
           state.isLoading = false
@@ -72,7 +108,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
+          state.user = {
             id: action.payload.id,
             firstname: action.payload.firstname,
             lastname: action.payload.lastname,
@@ -106,7 +142,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState) => {
           state.isLoading = false
-          state.userObj = undefined
+          state.user = undefined
           state.error = undefined
         },
         rejected: (state: UserInitialState, action) => {
@@ -118,6 +154,7 @@ export const userSlice = createAppSlice({
   }),
   selectors: {
     user_data: (state: UserInitialState) => state,
+    selectUser: state => state.user,
   },
 })
 

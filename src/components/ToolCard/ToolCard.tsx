@@ -28,7 +28,7 @@ function ToolCard({
   const navigate = useNavigate()
 
   const goAdvertPage = (id: string | undefined) => {
-    navigate(`TOOLS_APP_ROUTES.TOOLS/${id}`)
+    navigate(`/api/tools/${id}`)
   }
 
   return (

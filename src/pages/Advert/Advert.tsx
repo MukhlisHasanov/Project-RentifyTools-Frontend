@@ -27,22 +27,19 @@ import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
 function Advert() {
   const [userData, setUserData] = useState<ToolProps | null>(null)
   const navigate = useNavigate()
-  const { id } = useParams();
-
+  const { id } = useParams()
 
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
   )
   const dispatch = useAppDispatch()
-  // async function fetchAdvert() {
-  //   const res = await fetch('/api/tools/findById/11')
-  //   const userData = await res.json()
-  //   setUserData(userData)
-  // }
 
-  useEffect(() => {
-    dispatch(toolSliceAction.fetchTools())
-  }, [id])
+  {
+    id &&
+      useEffect(() => {
+        dispatch(toolSliceAction.fetchTool(id))
+      }, [id])
+  }
 
   const nextImage = () => {}
 

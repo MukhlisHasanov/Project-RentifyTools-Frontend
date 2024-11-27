@@ -28,9 +28,11 @@ function SignUpForm({
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
 
-  const { userObj, error, isLoading } = useAppSelector(
-    userSliceSelectors.user_data,
-  )
+  const {
+    user: userObj,
+    error,
+    isLoading,
+  } = useAppSelector(userSliceSelectors.user_data)
 
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()

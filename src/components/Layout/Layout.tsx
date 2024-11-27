@@ -23,6 +23,9 @@ import {
 } from './styles'
 import { Button } from '@mui/material'
 import { colors } from 'styles/colors'
+import { useAppSelector } from 'store/hooks'
+import { userSlice } from 'store/redux/userSlice/userSlice'
+import { UserResponseDto } from 'store/redux/userSlice/types'
 
 function Layout() {
   const [toolName, setToolName] = useState<string>('')
@@ -72,6 +75,11 @@ function Layout() {
     </FooterLink>
   ))
 
+  const user = useAppSelector(userSlice.selectors.selectUser)
+
+
+
+
   return (
     <LayoutWrapper>
       <AppHeader>
@@ -84,11 +92,16 @@ function Layout() {
           />
         </SearchContainer>
         <HeaderNav>
+          <p>{user?.roles.find(r => r.id === 1) && 'USER'}</p>
+          <p>{user?.roles.find(r => r.id === 2) && 'ADMIN'}</p>
+
           <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
           <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Advert</HeaderLink>
           {isLogin ? (
             <>
-              <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
+              {user?.roles.find(r => r.id === 1) && (
+                <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
+              )}
               <Button
                 sx={{
                   backgroundColor: colors.TRANSPARENT,

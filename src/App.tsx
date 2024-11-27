@@ -15,8 +15,18 @@ import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { userSlice } from 'store/redux/userSlice/userSlice'
 
 function App() {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(userSlice.actions.getCurrentUser())
+  }, [localStorage.getItem('accessToken')])
+
+
+
   return (
     <BrowserRouter>
       <Routes>
