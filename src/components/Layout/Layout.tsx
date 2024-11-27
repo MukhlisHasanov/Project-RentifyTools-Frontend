@@ -35,12 +35,12 @@ function Layout() {
     setToolName('')
   }, [location.pathname])
 
-  const getToolData = () => {
-    if (!toolName.trim()) {
-      alert('Please enter a tool`s title')
-      return
-    }
-  }
+  // const getToolData = () => {
+  //   if (!toolName.trim()) {
+  //     alert('Please enter a tool`s title')
+  //     return
+  //   }
+  // }
 
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setToolName(event.target.value)
@@ -80,7 +80,7 @@ function Layout() {
           <Search
             toolName={toolName}
             onChangeValue={onChangeValue}
-            onSearch={getToolData}
+            // onSearch={getToolData}
           />
         </SearchContainer>
         <HeaderNav>

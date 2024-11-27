@@ -47,3 +47,6 @@ export const Text = styled.span`
   justify-content: space-evenly;
   text-align: center;
 `
+export const ErrorContainer = styled.div`
+  color: ${colors.ERROR};
+`
