@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -19,6 +20,7 @@ import {
   InputsContainer,
   TitleContainer,
 } from './styles'
+import { TokenPayLoad } from 'store/redux/signInSlice/types'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 import { ButtonControl } from 'components/SignUpForm/styles'
 
@@ -54,6 +56,9 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
+          const accessToken = localStorage.getItem('accessToken')
+          const { sub: userId } = jwtDecode<TokenPayLoad>(accessToken!)
+          dispatch(signInOutSliceAction.getUserById(userId))
           helpers.resetForm()
           navigate('/')
         })

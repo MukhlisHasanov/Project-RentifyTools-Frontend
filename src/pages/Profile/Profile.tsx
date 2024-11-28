@@ -2,11 +2,6 @@ import { CategoryImg, ImageTitle, ImageWrapper } from 'pages/Home/styles'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import {
-  registerUser,
-  signUpSliceAction,
-  signUpSliceSelectors,
-} from 'store/redux/signUpSlice/signUpSlice'
 //v231124  import { UserInitialState } from "store/redux/signUpSlice/types";
 import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
 import {
@@ -17,7 +12,7 @@ import {
 } from './styles'
 //import userSlice from "store/redux/userSlice/userSlice";
 import UserCard from 'components/UserCard/UserCard'
-import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
+import { userSliceAction, userSliceSelectors } from 'store/redux/userSlice/userSlice'
 
 function Profile() {
   const navigate = useNavigate()
@@ -25,10 +20,23 @@ function Profile() {
   const { userObj, isLoading, error } = useAppSelector(
     userSliceSelectors.user_data,
   )
+  useEffect(() => {
+    if (!userObj) {
+      const storedUser = localStorage.getItem('userObj');
+      if (storedUser) {
+        dispatch({
+          type: 'REGISTER_USER/fulfilled',
+          payload: JSON.parse(storedUser),
+        });
+      }
+    }
+  }, [dispatch, userObj]);
+
  
 
   return (
     <PageWrapper>
+      {isLoading && <p>Loading...</p>}
       {userObj && (
         <ProfileContainer>
           <UserCard userData={userObj} error={error} />
@@ -39,6 +47,4 @@ function Profile() {
 }
 export default Profile
 
-function fetchUserById(userId: any): any {
-  throw new Error('Function not implemented.')
-}
+

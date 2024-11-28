@@ -17,9 +17,8 @@ function SearchResults() {
       title={tool.title}
       price={tool.price}
       description={tool.description}
-      onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
-    />
+      onAddToCard={() => { } }        //v251124 verändert
+      onAddToFavourites={() => { } } toolId={""}    />        //v251124 verändert
   ));
 
   return (

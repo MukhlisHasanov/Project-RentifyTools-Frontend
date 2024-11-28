@@ -8,6 +8,8 @@ const userDataInitialState: UserInitialState = {
   error: undefined,
 }
 
+const token = localStorage.getItem('accessToken')
+
 export const userSlice = createAppSlice({
   name: 'REGISTER_USER',
   initialState: userDataInitialState,
@@ -34,13 +36,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
-            id: action.payload.id,
-            firstname: action.payload.firstname,
-            lastname: action.payload.lastname,
-            email: action.payload.email,
-            phone: action.payload.phone,
-          }
+          localStorage.setItem('userObj', JSON.stringify(action.payload));
         },
         rejected: (state: UserInitialState, action) => {
           state.isLoading = false
@@ -50,20 +46,28 @@ export const userSlice = createAppSlice({
     ),
 
     updateUser: create.asyncThunk(
-      async (userData: UserRequestDto, { rejectWithValue }) => {
-        const response = await fetch('/api/users/{userId}', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        })
+      async ({ userId, userData }: { userId: number; userData: UserRequestDto }, { rejectWithValue }) => {
+        try {
+          const response = await fetch(`/api/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(userData),
+          });
+    
+          const result = await response.json();
+    
+          if (!response.ok) {
+            return rejectWithValue(result.message || 'Failed to update user data');
+          }
+          return result;
 
-        const result = await response.json()
-        if (!response.ok) {
-          return rejectWithValue(result.message || 'Failed to update user data')
+        } catch (error) {
+          return rejectWithValue('Network error or server unavailable');
         }
-        return result
       },
       {
         pending: (state: UserInitialState) => {
@@ -72,13 +76,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
-            id: action.payload.id,
-            firstname: action.payload.firstname,
-            lastname: action.payload.lastname,
-            email: action.payload.email,
-            phone: action.payload.phone,
-          }
+          localStorage.setItem('userObj', JSON.stringify(action.payload));
         },
         rejected: (state: UserInitialState, action) => {
           state.isLoading = false
@@ -88,25 +86,34 @@ export const userSlice = createAppSlice({
     ),
 
     deleteUser: create.asyncThunk(
-      async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/users/{userId}', {
-          method: 'DELETE',
-        })
+      async (userId: number, { rejectWithValue }) => {
+        try {
+          const response = await fetch(`/api/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          })
 
-        if (!response.ok) {
           const result = await response.json()
-          return rejectWithValue(result.message || 'Failed to delete user')
+
+          if (!response.ok) {
+            return rejectWithValue(result.message || 'Failed to delete user')
+          }
+          return result
+        } catch (error) {
+          return rejectWithValue('An error occurred while deleting the user')
         }
-        return 'User deleted successfully'
       },
       {
         pending: (state: UserInitialState) => {
           state.isLoading = true
           state.error = undefined
         },
-        fulfilled: (state: UserInitialState) => {
+        fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = undefined
+          localStorage.setItem('userObj', JSON.stringify(action.payload));
           state.error = undefined
         },
         rejected: (state: UserInitialState, action) => {

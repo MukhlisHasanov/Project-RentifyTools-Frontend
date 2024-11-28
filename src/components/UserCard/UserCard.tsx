@@ -17,6 +17,11 @@ import { UserInfo } from 'pages/Advert/styles'
 
 function UserCard({ userData, error }: UserProps) {
   const navigate = useNavigate()
+  const userObject = localStorage.getItem('userObj');
+if (userObject) {
+  
+  const userObj = JSON.parse(userObject);
+}
 
   return (
     <UserContainer>

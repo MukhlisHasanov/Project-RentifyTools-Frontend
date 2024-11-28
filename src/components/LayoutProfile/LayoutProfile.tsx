@@ -14,7 +14,7 @@ import {
 } from "./styles";
 import { UserImg } from "assets";
 import { useAppSelector } from "store/hooks"; //v241124 eingefügt
-import { signUpSliceSelectors } from "store/redux/signUpSlice/signUpSlice"; //v241124 eingefügt
+
 import { userSliceSelectors } from "store/redux/userSlice/userSlice";
 
 function LayoutProfile() {

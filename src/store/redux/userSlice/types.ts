@@ -1,4 +1,5 @@
 export interface UserRequestDto {
+    id: any;
     firstname: string;
     lastname: string;
     email: string;
