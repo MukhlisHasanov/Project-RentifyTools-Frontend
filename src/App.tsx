@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { SnackbarProvider } from 'notistack'
 
 import Layout from 'components/Layout/Layout'
 import LayoutProfile from 'components/LayoutProfile/LayoutProfile'
@@ -18,6 +19,7 @@ import Profile from 'pages/Profile/Profile'
 
 function App() {
   return (
+    <SnackbarProvider maxSnack={3}> 
     <BrowserRouter>
       <Routes>
         <Route path={TOOLS_APP_ROUTES.HOME} element={<Layout />}>
@@ -46,6 +48,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </SnackbarProvider>
   )
 }
 
