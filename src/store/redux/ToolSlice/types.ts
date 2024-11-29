@@ -2,7 +2,7 @@ export interface ToolRequestDto {
   title: string
   description: string
   price: string
-  imageUrls?: string[] // Оновлено: масив URL-ів
+  imageUrls?: string[]
   status?: string
 }
 

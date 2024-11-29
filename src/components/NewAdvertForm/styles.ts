@@ -1,6 +1,6 @@
-import styled from "@emotion/styled"
+import styled from '@emotion/styled'
 
-import { colors } from "styles/colors"
+import { colors } from 'styles/colors'
 
 export const NewAdvertFormContainer = styled.form`
   display: flex;

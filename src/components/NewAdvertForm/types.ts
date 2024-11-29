@@ -6,7 +6,7 @@ export enum NEWADVERT_FORM_NAMES {
     PRICE = "price",
   }
 
-  export interface AdvertFormProps {
-    onCreate?: ()=> void
-    isProductsPage?: boolean
-  }
+export interface AdvertFormProps {
+  onCreate?: () => void
+  isProductsPage?: boolean
+}

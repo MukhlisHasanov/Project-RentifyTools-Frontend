@@ -29,24 +29,23 @@ function NewAdvertForm() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { isLoading, error } = useAppSelector(toolSliceSelectors.tools_data)
+  const { tools, error, isLoading } = useAppSelector(
+    toolSliceSelectors.tools_data,
+  )
 
-  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const files = Array.from(event.target.files)
-      try {
-        const resultAction = await dispatch(toolSliceAction.uploadImage(files))
-        if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
-          const imageUrls = resultAction.payload
-          console.log(resultAction.payload)
+  const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0]
 
-          formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE_URLS, [
-            ...(formik.values.imageUrls || []),
-            ...imageUrls,
-          ])
-        }
-      } catch (error) {
-        console.error('Failed to upload images:', error)
+      // Создаем локальный превью для отображения
+      const imageURL = URL.createObjectURL(file)
+
+      // Устанавливаем превью изображения
+      const previewElement = document.getElementById(
+        'image-preview',
+      ) as HTMLImageElement
+      if (previewElement) {
+        previewElement.src = imageURL
       }
     }
   }
