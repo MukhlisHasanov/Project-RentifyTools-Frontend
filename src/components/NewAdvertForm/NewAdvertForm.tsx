@@ -37,10 +37,8 @@ function NewAdvertForm() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
 
-      // Создаем локальный превью для отображения
       const imageURL = URL.createObjectURL(file)
 
-      // Устанавливаем превью изображения
       const previewElement = document.getElementById(
         'image-preview',
       ) as HTMLImageElement
