@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, ChangeEvent } from "react"
+import { HTMLInputTypeAttribute, ChangeEvent } from 'react'
 
 export interface InputProps {
   id: string

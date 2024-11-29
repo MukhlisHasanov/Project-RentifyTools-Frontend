@@ -4,12 +4,12 @@ export interface LoginRequestDto {
 }
 
 export interface TokenPayLoad {
-  sub: number;
+  sub: number
 }
 
 export interface LoginInitialState {
-  userId:number | null
-  isLoading:boolean
+  userId: number | null
+  isLoading: boolean
   isAuthenticated: boolean
   error: string | undefined
 }

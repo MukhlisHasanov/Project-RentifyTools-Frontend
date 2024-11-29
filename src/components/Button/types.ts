@@ -1,7 +1,6 @@
-import { MouseEvent } from "react"
+import { MouseEvent } from 'react'
 
-export type ButtonTypes = "submit" | "reset" | "button" | undefined
-
+export type ButtonTypes = 'submit' | 'reset' | 'button' | undefined
 
 export interface ButtonProps {
   type?: ButtonTypes

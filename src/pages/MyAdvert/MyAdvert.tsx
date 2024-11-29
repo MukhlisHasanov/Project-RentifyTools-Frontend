@@ -1,16 +1,20 @@
-
 import { useNavigate } from 'react-router-dom'
 import { PageWrapper, CardsContainer } from './styles'
 import ToolCard from 'components/ToolCard/ToolCard'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { toolSliceAction, toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
 import { useEffect } from 'react'
 import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 
 function MyAdvert() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { userTools, isLoading, error } = useAppSelector(toolSliceSelectors.userTools_data)
+  const { userTools, isLoading, error } = useAppSelector(
+    toolSliceSelectors.userTools_data,
+  )
 
   useEffect(() => {
     dispatch(toolSliceAction.fetchUserTools())
@@ -30,9 +34,7 @@ function MyAdvert() {
 
   return (
     <PageWrapper>
-      <CardsContainer>
-        {userToolCards}
-      </CardsContainer>
+      <CardsContainer>{userToolCards}</CardsContainer>
     </PageWrapper>
   )
 }

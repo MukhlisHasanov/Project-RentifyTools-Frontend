@@ -1,5 +1,5 @@
-import styled from "@emotion/styled"
-import { colors } from "styles/colors"
+import styled from '@emotion/styled'
+import { colors } from 'styles/colors'
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ export const TextContainer = styled.h2`
   font-weight: bold;
   color: ${colors.WHITE};
   margin: 10px;
-  background:  ${colors.HEADER};
+  background: ${colors.HEADER};
   height: fit-content;
   width: fit-content;
   padding: 5px;

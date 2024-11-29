@@ -10,9 +10,11 @@ import {
 import { AdvertResponseDto } from 'store/redux/addAdvert/types'
 import ChangeAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 
-
 import { PageWrapper } from './styles'
-import { toolSliceAction, toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
 
 function ChangeAdvert() {
   const dispatch = useAppDispatch()

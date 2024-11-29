@@ -51,15 +51,15 @@ export const CardPrice = styled.p`
 `
 
 export const CardDescription = styled.div`
-   font-size: 16px;
+  font-size: 16px;
   color: ${colors.WHITE};
   margin-bottom: auto;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5; 
-  max-height: calc(1.5em * 4); 
-  display: block; 
-  word-break: break-word; 
+  line-height: 1.5;
+  max-height: calc(1.5em * 4);
+  display: block;
+  word-break: break-word;
 `
 export const CardStatus = styled.p`
   font-size: 16px;
