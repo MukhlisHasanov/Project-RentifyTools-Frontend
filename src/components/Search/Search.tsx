@@ -1,10 +1,12 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, TextField, Box } from '@mui/material'
-import { colors } from 'styles/colors'
+
 import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
+
 import { TOOLS_APP_ROUTES } from 'constants/routes'
+import { colors } from 'styles/colors'
 
 interface SearchProps {
   toolName: string

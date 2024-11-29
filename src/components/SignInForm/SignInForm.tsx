@@ -2,6 +2,7 @@ import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { SnackbarProvider, useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -9,7 +10,6 @@ import {
   signInOutSliceSelectors,
 } from 'store/redux/signInSlice/signInSlice'
 
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { ButtonControl } from 'components/SignUpForm/styles'
@@ -20,19 +20,17 @@ import {
   Text,
   InputsContainer,
   TitleContainer,
-  ErrorContainer,
 } from './styles'
 import { TokenPayLoad } from 'store/redux/signInSlice/types'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const { error, isLoading } = useAppSelector(
+  const { isLoading } = useAppSelector(
     signInOutSliceSelectors.login_user,
   )
-
-  const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object().shape({
     [SIGNIN_FORM_NAMES.EMAIL]: Yup.string()
@@ -49,7 +47,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       .min(5, 'At least 5 characters')
       .max(30, 'Up to 30 characters')
       .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]+$/,
         'Include 1 uppercase, 1 number, and 1 special character',
       ),
   })
@@ -66,59 +64,57 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
-          const accessToken = localStorage.getItem('accessToken')
-          const { sub: userId } = jwtDecode<TokenPayLoad>(accessToken!)
-          dispatch(signInOutSliceAction.getUserById(userId))
-          helpers.resetForm()
-          navigate(TOOLS_APP_ROUTES.HOME)
+          enqueueSnackbar('Login successful !', { variant: 'success' })
+          setTimeout(() => {
+            helpers.resetForm()
+            navigate(-3)
+          }, 2000)
         })
         .catch(() => {
-          console.error('Incorrect password or email address')
+          enqueueSnackbar('Incorrect email or password!', { variant: 'error' })
         })
     },
   })
 
   return (
-    <SignInFormContainer onSubmit={formik.handleSubmit}>
-      <TitleContainer>
-        <Title isActive>Sign In</Title>
-        <Title isActive={false} onClick={onSwitchToSignUp}>
-          Sign Up
-        </Title>
-      </TitleContainer>
-      <InputsContainer>
-        <Input
-          id="signinform-email"
-          label="Email:"
-          name={SIGNIN_FORM_NAMES.EMAIL}
-          type="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.errors.email}
-        />
-        <Input
-          id="signinform-password"
-          label="Password:"
-          name={SIGNIN_FORM_NAMES.PASSWORD}
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.errors.password}
-        />
-      </InputsContainer>
-      <ButtonControl>
-        <Button
-          type="submit"
-          name={isLoading ? 'Signing In...' : 'Sign In'}
-          disabled={isLoading}
-        />
-      </ButtonControl>
-      {error ? (
-        <ErrorContainer>{error}</ErrorContainer>
-      ) : (
+    <SnackbarProvider maxSnack={3}>
+      <SignInFormContainer onSubmit={formik.handleSubmit}>
+        <TitleContainer>
+          <Title isActive>Sign In</Title>
+          <Title isActive={false} onClick={onSwitchToSignUp}>
+            Sign Up
+          </Title>
+        </TitleContainer>
+        <InputsContainer>
+          <Input
+            id="signinform-email"
+            label="Email:"
+            name={SIGNIN_FORM_NAMES.EMAIL}
+            type="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.errors.email}
+          />
+          <Input
+            id="signinform-password"
+            label="Password:"
+            name={SIGNIN_FORM_NAMES.PASSWORD}
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.errors.password}
+          />
+        </InputsContainer>
+        <ButtonControl>
+          <Button
+            type="submit"
+            name={isLoading ? 'Signing In...' : 'Sign In'}
+            disabled={isLoading}
+          />
+        </ButtonControl>
         <Text>By signing in, you agree to our Terms of Service</Text>
-      )}
-    </SignInFormContainer>
+      </SignInFormContainer>
+    </SnackbarProvider>
   )
 }
 export default SignInForm
