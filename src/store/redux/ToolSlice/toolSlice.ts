@@ -52,9 +52,39 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    fetchTool: create.asyncThunk(
+      async (_, { rejectWithValue }) => {
+        const { id } = useParams()
+        const response = await fetch(`/api/tools/${id}`, {
+          method: 'GET',
+        })
+
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to fetch tools')
+        }
+        return result as ToolResponseDto
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.toolObj = action.payload
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-          // const { id } = useParams();
+        // const { id } = useParams();
         const response = await fetch('/api/tools', {
           method: 'GET',
         })

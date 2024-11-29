@@ -23,26 +23,21 @@ import {
   toolSliceSelectors,
 } from 'store/redux/ToolSlice/toolSlice'
 import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
+import ToolCard from 'components/ToolCard/ToolCard'
 
 function Advert() {
   const [userData, setUserData] = useState<ToolProps | null>(null)
   const navigate = useNavigate()
-  const { id } = useParams();
-
+  const { id } = useParams()
 
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
   )
   const dispatch = useAppDispatch()
-  // async function fetchAdvert() {
-  //   const res = await fetch('/api/tools/findById/11')
-  //   const userData = await res.json()
-  //   setUserData(userData)
-  // }
 
   useEffect(() => {
-    dispatch(toolSliceAction.fetchTools())
-  }, [id])
+    dispatch(toolSliceAction.fetchTool())
+  }, [])
 
   const nextImage = () => {}
 
@@ -72,9 +67,11 @@ function Advert() {
           </PhotoWrapper>
           <DescriptionFrame>
             <ToolInfo>
-              <p>Title: {toolObj.title} </p>
-              <p>Price: {toolObj.price}</p>
-              <p>Description: {toolObj.description} </p>
+              <ToolCard
+                title={toolObj.title}
+                price={toolObj.price}
+                description={toolObj.description}
+              />
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} />

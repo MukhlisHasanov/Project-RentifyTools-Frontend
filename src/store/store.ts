@@ -2,7 +2,7 @@ import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineSlices, configureStore } from '@reduxjs/toolkit'
 
 import { userSlice } from 'store/redux/userSlice/userSlice'
-import { signInOutSlice } from 'store/redux/signInSlice/signInSlice'
+import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
 
 import { toolSlice } from './redux/ToolSlice/toolSlice'
 

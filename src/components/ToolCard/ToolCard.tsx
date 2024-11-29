@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function ToolCard({
-  id,
+  toolId,
   imageUrl,
   title,
   price,
@@ -28,14 +28,14 @@ function ToolCard({
   const navigate = useNavigate()
 
   const goAdvertPage = (id: string | undefined) => {
-    navigate(`TOOLS_APP_ROUTES.TOOLS/${id}`)
+    navigate(`/tools/${id}`)
   }
 
   return (
     <CardWrapper>
-      <CardImage onClick={() => goAdvertPage(id)} src={imageUrl} alt={title} />
+      <CardImage onClick={() => goAdvertPage(toolId)} src={imageUrl} alt={title} />
       <CardContent>
-        <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>
+        <CardTitle onClick={() => goAdvertPage(toolId)}>{title}</CardTitle>
         <CardPrice>Price: {price}</CardPrice>
         <CardStatus>Status: {status}</CardStatus>
         <CardDescription>Description: {description}</CardDescription>
