@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { toolSliceAction, toolSliceSelectors } from "store/redux/ToolSlice/toolSlice"
-import ToolCard from "components/ToolCard/ToolCard"
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
+import ToolCard from 'components/ToolCard/ToolCard'
 
 import {
   CategoryImg1,
@@ -17,29 +20,41 @@ import {
   CategoryImg10,
   CategoryImg11,
   CategoryImg12,
-} from "assets"
+} from 'assets'
 
-import { PageTitle, PageWrapper, PageContainer, CategoryImg, ImageTitle, ImageWrapper, CategoryContainer, CardsContainer, TextContainer } from "./styles"
+import {
+  PageTitle,
+  PageWrapper,
+  PageContainer,
+  CategoryImg,
+  ImageTitle,
+  ImageWrapper,
+  CategoryContainer,
+  CardsContainer,
+  TextContainer,
+} from './styles'
 
 const imagesWithTitles = [
-  { src: CategoryImg1, title: "Excavators & Mini Excavators" },
-  { src: CategoryImg2, title: "Lifting Equipment & Aerial Work Platforms" },
-  { src: CategoryImg3, title: "Power Tools" },
-  { src: CategoryImg4, title: "Front Loaders & Mini Loaders" },
-  { src: CategoryImg5, title: "Compressors & Generators" },
-  { src: CategoryImg6, title: "Measuring Equipment" },
-  { src: CategoryImg7, title: "Concrete Mixers & Concrete Pumps" },
-  { src: CategoryImg8, title: "Rollers & Compaction Equipment" },
-  { src: CategoryImg9, title: "Welding Equipment" },
-  { src: CategoryImg10, title: "Cranes & Manipulators" },
-  { src: CategoryImg11, title: "Garden & Landscaping Tools" },
-  { src: CategoryImg12, title: "Lighting Equipment & Spotlights" },
-];
+  { src: CategoryImg1, title: 'Excavators & Mini Excavators' },
+  { src: CategoryImg2, title: 'Lifting Equipment & Aerial Work Platforms' },
+  { src: CategoryImg3, title: 'Power Tools' },
+  { src: CategoryImg4, title: 'Front Loaders & Mini Loaders' },
+  { src: CategoryImg5, title: 'Compressors & Generators' },
+  { src: CategoryImg6, title: 'Measuring Equipment' },
+  { src: CategoryImg7, title: 'Concrete Mixers & Concrete Pumps' },
+  { src: CategoryImg8, title: 'Rollers & Compaction Equipment' },
+  { src: CategoryImg9, title: 'Welding Equipment' },
+  { src: CategoryImg10, title: 'Cranes & Manipulators' },
+  { src: CategoryImg11, title: 'Garden & Landscaping Tools' },
+  { src: CategoryImg12, title: 'Lighting Equipment & Spotlights' },
+]
 
 function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { tools, isLoading, error } = useAppSelector(toolSliceSelectors.tools_data)
+  const { tools, isLoading, error } = useAppSelector(
+    toolSliceSelectors.tools_data,
+  )
 
   useEffect(() => {
     dispatch(toolSliceAction.fetchTools())
@@ -72,9 +87,7 @@ function Home() {
         <PageContainer>{imageContainers}</PageContainer>
       </CategoryContainer>
       <TextContainer>Last Adverts</TextContainer>
-      <CardsContainer>
-        {toolCards}
-      </CardsContainer>
+      <CardsContainer>{toolCards}</CardsContainer>
     </PageWrapper>
   )
 }

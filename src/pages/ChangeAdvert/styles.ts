@@ -1,4 +1,4 @@
-import styled from "@emotion/styled"
+import styled from '@emotion/styled'
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -12,4 +12,4 @@ export const SuccessMessage = styled.div`
   color: green;
   font-size: 16px;
   margin-bottom: 20px;
-`;
+`

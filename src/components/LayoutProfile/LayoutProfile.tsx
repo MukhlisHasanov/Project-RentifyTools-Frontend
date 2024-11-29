@@ -1,7 +1,7 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { v4 } from "uuid";
+import { Outlet, useNavigate } from 'react-router-dom'
+import { v4 } from 'uuid'
 
-import { TOOLS_APP_ROUTES } from "constants/routes";
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 import {
   ProfileWrapper,
   Sidebar,
@@ -11,36 +11,35 @@ import {
   UserProfile,
   UserPhoto,
   UserName,
-} from "./styles";
-import { UserImg } from "assets";
-import { useAppSelector } from "store/hooks"; //v241124 eingefügt
-
-import { userSliceSelectors } from "store/redux/userSlice/userSlice";
+} from './styles'
+import { UserImg } from 'assets'
+import { useAppSelector } from 'store/hooks'
+import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
 
 function LayoutProfile() {
-  const navigate = useNavigate();
-  
-  const { userObj } = useAppSelector(userSliceSelectors.user_data);
+  const navigate = useNavigate()
+
+const { userObj, isLoading } = useAppSelector(userSliceSelectors.user_data);
 
   const goToProfile = () => {
-    navigate(TOOLS_APP_ROUTES.PROFILE);
-  };
-
+    navigate(TOOLS_APP_ROUTES.PROFILE)
+    
+  }
 
   const profileLinks = {
-    [TOOLS_APP_ROUTES.MESSAGES]: "Messages",
-    [TOOLS_APP_ROUTES.MY_ADVERTS]: "My Adverts",
-    [TOOLS_APP_ROUTES.FAVOURITES]: "Favourites",
-    [TOOLS_APP_ROUTES.RENTED_TOOLS]: "Rented Tools",
-  };
+    [TOOLS_APP_ROUTES.MESSAGES]: 'Messages',
+    [TOOLS_APP_ROUTES.MY_ADVERTS]: 'My Adverts',
+    [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites',
+    [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
+  }
 
-  const sidebarLinks = Object.keys(profileLinks).map((link) => {
+  const sidebarLinks = Object.keys(profileLinks).map(link => {
     return (
       <SidebarLink key={v4()} to={link}>
         {profileLinks[link as keyof typeof profileLinks]}
       </SidebarLink>
-    );
-  });
+    )
+  })
 
   return (
     <ProfileWrapper>
@@ -55,7 +54,7 @@ function LayoutProfile() {
         <Outlet />
       </Content>
     </ProfileWrapper>
-  );
+  )
 }
 
-export default LayoutProfile;
+export default LayoutProfile

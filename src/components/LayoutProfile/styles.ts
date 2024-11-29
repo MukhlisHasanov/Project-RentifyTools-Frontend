@@ -7,7 +7,7 @@ export const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-`;
+`
 
 export const Sidebar = styled.header`
   width: 300px;
@@ -16,17 +16,15 @@ export const Sidebar = styled.header`
   border-right: 2px solid ${colors.WHITE};
   position: fixed;
   left: 0;
-  top: 80px; 
+  top: 80px;
   height: 100vh;
-`;
+`
 
 export const Content = styled.main`
   flex: 1;
   margin-left: 300px;
   box-sizing: border-box;
 `
-
-
 
 export const SidebarLink = styled(NavLink)`
   font-size: 20px;
@@ -36,7 +34,9 @@ export const SidebarLink = styled(NavLink)`
   color: ${colors.WHITE};
   border-radius: 8px;
   padding: 10px 20px;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 
   &:hover {
     color: ${colors.BUTTON};
@@ -46,8 +46,7 @@ export const SidebarLink = styled(NavLink)`
     font-weight: bold;
     color: ${colors.BUTTON};
   }
-`;
-
+`
 
 export const UserProfile = styled.span`
   display: flex;
@@ -60,8 +59,7 @@ export const UserProfile = styled.span`
   &:hover {
     transform: scale(1.05);
   }
-`;
-
+`
 
 export const UserPhoto = styled.img`
   width: 100px;
@@ -70,7 +68,7 @@ export const UserPhoto = styled.img`
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 3px solid ${colors.BUTTON};
-`;
+`
 
 export const UserName = styled.h3`
   font-size: 24px;

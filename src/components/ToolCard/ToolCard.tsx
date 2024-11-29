@@ -31,7 +31,7 @@ function ToolCard({
   const navigate = useNavigate()
 
   const goAdvertPage = () => {
-    navigate(TOOLS_APP_ROUTES.PRODUCTS)
+    navigate(TOOLS_APP_ROUTES.TOOLS)
   }
  
  

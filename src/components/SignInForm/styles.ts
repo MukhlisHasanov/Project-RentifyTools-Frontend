@@ -1,6 +1,6 @@
-import styled from "@emotion/styled"
+import styled from '@emotion/styled'
 
-import { colors } from "styles/colors"
+import { colors } from 'styles/colors'
 
 interface TitleStyleProps {
   isActive: boolean
@@ -26,9 +26,9 @@ export const TitleContainer = styled.div`
 `
 export const Title = styled.span<TitleStyleProps>`
   cursor: pointer;
-  color: ${({ isActive }) => (isActive ? "#F69320" : "#FFFFFF")};
+  color: ${({ isActive }) => (isActive ? '#F69320' : '#FFFFFF')};
   font-size: 30px;
-  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
+  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
 `
 export const InputLabel = styled.label`
   font-size: 16px;
@@ -46,4 +46,7 @@ export const Text = styled.span`
   font-weight: bold;
   justify-content: space-evenly;
   text-align: center;
+`
+export const ErrorContainer = styled.div`
+  color: ${colors.ERROR};
 `

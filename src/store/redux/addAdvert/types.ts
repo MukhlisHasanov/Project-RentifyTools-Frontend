@@ -1,7 +1,7 @@
 export interface AdvertRequestDto {
   title: string
   description: string
-  status?:string
+  status?: string
   image: string
   price: string
 }

@@ -1,58 +1,30 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { v4 } from 'uuid'
 import { useState, useEffect, ChangeEvent } from 'react'
-import { useDispatch } from 'react-redux'
-import Search from 'components/Search/Search'
-import LogoutIcon from '@mui/icons-material/Logout'
+import { Outlet, useLocation } from 'react-router-dom'
+import { v4 } from 'uuid'
 
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInSlice'
-
+import Header from 'components/Header/Header'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   LayoutWrapper,
-  AppHeader,
-  AppTitle,
-  HeaderLink,
-  HeaderNav,
   AppMain,
   AppFooter,
   FooterNav,
   FooterLink,
-  SearchContainer,
 } from './styles'
-import { Button } from '@mui/material'
-import { colors } from 'styles/colors'
 
 function Layout() {
-  const [toolName, setToolName] = useState<string>('')
-  const navigate = useNavigate()
   const location = useLocation()
-  const dispatch = useDispatch()
+  const [toolName, setToolName] = useState<string>('')
+
   const isLogin = Boolean(localStorage.getItem('accessToken'))
 
   useEffect(() => {
     setToolName('')
   }, [location.pathname])
 
-  const getToolData = () => {
-    if (!toolName.trim()) {
-      alert('Please enter a tool`s title')
-      return
-    }
-  }
-
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setToolName(event.target.value)
-  }
-
-  const goToHomePage = () => {
-    navigate(TOOLS_APP_ROUTES.HOME)
-  }
-
-  const handleLogout = () => {
-    dispatch(signInOutSliceAction.logoutUser())
-    navigate(TOOLS_APP_ROUTES.HOME)
   }
 
   const appLinksFooter = {
@@ -74,37 +46,11 @@ function Layout() {
 
   return (
     <LayoutWrapper>
-      <AppHeader>
-        <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
-        <SearchContainer>
-          <Search
-            toolName={toolName}
-            onChangeValue={onChangeValue}
-            onSearch={getToolData}
-          />
-        </SearchContainer>
-        <HeaderNav>
-          <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
-          <HeaderLink to={TOOLS_APP_ROUTES.ADD_ADVERTS}>Add Advert</HeaderLink>
-          {isLogin ? (
-            <>
-              <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>Profile</HeaderLink>
-              <Button
-                sx={{
-                  backgroundColor: colors.TRANSPARENT,
-                  height: '100%',
-                }}
-                variant="contained"
-                onClick={handleLogout}
-              >
-                <LogoutIcon />
-              </Button>
-            </>
-          ) : (
-            <HeaderLink to={TOOLS_APP_ROUTES.LOGIN}>Login</HeaderLink>
-          )}
-        </HeaderNav>
-      </AppHeader>
+      <Header
+        isLogin={isLogin}
+        toolName={toolName}
+        onChangeValue={onChangeValue}
+      />
       <AppMain>
         <Outlet />
       </AppMain>

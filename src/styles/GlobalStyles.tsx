@@ -1,4 +1,4 @@
-import { Global, css } from "@emotion/react";
+import { Global, css } from '@emotion/react'
 
 function GlobalStyles() {
   const globalAppStyles = css`
@@ -30,9 +30,9 @@ function GlobalStyles() {
       margin: 0;
       padding: 0;
     }
-  `;
+  `
 
-  return <Global styles={globalAppStyles} />;
+  return <Global styles={globalAppStyles} />
 }
 
-export default GlobalStyles;
+export default GlobalStyles

@@ -1,5 +1,5 @@
-import styled from "@emotion/styled"
-import { colors } from "styles/colors"
+import styled from '@emotion/styled'
+import { colors } from 'styles/colors'
 
 export const ModalWrapper = styled.div`
   display: flex;
