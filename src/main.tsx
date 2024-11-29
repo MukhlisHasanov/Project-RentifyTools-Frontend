@@ -1,12 +1,12 @@
-import { createRoot } from "react-dom/client"
-import { Provider } from "react-redux"
+import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
 
-import GlobalStyles from "styles/GlobalStyles"
+import GlobalStyles from 'styles/GlobalStyles'
 
-import App from "./App"
-import { store } from "./store/store"
+import App from './App'
+import { store } from './store/store'
 
-const container = document.getElementById("root")
+const container = document.getElementById('root')
 
 if (container) {
   const root = createRoot(container)
