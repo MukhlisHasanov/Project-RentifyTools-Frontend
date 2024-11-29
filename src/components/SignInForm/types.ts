@@ -5,3 +5,6 @@ export enum SIGNIN_FORM_NAMES {
 export interface SignInFormProps {
   onSwitchToSignUp: () => void
 }
+export interface VariantType {
+  variant: 'error' | 'default' | 'success' | 'warning' | 'info'
+}
