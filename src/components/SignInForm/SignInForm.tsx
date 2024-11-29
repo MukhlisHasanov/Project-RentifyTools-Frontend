@@ -47,7 +47,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       .min(5, 'At least 5 characters')
       .max(30, 'Up to 30 characters')
       .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]+$/,
         'Include 1 uppercase, 1 number, and 1 special character',
       ),
   })
