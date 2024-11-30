@@ -14,7 +14,8 @@ function Profile() {
   const [users, setUsers] = useState([])
 
   async function fetchUserProfile() {
-    const res = await fetch('/api/users/13')
+    const userId= localStorage.getItem('userId')
+    const res = await fetch(`/api/users/${userId}`)
     const userData = await res.json()
     setUserData(userData)
   }
