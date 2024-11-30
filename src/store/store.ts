@@ -7,7 +7,6 @@ import { signInOutSlice } from 'store/redux/signInSlice/signInSlice'
 import { toolSlice } from './redux/ToolSlice/toolSlice'
 
 import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
-// import { userSlice } from 'store/redux/userSlice/userSlice'
 
 const rootReducer = combineSlices(
   userSlice,
