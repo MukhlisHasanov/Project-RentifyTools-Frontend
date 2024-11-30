@@ -33,17 +33,20 @@ function NewAdvertForm() {
     toolSliceSelectors.tools_data,
   )
 
-  const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0]
-
-      const imageURL = URL.createObjectURL(file)
-
-      const previewElement = document.getElementById(
-        'image-preview',
-      ) as HTMLImageElement
-      if (previewElement) {
-        previewElement.src = imageURL
+  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const files = Array.from(event.target.files)
+      try {
+        const resultAction = await dispatch(toolSliceAction.uploadImage(files))
+        if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
+          const imageUrls = resultAction.payload
+          formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE_URLS, [
+            ...(formik.values.imageUrls || []),
+            ...imageUrls,
+          ])
+        }
+      } catch (error) {
+        console.error('Failed to upload images:', error)
       }
     }
   }
@@ -72,24 +75,23 @@ function NewAdvertForm() {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
       [NEWADVERT_FORM_NAMES.STATUS]: 'AVAILABLE',
-      [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [],
+      [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [] as string[], // Масив URL-ів для зображень
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: async (values, helpers) => {
       try {
-        const result = await dispatch(toolSliceAction.createTool({
-          title: values.title,
-          description: values.description,
-          status: values.status,
-          price: values.price,
-          imageUrls:
-            values.imageUrls && values.imageUrls.length > 0
-              ? values.imageUrls
-              : [],
-        }));
-        
+        const result = await dispatch(
+          toolSliceAction.createTool({
+            title: values.title,
+            description: values.description,
+            status: values.status,
+            price: values.price,
+            imageUrls: values.imageUrls ?? []
+          }),
+        );
+  
         if (toolSliceAction.createTool.fulfilled.match(result)) {
           helpers.resetForm();
           navigate(TOOLS_APP_ROUTES.MY_ADVERTS);
@@ -100,9 +102,9 @@ function NewAdvertForm() {
       } catch (error) {
         console.error('Submit error:', error);
       }
-    }
-    
-  })
+    },
+  });
+  
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
