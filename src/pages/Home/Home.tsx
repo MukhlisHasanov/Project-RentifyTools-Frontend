@@ -72,6 +72,7 @@ function Home() {
 
   const toolCards = tools.map(tool => (
     <ToolCard
+      toolId={tool.id}
       key={tool.id}
       imageUrl={tool.imageUrl}
       title={tool.title}

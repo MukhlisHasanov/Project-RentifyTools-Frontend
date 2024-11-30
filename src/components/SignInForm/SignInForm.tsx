@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInSlice'
+} from 'store/redux/signInSlice/signInOutSlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
