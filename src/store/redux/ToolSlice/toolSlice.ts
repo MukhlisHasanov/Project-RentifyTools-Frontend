@@ -53,8 +53,7 @@ export const toolSlice = createAppSlice({
     ),
 
     fetchTool: create.asyncThunk(
-      async (_, { rejectWithValue }) => {
-        const { id } = useParams()
+      async (id: string, { rejectWithValue }) => {
         const response = await fetch(`/api/tools/${id}`, {
           method: 'GET',
         })
@@ -84,7 +83,6 @@ export const toolSlice = createAppSlice({
 
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-        // const { id } = useParams();
         const response = await fetch('/api/tools', {
           method: 'GET',
         })
