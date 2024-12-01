@@ -1,11 +1,6 @@
 //v301124  import { CategoryImg, ImageTitle, ImageWrapper } from 'pages/Home/styles'
 import { useEffect } from 'react'
-//v301124  import { CategoryImg, ImageTitle, ImageWrapper } from 'pages/Home/styles'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-//v231124  import { UserInitialState } from "store/redux/signUpSlice/types";
-//v301124  import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 //v231124  import { UserInitialState } from "store/redux/signUpSlice/types";
 //v301124  import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
@@ -32,10 +27,7 @@ console.log(user)
     <PageWrapper>
       
       {user &&  (
-      
-      {user &&  (
         <ProfileContainer>
-          <UserCard userData={user} error={error} />
           <UserCard userData={user} error={error} />
         </ProfileContainer>
       )}
