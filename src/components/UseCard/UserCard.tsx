@@ -25,10 +25,10 @@ function UserCard({ userData, error }: UserProps) {
       </UserDetails>
 
       <UserActions>
-        <IconButton onClick={() => navigate('/edit-profile')}>
+        <IconButton onClick={()  => navigate('/edit-profile')} color="warning" >
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => console.log('Delete user')}>
+        <IconButton onClick={() => console.log('Delete user')} color="warning">
           <DeleteIcon />
         </IconButton>
       </UserActions>
