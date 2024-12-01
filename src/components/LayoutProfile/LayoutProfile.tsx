@@ -67,7 +67,6 @@ function LayoutProfile() {
         <UserProfile onClick={goToProfile}>
           <UserPhoto src={UserImg} alt="User Photo" />
           <UserName>{userName}</UserName>
-          <UserName>{userName}</UserName>
         </UserProfile>
         <SidebarNav>{sidebarLinks}</SidebarNav>
       </Sidebar>
