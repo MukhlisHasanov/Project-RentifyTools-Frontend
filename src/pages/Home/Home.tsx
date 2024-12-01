@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
-import { selectToolsData } from 'store/redux/selectors/userSlelectors'
-import { selectIsAuthenticated, selectUserId } from 'store/redux/selectors/userSlelectors'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
 
 import ToolCard from 'components/ToolCard/ToolCard'
-
 import {
   CategoryImg1,
   CategoryImg2,
@@ -53,10 +53,9 @@ const imagesWithTitles = [
 function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const { tools, isLoading, error } = useAppSelector(selectToolsData)
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
-  const userId = useAppSelector(selectUserId)
+  const { tools, isLoading, error } = useAppSelector(
+    toolSliceSelectors.tools_data,
+  )
 
   useEffect(() => {
     dispatch(toolSliceAction.fetchTools())
@@ -71,7 +70,7 @@ function Home() {
     </ImageWrapper>
   ))
 
-  const toolCards = tools.map((tool) => (
+  const toolCards = tools.map(tool => (
     <ToolCard
       toolId={tool.id}
       key={tool.id}
@@ -86,8 +85,6 @@ function Home() {
 
   return (
     <PageWrapper>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
       <CategoryContainer>
         <PageTitle>RentifyTools Categories</PageTitle>
         <PageContainer>{imageContainers}</PageContainer>
