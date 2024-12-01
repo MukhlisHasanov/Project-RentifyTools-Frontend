@@ -1,7 +1,7 @@
+import React, { ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { ChangeEvent } from 'react'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -11,16 +11,16 @@ import {
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
-import { ButtonControl } from 'components/SignUpForm/styles'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   NewAdvertFormContainer,
   Title,
   InputLabel,
   InputsContainer,
-  TitleContainer,
   DescriptionContainer,
+  ImagePreviewContainer,
+  ImagePreviewWrapper,
+  ButtonControlWrapper,
 } from './styles'
 import { NEWADVERT_FORM_NAMES } from './types'
 import { ToolRequestDto } from 'store/redux/ToolSlice/types'
@@ -29,9 +29,7 @@ function NewAdvertForm() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { tools, error, isLoading } = useAppSelector(
-    toolSliceSelectors.tools_data,
-  )
+  const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
 
   const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -75,10 +73,10 @@ function NewAdvertForm() {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
       [NEWADVERT_FORM_NAMES.STATUS]: 'AVAILABLE',
-      [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [] as string[], // Масив URL-ів для зображень
+      [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [] as string[],
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     validateOnChange: false,
     onSubmit: async (values, helpers) => {
       try {
@@ -88,29 +86,25 @@ function NewAdvertForm() {
             description: values.description,
             status: values.status,
             price: values.price,
-            imageUrls: values.imageUrls ?? []
+            imageUrls: values.imageUrls || [],
           }),
-        );
-  
+        )
+
         if (toolSliceAction.createTool.fulfilled.match(result)) {
-          helpers.resetForm();
-          navigate(TOOLS_APP_ROUTES.MY_ADVERTS);
-          window.location.reload();
+          helpers.resetForm()
+          navigate('/my-adverts')
         } else {
-          console.error('Failed to create advert:', result.error);
+          console.error('Failed to create advert:', result.error)
         }
       } catch (error) {
-        console.error('Submit error:', error);
+        console.error('Submit error:', error)
       }
     },
-  });
-  
+  })
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
-      <TitleContainer>
-        <Title>New Advert</Title>
-      </TitleContainer>
+      <Title>New Advert</Title>
       <InputsContainer>
         <Input
           id="advertform-title"
@@ -138,31 +132,19 @@ function NewAdvertForm() {
           onChange={formik.handleChange}
         />
       </InputsContainer>
-      <ButtonControl>
-        {formik.values.imageUrls && formik.values.imageUrls.length > 0 && (
-          <>
-            {formik.values.imageUrls.map((url, index) => (
-              <div key={url}>
-                <img
-                  id={`image-preview-${index}`}
-                  src={url}
-                  alt="Preview"
-                  style={{
-                    maxWidth: '100px',
-                    maxHeight: '100px',
-                    marginBottom: '10px',
-                  }}
-                />
-                <div>
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    View Image
-                  </a>
-                </div>
-              </div>
-            ))}
-          </>
-        )}
-
+      {formik.values.imageUrls && formik.values.imageUrls.length > 0 && (
+        <ImagePreviewContainer>
+          {formik.values.imageUrls.map((url, index) => (
+            <ImagePreviewWrapper key={index}>
+              <img src={url} alt={`Preview ${index}`} />
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                View Image
+              </a>
+            </ImagePreviewWrapper>
+          ))}
+        </ImagePreviewContainer>
+      )}
+      <ButtonControlWrapper>
         <input
           type="file"
           id="image-upload"
@@ -176,14 +158,12 @@ function NewAdvertForm() {
           name="Add the photos"
           onClick={() => document.getElementById('image-upload')?.click()}
         />
-      </ButtonControl>
-      <ButtonControl>
         <Button
           type="submit"
           name={isLoading ? 'Loading advert...' : 'Create new advert'}
           disabled={isLoading}
         />
-      </ButtonControl>
+      </ButtonControlWrapper>
     </NewAdvertFormContainer>
   )
 }
