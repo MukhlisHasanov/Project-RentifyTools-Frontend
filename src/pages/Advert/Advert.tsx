@@ -9,46 +9,49 @@ import {
   ProductImageControl,
   ProfileImageControl,
   BackButtonControl,
-} from './styles';
-import Button from 'components/Button/Button';
+} from './styles'
+import Button from 'components/Button/Button'
 
-import { UserImg } from 'assets';
-import { useState, useEffect } from 'react';
-import { ToolProps } from './types';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'store/hooks';
+import { UserImg } from 'assets'
+import { useState, useEffect } from 'react'
+import { ToolProps } from './types'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice';
+} from 'store/redux/ToolSlice/toolSlice'
 
 function Advert() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Поточний індекс зображення
-  const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Поточний індекс зображення
+  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
 
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
-  );
-  const dispatch = useAppDispatch();
+  )
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (id) {
-      dispatch(toolSliceAction.fetchTool(id));
+      dispatch(toolSliceAction.fetchTool(id))
     }
-  }, [id, dispatch]);
+  }, [id, dispatch])
 
   const nextImage = () => {
-    if (toolObj?.imageUrls && currentImageIndex < toolObj.imageUrls.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
+    if (
+      toolObj?.imageUrls &&
+      currentImageIndex < toolObj.imageUrls.length - 1
+    ) {
+      setCurrentImageIndex(currentImageIndex + 1)
     }
-  };
+  }
 
   const prevImage = () => {
     if (toolObj?.imageUrls && currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
+      setCurrentImageIndex(currentImageIndex - 1)
     }
-  };
+  }
 
   return (
     <PageWrapper>
@@ -98,7 +101,7 @@ function Advert() {
         <p>No data available</p>
       )}
     </PageWrapper>
-  );
+  )
 }
 
-export default Advert;
+export default Advert
