@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material'
 import { UserContainer, UserDetails, UserActions } from './styles'
 import { UserProps } from './types'
 import { UserName } from 'components/LayoutProfile/styles'
-import { UserInfo } from 'pages/Advert/styles'
+import { UserInfo } from './styles'
 import { useState, useEffect } from 'react'
 
 function UserCard({ userData, error }: UserProps) {

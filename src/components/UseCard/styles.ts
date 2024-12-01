@@ -2,18 +2,18 @@ import styled from '@emotion/styled';
 import { colors } from 'styles/colors';
 
 export const UserContainer = styled.div`
-  border: 1px solid #ddd;
-  padding: 16px;
-  border-radius: 8px;
-  background-color: ${colors.HEADER};
-  margin: 16px 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 `;
 
+
 export const UserDetails = styled.div`
-  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
 `;
 
 export const UserRoleList = styled.ul`
@@ -24,7 +24,7 @@ export const UserRoleList = styled.ul`
 
 export const UserRoleItem = styled.li`
   font-size: 0.9rem;
-  color: #555;
+  color: white;
   margin: 4px 0;
 `;
 
@@ -33,3 +33,8 @@ export const UserActions = styled.div`
   gap: 8px;
   align-items: center;
 `;
+
+export const UserInfo = styled.p`
+color: white;
+
+`

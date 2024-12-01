@@ -5,22 +5,23 @@ import { colors } from 'styles/colors'
 
 export const PageWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex: 1;
-  gap: 4px;
-`
+  height: 50vh;
+  
+`;
 
 export const ProfileContainer = styled.div`
-  background-color: ${colors.HEADER};
   width: 500px;
-  height: 170px;
-  top: 221px;
-  left: 695px;
-  border-radius: 15px;
-  gap: 10px;
   padding: 20px;
-`
+  border: 2px solid ${colors.WHITE || '#ffffff'};
+  border-radius: 15px;
+  background-color: ${colors.HEADER || '#333'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
 
 export const ProfileTitle = styled.h1`
   font-size: 20px;
