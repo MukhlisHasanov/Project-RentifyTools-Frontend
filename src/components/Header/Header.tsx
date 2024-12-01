@@ -35,7 +35,7 @@ function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
     <AppHeader>
       <AppTitle onClick={goToHomePage}>RENTIFY TOOLS</AppTitle>
       <SearchContainer>
-        <Search toolName={toolName} onChangeValue={onChangeValue} />
+        <Search  toolName={toolName} onChangeValue={onChangeValue} />
       </SearchContainer>
       <HeaderNav>
         <HeaderLink to={TOOLS_APP_ROUTES.HOME}>Home</HeaderLink>
