@@ -18,6 +18,7 @@ import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
+import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
 
 function App() {
   const dispatch = useAppDispatch()

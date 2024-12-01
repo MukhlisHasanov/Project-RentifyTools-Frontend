@@ -13,4 +13,3 @@ export interface UserCardProps {
   phone: string
 }
 
-//v231124 Ich weis es nicht mehr was ich hier verändert habe 

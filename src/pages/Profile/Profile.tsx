@@ -17,7 +17,7 @@ import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function Profile() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch() //241124 Löschen?
+  const dispatch = useAppDispatch()
   const { user, error } = useAppSelector(
     signInOutSliceSelectors.currentUser,
   )
