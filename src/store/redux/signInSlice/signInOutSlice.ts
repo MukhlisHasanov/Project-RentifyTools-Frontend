@@ -48,6 +48,7 @@ export const signInOutSlice = createAppSlice({
           state.isLoading = false
           state.isAuthenticated = true
           state.error = undefined
+          state.userId = decoded.sub
         },
         rejected: (state: LoginInitialState, action) => {
           state.isLoading = false
@@ -62,6 +63,17 @@ export const signInOutSlice = createAppSlice({
       
       state.isAuthenticated = false
       state.error = undefined
+      state.userId = null
+    }),
+    setAuthenticatedUser: create.reducer((state: LoginInitialState, action) => {
+      //v301124 Falls die App frisch geladen wird, checken wir localStorage
+      const userId = localStorage.getItem('userId')
+      const accessToken = localStorage.getItem('accessToken')
+
+      if (userId && accessToken) {
+        state.isAuthenticated = true
+        state.userId = Number(userId)
+      }
     }),
     getCurrentUser: create.asyncThunk(
       async (_: void, { rejectWithValue }) => {

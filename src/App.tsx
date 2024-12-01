@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
+import { useEffect } from 'react'
+import { useAppDispatch } from 'store/hooks'
 
 import Layout from 'components/Layout/Layout'
 import LayoutProfile from 'components/LayoutProfile/LayoutProfile'
@@ -18,6 +20,13 @@ import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    //v301124 Initialisiere den Authentifizierungsstatus
+    dispatch(signInOutSliceAction.setAuthenticatedUser())
+  }, [dispatch])
+
   return (
     <SnackbarProvider maxSnack={3}> 
     <BrowserRouter>
