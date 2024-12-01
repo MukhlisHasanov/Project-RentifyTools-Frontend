@@ -1,7 +1,9 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
+
 import { TOOLS_APP_ROUTES } from 'constants/routes';
+
 import {
   ProfileWrapper,
   Sidebar,
@@ -18,6 +20,8 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice';
 
+
+
 function LayoutProfile() {
   const navigate = useNavigate()
 
@@ -26,9 +30,12 @@ function LayoutProfile() {
   )
   const dispatch = useAppDispatch()
 
+
+
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE);
   };
+
 
   const profileLinks = {
     [TOOLS_APP_ROUTES.MESSAGES]: 'Messages',
@@ -36,6 +43,7 @@ function LayoutProfile() {
     [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
   };
+ 
 
   const sidebarLinks = Object.keys(profileLinks).map(link => {
     return (
@@ -51,11 +59,14 @@ function LayoutProfile() {
     ? `${user.firstname} ${user.lastname}`
     : 'User Name'
 
+
+
   return (
     <ProfileWrapper>
       <Sidebar>
         <UserProfile onClick={goToProfile}>
           <UserPhoto src={UserImg} alt="User Photo" />
+          <UserName>{userName}</UserName>
           <UserName>{userName}</UserName>
         </UserProfile>
         <SidebarNav>{sidebarLinks}</SidebarNav>
@@ -65,6 +76,8 @@ function LayoutProfile() {
       </Content>
     </ProfileWrapper>
   );
+  
 }
 
 export default LayoutProfile;
+

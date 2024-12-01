@@ -23,14 +23,17 @@ import {
   InputsContainer,
   ButtonControl,
 } from './styles'
+import { useNavigate } from 'react-router-dom'
 
 function SignUpForm({
+ 
   onSwitchToSignIn,
   onRegistrationSuccess,
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
   const { isLoading } = useAppSelector(userSliceSelectors.user_data)
   const { enqueueSnackbar } = useSnackbar()
+  const navigate = useNavigate()
   const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
@@ -90,6 +93,7 @@ function SignUpForm({
       dispatch(userSliceAction.createUser(userData))
         .unwrap()
         .then(() => {
+
           enqueueSnackbar('Registration successful! Please log in.', {
             variant: 'success',
           })
@@ -97,6 +101,7 @@ function SignUpForm({
             helpers.resetForm()
             onRegistrationSuccess()
           }, 2000)
+          navigate(TOOLS_APP_ROUTES.LOGIN)
           navigate(TOOLS_APP_ROUTES.LOGIN)
         })
         .catch(() => {

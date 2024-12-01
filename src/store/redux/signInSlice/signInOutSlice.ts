@@ -1,5 +1,3 @@
-import { jwtDecode } from 'jwt-decode'
-
 import { createAppSlice } from 'store/createAppSlice'
 
 import { LoginInitialState, LoginRequestDto } from './types'
@@ -27,12 +25,12 @@ export const signInOutSlice = createAppSlice({
           const result = await response.json()
           if (!response.ok) {
             return rejectWithValue(
-              result.message || 'Incorrect password or email address',
+              result.message || 'Incorrect user password or email',
             )
           }
           return result
         } catch (error) {
-          return rejectWithValue('Incorrect password or email address')
+          return rejectWithValue('Network error or server is unavailable')
         }
       },
       {
@@ -43,11 +41,13 @@ export const signInOutSlice = createAppSlice({
         },
         fulfilled: (state: LoginInitialState, action) => {
           // const decoded = jwtDecode<TokenPayLoad>(action.payload.accessToken)
+          // const decoded = jwtDecode<TokenPayLoad>(action.payload.accessToken)
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
           state.isLoading = false
           state.isAuthenticated = true
           state.error = undefined
+          state.userId = decoded.sub
         },
         rejected: (state: LoginInitialState, action) => {
           state.isLoading = false
@@ -62,6 +62,7 @@ export const signInOutSlice = createAppSlice({
       state.user = undefined
       state.isAuthenticated = false
       state.error = undefined
+      state.userId = null
     }),
     getCurrentUser: create.asyncThunk(
       async (_: void, { rejectWithValue }) => {
@@ -98,6 +99,10 @@ export const signInOutSlice = createAppSlice({
   }),
   selectors: {
     login_user: (state: LoginInitialState) => state,
+    currentUser: (state: LoginInitialState) => ({
+      user: state.user,
+      error: state.error,
+    }),
     currentUser: (state: LoginInitialState) => ({
       user: state.user,
       error: state.error,
