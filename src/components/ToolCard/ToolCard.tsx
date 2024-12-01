@@ -13,11 +13,10 @@ import {
 } from './styles'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function ToolCard({
   toolId,
-  imageUrl,
+  imageUrls,
   title,
   price,
   status,
@@ -33,7 +32,15 @@ function ToolCard({
 
   return (
     <CardWrapper>
-      <CardImage onClick={() => goAdvertPage(toolId)} src={imageUrl} alt={title} />
+      <CardImage
+        onClick={() => goAdvertPage(toolId)}
+        src={
+          Array.isArray(imageUrls) && imageUrls.length > 0
+            ? imageUrls[0]
+            : '/placeholder.jpg'
+        }
+        alt={title}
+      />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(toolId)}>{title}</CardTitle>
         <CardPrice>Price: {price}</CardPrice>

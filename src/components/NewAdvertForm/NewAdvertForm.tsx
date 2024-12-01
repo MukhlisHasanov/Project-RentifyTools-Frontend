@@ -92,7 +92,7 @@ function NewAdvertForm() {
 
         if (toolSliceAction.createTool.fulfilled.match(result)) {
           helpers.resetForm()
-          navigate('/my-adverts')
+          navigate('/profile/my-adverts')
         } else {
           console.error('Failed to create advert:', result.error)
         }
