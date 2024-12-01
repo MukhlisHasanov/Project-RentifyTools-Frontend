@@ -1,48 +1,22 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { UserProps } from './types'
-import {
-  PageWrapper,
-  ProfileContainer,
-  ProfileItem,
-  ProfileTitle,
-} from './styles'
+import { useAppSelector } from 'store/hooks'
+
+import { PageWrapper, ProfileContainer } from './styles'
+
+import UserCard from 'components/UseCard/UserCard'
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null)
-  const navigate = useNavigate()
-  const [users, setUsers] = useState([])
+  const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
 
-  async function fetchUserProfile() {
-    const res = await fetch('/api/users/13')
-    const userData = await res.json()
-    setUserData(userData)
-  }
-
-  useEffect(() => {
-    fetchUserProfile()
-  }, [])
-
-  const goToEditProfile = () => {
-    navigate('/edit-profile')
-  }
-
+  console.log(user)
   return (
     <PageWrapper>
-      {userData ? (
+      {user && (
         <ProfileContainer>
-          <ProfileTitle>Profil</ProfileTitle>
-          <ProfileItem>Name: {userData.firstname}</ProfileItem>
-          <ProfileItem>Surname: {userData.lastname}</ProfileItem>
-          <ProfileItem>Email: {userData.email}</ProfileItem>
-          <ProfileItem>Phone: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Change information</button>
+          <UserCard userData={user} error={error} />
         </ProfileContainer>
-      ) : (
-        <p>Profile is loading...</p>
       )}
     </PageWrapper>
   )
 }
-
 export default Profile

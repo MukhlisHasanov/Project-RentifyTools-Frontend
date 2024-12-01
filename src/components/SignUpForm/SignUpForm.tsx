@@ -3,10 +3,13 @@ import * as Yup from 'yup'
 import { SnackbarProvider, useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { useNavigate } from 'react-router-dom'
+
 import {
   userSliceAction,
   userSliceSelectors,
 } from 'store/redux/userSlice/userSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -28,7 +31,7 @@ function SignUpForm({
   const dispatch = useAppDispatch()
   const { error,isLoading } = useAppSelector(userSliceSelectors.user_data)
   const { enqueueSnackbar } = useSnackbar()
-
+  const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
       .required('First name is required')
@@ -95,6 +98,7 @@ function SignUpForm({
             onRegistrationSuccess()
             helpers.resetForm()
           }, 2000)
+          navigate(TOOLS_APP_ROUTES.LOGIN)
         })
         .catch((error) => {
           enqueueSnackbar(error, { variant: 'error' })

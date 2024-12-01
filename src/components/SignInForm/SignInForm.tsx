@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInSlice'
+} from 'store/redux/signInSlice/signInOutSlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -26,9 +26,7 @@ import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(
-    signInOutSliceSelectors.login_user,
-  )
+  const { user, isLoading } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object().shape({
@@ -46,7 +44,7 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       .min(5, 'At least 5 characters')
       .max(30, 'Up to 30 characters')
       .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]+$/,
         'Include 1 uppercase, 1 number, and 1 special character',
       ),
   })
@@ -63,6 +61,8 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
+          dispatch(signInOutSliceAction.getCurrentUser())
+          console.log(user)
           enqueueSnackbar('Login successful !', { variant: 'success' })
           setTimeout(() => {
             helpers.resetForm()
