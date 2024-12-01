@@ -1,6 +1,7 @@
 import { createAppSlice } from 'store/createAppSlice'
 
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
+import { error } from 'console'
 
 const userDataInitialState: UserInitialState = {
   userObj: undefined,
@@ -34,13 +35,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
-            id: action.payload.id,
-            firstname: action.payload.firstname,
-            lastname: action.payload.lastname,
-            email: action.payload.email,
-            phone: action.payload.phone,
-          }
+          state.userObj = action.payload
         },
         rejected: (state: UserInitialState, action) => {
           state.isLoading = false
@@ -54,6 +49,7 @@ export const userSlice = createAppSlice({
         const response = await fetch('/api/users/{userId}', {
           method: 'PUT',
           headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(userData),
@@ -72,13 +68,7 @@ export const userSlice = createAppSlice({
         },
         fulfilled: (state: UserInitialState, action) => {
           state.isLoading = false
-          state.userObj = {
-            id: action.payload.id,
-            firstname: action.payload.firstname,
-            lastname: action.payload.lastname,
-            email: action.payload.email,
-            phone: action.payload.phone,
-          }
+          state.userObj = action.payload
         },
         rejected: (state: UserInitialState, action) => {
           state.isLoading = false
@@ -90,6 +80,9 @@ export const userSlice = createAppSlice({
     deleteUser: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/users/{userId}', {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
           method: 'DELETE',
         })
 
@@ -117,7 +110,11 @@ export const userSlice = createAppSlice({
     ),
   }),
   selectors: {
-    user_data: (state: UserInitialState) => state,
+    user_data: (state: UserInitialState) => ({
+      userObj: state.userObj,
+      isLoading: state.isLoading,
+      error: state.error,
+    }),
   },
 })
 

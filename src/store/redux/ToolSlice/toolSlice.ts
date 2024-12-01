@@ -1,6 +1,7 @@
 import { createAppSlice } from 'store/createAppSlice'
 import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { useParams } from 'react-router-dom'
 
 const toolDataInitialState: ToolInitialState = {
   userTools: [],
@@ -42,6 +43,35 @@ export const toolSlice = createAppSlice({
           state.toolObj = action.payload
           state.tools.push(action.payload)
           state.initialTools.push(action.payload)
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
+    fetchTool: create.asyncThunk(
+      async (id: string, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/${id}`, {
+          method: 'GET',
+        })
+
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(result.message || 'Failed to fetch tools')
+        }
+        return result as ToolResponseDto
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.toolObj = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -188,6 +218,12 @@ export const toolSlice = createAppSlice({
   selectors: {
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
+      isLoading: state.isLoading,
+      error: state.error,
+    }),
+
+    toolObj_data: (state: ToolInitialState) => ({
+      toolObj: state.toolObj,
       isLoading: state.isLoading,
       error: state.error,
     }),

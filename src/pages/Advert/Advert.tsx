@@ -16,22 +16,30 @@ import Button from 'components/Button/Button'
 import { UserImg } from 'assets'
 import { useState, useEffect } from 'react'
 import { ToolProps } from './types'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAppSelector, useAppDispatch } from 'store/hooks'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
+import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
+import ToolCard from 'components/ToolCard/ToolCard'
 
 function Advert() {
   const [userData, setUserData] = useState<ToolProps | null>(null)
   const navigate = useNavigate()
-  const [tools, setTools] = useState([])
+  const { id } = useParams<{ id: string }>()
 
-  async function fetchAdvert() {
-    const res = await fetch('/api/tools/findById/11')
-    const userData = await res.json()
-    setUserData(userData)
-  }
+  const { toolObj, isLoading, error } = useAppSelector(
+    toolSliceSelectors.toolObj_data,
+  )
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    fetchAdvert()
-  }, [])
+    if (id) {
+      dispatch(toolSliceAction.fetchTool(id))
+    }
+  }, [id, dispatch])
 
   const nextImage = () => {}
 
@@ -39,9 +47,12 @@ function Advert() {
 
   return (
     <PageWrapper>
-      {userData ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : toolObj ? (
         <>
-          {/* <BackButtonWrapper> */}
           <BackButtonControl>
             <Button name="Back" onClick={() => navigate(-1)} />
           </BackButtonControl>
@@ -50,32 +61,34 @@ function Advert() {
               <Button name="〈" isTransparent onClick={prevImage} />
             </ButtonControl>
             <PhotoFrame>
-              <ProductImageControl src={userData.image} />
+              <ProductImageControl src={toolObj.imageUrl} />
             </PhotoFrame>
             <ButtonControl>
               <Button name="〉" isTransparent onClick={nextImage} />
             </ButtonControl>
           </PhotoWrapper>
-          {/* </BackButtonWrapper> */}
           <DescriptionFrame>
             <ToolInfo>
-              <p>Title: {userData.title} </p>
-              {/* <p>Category: </p> */}
-              <p>Price: {userData.price}</p>
-              <p>Description: {userData.description} </p>
-              {/* <Card /> */}
+              <ToolCard
+                // toolId={toolObj.id}
+                title={toolObj.title}
+                price={toolObj.price}
+                description={toolObj.description}
+                // imageUrl={toolObj.imageUrl}
+                onAddToCard={() => console.log('Add to cart')}
+                onAddToFavourites={() => console.log('Add to favourites')}
+              />
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} />
               <p>Username</p>
-              {/* <ProfileCard /> */}
               <Button name="Send message" />
               <Button name="Show phone" />
             </UserInfo>
           </DescriptionFrame>
         </>
       ) : (
-        <p></p>
+        <p>No data available</p>
       )}
     </PageWrapper>
   )
