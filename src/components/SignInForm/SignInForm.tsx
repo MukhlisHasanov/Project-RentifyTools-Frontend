@@ -71,13 +71,14 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
         })
         .catch(() => {
           enqueueSnackbar('Incorrect email or password!', { variant: 'error' })
+          helpers.resetForm()
         })
     },
   })
 
   return (
     <SnackbarProvider maxSnack={3}>
-      <SignInFormContainer onSubmit={formik.handleSubmit}>
+      <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
           <Title isActive>Sign In</Title>
           <Title isActive={false} onClick={onSwitchToSignUp}>

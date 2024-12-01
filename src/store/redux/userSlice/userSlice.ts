@@ -15,17 +15,28 @@ export const userSlice = createAppSlice({
   reducers: create => ({
     createUser: create.asyncThunk(
       async (userData: UserRequestDto, { rejectWithValue }) => {
-        const response = await fetch('/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(userData),
-        })
+        try {
+          const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+          })
 
-        const result = await response.json()
-        if (!response.ok) {
-          return rejectWithValue(result.message || 'Failed to register user')
+          const result = await response.json()
+
+          if (response.status === 409) {
+            return rejectWithValue(
+              'User already exists with this email or phone',
+            )
+          }
+
+          if (!response.ok) {
+            return rejectWithValue(result.message || 'Failed to register user')
+          }
+          return result
+        } catch (error) {
+          return rejectWithValue('Network error or server is unavailable')
         }
-        return result
       },
       {
         pending: (state: UserInitialState) => {
