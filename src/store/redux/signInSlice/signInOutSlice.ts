@@ -42,7 +42,6 @@ export const signInOutSlice = createAppSlice({
           state.error = undefined
         },
         fulfilled: (state: LoginInitialState, action) => {
-          // const decoded = jwtDecode<TokenPayLoad>(action.payload.accessToken)
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
           state.isLoading = false

@@ -26,9 +26,7 @@ import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { user, isLoading } = useAppSelector(
-    signInOutSliceSelectors.login_user,
-  )
+  const { user, isLoading } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object().shape({
