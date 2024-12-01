@@ -1,8 +1,7 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { v4 } from 'uuid';
+import { Outlet, useNavigate } from 'react-router-dom'
+import { v4 } from 'uuid'
 
-
-import { TOOLS_APP_ROUTES } from 'constants/routes';
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   ProfileWrapper,
@@ -18,32 +17,24 @@ import { UserImg } from 'assets'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice';
-
-
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function LayoutProfile() {
   const navigate = useNavigate()
 
-  const {user,  error } = useAppSelector(
-    signInOutSliceSelectors.currentUser,
-  )
+  const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
-
-
   const goToProfile = () => {
-    navigate(TOOLS_APP_ROUTES.PROFILE);
-  };
-
+    navigate(TOOLS_APP_ROUTES.PROFILE)
+  }
 
   const profileLinks = {
     [TOOLS_APP_ROUTES.MESSAGES]: 'Messages',
     [TOOLS_APP_ROUTES.MY_ADVERTS]: 'My Adverts',
     [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
-  };
- 
+  }
 
   const sidebarLinks = Object.keys(profileLinks).map(link => {
     return (
@@ -53,13 +44,7 @@ function LayoutProfile() {
     )
   })
 
- 
-
-  const userName = user
-    ? `${user.firstname} ${user.lastname}`
-    : 'User Name'
-
-
+  const userName = user ? `${user.firstname} ${user.lastname}` : 'User Name'
 
   return (
     <ProfileWrapper>
@@ -74,9 +59,7 @@ function LayoutProfile() {
         <Outlet />
       </Content>
     </ProfileWrapper>
-  );
-  
+  )
 }
 
-export default LayoutProfile;
-
+export default LayoutProfile
