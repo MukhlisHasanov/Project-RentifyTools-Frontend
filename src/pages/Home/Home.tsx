@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
 } from 'store/redux/ToolSlice/toolSlice'
-import ToolCard from 'components/ToolCard/ToolCard'
 
+import ToolCard from 'components/ToolCard/ToolCard'
 import {
   CategoryImg1,
   CategoryImg2,
@@ -71,6 +72,7 @@ function Home() {
 
   const toolCards = tools.map(tool => (
     <ToolCard
+      toolId={tool.id}
       key={tool.id}
       imageUrl={tool.imageUrl}
       title={tool.title}

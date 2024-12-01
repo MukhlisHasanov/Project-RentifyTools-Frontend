@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { SnackbarProvider } from 'notistack'
 
 import Layout from 'components/Layout/Layout'
 import LayoutProfile from 'components/LayoutProfile/LayoutProfile'
@@ -6,7 +7,6 @@ import Home from 'pages/Home/Home'
 import MyAdvert from 'pages/MyAdvert/MyAdvert'
 import SignUpForm from 'pages/Login/Login'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
-import Advert from 'pages/Profile/Profile'
 import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
@@ -15,9 +15,11 @@ import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
+import Advert from 'pages/Advert/Advert'
 
 function App() {
   return (
+    <SnackbarProvider maxSnack={3}> 
     <BrowserRouter>
       <Routes>
         <Route path={TOOLS_APP_ROUTES.HOME} element={<Layout />}>
@@ -43,9 +45,11 @@ function App() {
               element={<HomePlug />}
             />
           </Route>
+          <Route path="/tools/:id" element={<Advert />} />
         </Route>
       </Routes>
     </BrowserRouter>
+    </SnackbarProvider>
   )
 }
 

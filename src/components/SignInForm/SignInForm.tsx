@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { SnackbarProvider, useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInSlice'
+} from 'store/redux/signInSlice/signInOutSlice'
 
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { ButtonControl } from 'components/SignUpForm/styles'
@@ -19,18 +19,16 @@ import {
   Text,
   InputsContainer,
   TitleContainer,
-  ErrorContainer,
 } from './styles'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const { error, isLoading } = useAppSelector(
+  const { isLoading } = useAppSelector(
     signInOutSliceSelectors.login_user,
   )
-
-  const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object().shape({
     [SIGNIN_FORM_NAMES.EMAIL]: Yup.string()
@@ -64,56 +62,57 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
-          helpers.resetForm()
-          navigate(TOOLS_APP_ROUTES.HOME)
+          enqueueSnackbar('Login successful !', { variant: 'success' })
+          setTimeout(() => {
+            helpers.resetForm()
+            navigate(-3)
+          }, 2000)
         })
         .catch(() => {
-          console.error('Incorrect password or email address')
+          enqueueSnackbar('Incorrect email or password!', { variant: 'error' })
         })
     },
   })
 
   return (
-    <SignInFormContainer onSubmit={formik.handleSubmit}>
-      <TitleContainer>
-        <Title isActive>Sign In</Title>
-        <Title isActive={false} onClick={onSwitchToSignUp}>
-          Sign Up
-        </Title>
-      </TitleContainer>
-      <InputsContainer>
-        <Input
-          id="signinform-email"
-          label="Email:"
-          name={SIGNIN_FORM_NAMES.EMAIL}
-          type="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.errors.email}
-        />
-        <Input
-          id="signinform-password"
-          label="Password:"
-          name={SIGNIN_FORM_NAMES.PASSWORD}
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.errors.password}
-        />
-      </InputsContainer>
-      <ButtonControl>
-        <Button
-          type="submit"
-          name={isLoading ? 'Signing In...' : 'Sign In'}
-          disabled={isLoading}
-        />
-      </ButtonControl>
-      {error ? (
-        <ErrorContainer>{error}</ErrorContainer>
-      ) : (
+    <SnackbarProvider maxSnack={3}>
+      <SignInFormContainer onSubmit={formik.handleSubmit}>
+        <TitleContainer>
+          <Title isActive>Sign In</Title>
+          <Title isActive={false} onClick={onSwitchToSignUp}>
+            Sign Up
+          </Title>
+        </TitleContainer>
+        <InputsContainer>
+          <Input
+            id="signinform-email"
+            label="Email:"
+            name={SIGNIN_FORM_NAMES.EMAIL}
+            type="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.errors.email}
+          />
+          <Input
+            id="signinform-password"
+            label="Password:"
+            name={SIGNIN_FORM_NAMES.PASSWORD}
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.errors.password}
+          />
+        </InputsContainer>
+        <ButtonControl>
+          <Button
+            type="submit"
+            name={isLoading ? 'Signing In...' : 'Sign In'}
+            disabled={isLoading}
+          />
+        </ButtonControl>
         <Text>By signing in, you agree to our Terms of Service</Text>
-      )}
-    </SignInFormContainer>
+      </SignInFormContainer>
+    </SnackbarProvider>
   )
 }
 export default SignInForm

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInSlice'
+import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
 
 import Search from 'components/Search/Search'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
