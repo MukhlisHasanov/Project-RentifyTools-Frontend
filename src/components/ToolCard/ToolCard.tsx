@@ -14,6 +14,9 @@ import {
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
+import { IconButton } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit';      //v301124 von mir importirt      
+import DeleteIcon from '@mui/icons-material/Delete';  //v301124 von mir importirt 
 
 function ToolCard({
   toolId,
@@ -31,6 +34,17 @@ function ToolCard({
     navigate(`/tools/${id}`)
   }
 
+   const handleEdit = () => {
+      console.log('Edit button clicked');
+    navigate(`change/edit/${toolId}`);
+    };
+    const handleDelete = () => {
+      if (window.confirm('Sicher?')) {
+        fetch(`/api/tools/${toolId}`, { method: 'DELETE' });
+        console.log('Delete request sent');
+      }
+    };
+
   return (
     <CardWrapper>
       <CardImage onClick={() => goAdvertPage(toolId)} src={imageUrl} alt={title} />
@@ -43,6 +57,14 @@ function ToolCard({
           <CardIcon onClick={onAddToCard}>
             <img src={ShopIcon} alt="Add to cart" />
           </CardIcon>
+
+          <IconButton onClick={handleEdit} color="warning" aria-label="edit">
+        <EditIcon />
+      </IconButton>
+      <IconButton onClick={handleDelete} color="warning" aria-label="delete">
+        <DeleteIcon />
+      </IconButton>
+      
           <CardIcon onClick={onAddToFavourites}>
             <img src={FavIcon} alt="Add to favorites" />
           </CardIcon>

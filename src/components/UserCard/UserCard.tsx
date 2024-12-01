@@ -12,43 +12,28 @@ import { useState, useEffect } from 'react'
 function UserCard({ userData, error }: UserProps) {
   const navigate = useNavigate()
 
-
-  const [user, setUser] = useState(userData || null);
-
-
-  useEffect(() => {
-    if (!userData) {
-      const userObject = localStorage.getItem('userObj');
-      if (userObject) {
-        const parsedUser = JSON.parse(userObject);
-        setUser(parsedUser);
-      }
-    }
-  }, [userData]);
-
-
-  if (!user) {
-    return <div>No user data available</div>;
-  }
-
   return (
     <UserContainer>
       <UserDetails>
-        <UserName>{`${user.firstname} ${user.lastname}`}</UserName>
-        <UserInfo>Email: {user.email}</UserInfo>
-        <UserInfo>Phone: {user.phone}</UserInfo>
+        {userData && (
+          <>
+            <UserName>{`${userData.firstname} ${userData.lastname}`}</UserName>
+            <UserInfo>Email: {userData.email}</UserInfo>
+            <UserInfo>Phone: {userData.phone}</UserInfo>
+          </>
+        )}
       </UserDetails>
 
-      <UserActions>       
+      <UserActions>
         <IconButton onClick={() => navigate('/edit-profile')}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => console.log("Delete user")}>
+        <IconButton onClick={() => console.log('Delete user')}>
           <DeleteIcon />
         </IconButton>
       </UserActions>
     </UserContainer>
-  );
+  )
 }
 
-export default UserCard;
+export default UserCard

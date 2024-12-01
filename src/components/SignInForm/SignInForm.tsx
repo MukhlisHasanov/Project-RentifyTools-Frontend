@@ -61,11 +61,12 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       console.log(values)
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
-        .then(() => {
+        .then(() => { 
+          dispatch(signInOutSliceAction.getCurrentUser)
           enqueueSnackbar('Login successful !', { variant: 'success' })
           setTimeout(() => {
             helpers.resetForm()
-            navigate(-3)
+            navigate(-1)
           }, 2000)
         })
         .catch(() => {

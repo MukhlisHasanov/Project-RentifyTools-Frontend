@@ -10,36 +10,27 @@ import {
   ProfileItem,
   ProfileTitle,
 } from './styles'
+
 //import userSlice from "store/redux/userSlice/userSlice";
 import UserCard from 'components/UserCard/UserCard'
-import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function Profile() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() //241124 Löschen?
-  const { userObj, isLoading, error } = useAppSelector(
-    userSliceSelectors.user_data,
+  const { user, error } = useAppSelector(
+    signInOutSliceSelectors.currentUser,
   )
-  useEffect(() => {
-    if (!userObj) {
-      const storedUser = localStorage.getItem('userObj');
-      if (storedUser) {
-        dispatch({
-          type: 'REGISTER_USER/fulfilled',
-          payload: JSON.parse(storedUser),
-        });
-      }
-    }
-  }, [dispatch, userObj]);
+
 
  
-
+console.log(user)
   return (
     <PageWrapper>
-      {isLoading && <p>Loading...</p>}
-      {userObj && (
+      
+      {user &&  (
         <ProfileContainer>
-          <UserCard userData={userObj} error={error} />
+          <UserCard userData={user} error={error} />
         </ProfileContainer>
       )}
     </PageWrapper>
