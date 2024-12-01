@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+//v301124  import { CategoryImg, ImageTitle, ImageWrapper } from 'pages/Home/styles'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserProps } from './types'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+//v231124  import { UserInitialState } from "store/redux/signUpSlice/types";
+//v301124  import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
 import {
   PageWrapper,
   ProfileContainer,
@@ -8,42 +11,27 @@ import {
   ProfileTitle,
 } from './styles'
 
+//import userSlice from "store/redux/userSlice/userSlice";
+import UserCard from 'components/UseCard/UserCard'
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+
 function Profile() {
-  const [userData, setUserData] = useState<UserProps | null>(null)
   const navigate = useNavigate()
-  const [users, setUsers] = useState([])
+  const dispatch = useAppDispatch()
+  const { user, error } = useAppSelector(
+    signInOutSliceSelectors.currentUser,
+  )
 
-  async function fetchUserProfile() {
-    const userId= localStorage.getItem('userId')
-    const res = await fetch(`/api/users/${userId}`)
-    const userData = await res.json()
-    setUserData(userData)
-  }
-
-  useEffect(() => {
-    fetchUserProfile()
-  }, [])
-
-  const goToEditProfile = () => {
-    navigate('/edit-profile')
-  }
-
+console.log(user)
   return (
     <PageWrapper>
-      {userData ? (
+      
+      {user &&  (
         <ProfileContainer>
-          <ProfileTitle>Profil</ProfileTitle>
-          <ProfileItem>Name: {userData.firstname}</ProfileItem>
-          <ProfileItem>Surname: {userData.lastname}</ProfileItem>
-          <ProfileItem>Email: {userData.email}</ProfileItem>
-          <ProfileItem>Phone: {userData.phone}</ProfileItem>
-          <button onClick={goToEditProfile}>Change information</button>
+          <UserCard userData={user} error={error} />
         </ProfileContainer>
-      ) : (
-        <p>Profile is loading...</p>
       )}
     </PageWrapper>
   )
 }
-
 export default Profile
