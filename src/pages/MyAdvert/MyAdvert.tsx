@@ -27,6 +27,7 @@ function MyAdvert() {
       imageUrls={tool.imageUrls}
       title={tool.title}
       price={tool.price}
+      status={tool.status}
       description={tool.description}
       onAddToCard={() => {}}
       onAddToFavourites={() => {}}

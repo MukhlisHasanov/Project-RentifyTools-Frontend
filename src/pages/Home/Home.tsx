@@ -78,6 +78,7 @@ function Home() {
       title={tool.title}
       price={tool.price}
       description={tool.description}
+      status={tool.status}
       onAddToCard={() => {}}
       onAddToFavourites={() => {}}
     />
