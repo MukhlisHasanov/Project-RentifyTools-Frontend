@@ -46,6 +46,15 @@ export const HeaderLink = styled(NavLink)`
   &.active {
     font-weight: bold;
   }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-right: 10px;
+  }
 `
 export const SearchContainer = styled.div`
   display: flex;

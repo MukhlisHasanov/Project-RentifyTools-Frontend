@@ -12,6 +12,7 @@ import {
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { ButtonControl } from 'components/SignUpForm/styles'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   SignInFormContainer,
@@ -25,9 +26,7 @@ import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(
-    signInOutSliceSelectors.login_user,
-  )
+  const { user, isLoading } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object().shape({
@@ -62,21 +61,24 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
+          dispatch(signInOutSliceAction.getCurrentUser())
+          console.log(user)
           enqueueSnackbar('Login successful !', { variant: 'success' })
           setTimeout(() => {
             helpers.resetForm()
-            navigate(-3)
+            navigate(TOOLS_APP_ROUTES.HOME)
           }, 2000)
         })
         .catch(() => {
           enqueueSnackbar('Incorrect email or password!', { variant: 'error' })
+          helpers.resetForm()
         })
     },
   })
 
   return (
     <SnackbarProvider maxSnack={3}>
-      <SignInFormContainer onSubmit={formik.handleSubmit}>
+      <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
           <Title isActive>Sign In</Title>
           <Title isActive={false} onClick={onSwitchToSignUp}>

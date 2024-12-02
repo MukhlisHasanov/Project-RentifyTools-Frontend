@@ -3,10 +3,13 @@ import * as Yup from 'yup'
 import { SnackbarProvider, useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { useNavigate } from 'react-router-dom'
+
 import {
   userSliceAction,
   userSliceSelectors,
 } from 'store/redux/userSlice/userSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -26,9 +29,9 @@ function SignUpForm({
   onRegistrationSuccess,
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(userSliceSelectors.user_data)
+  const { error,isLoading } = useAppSelector(userSliceSelectors.user_data)
   const { enqueueSnackbar } = useSnackbar()
-
+  const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
       .required('First name is required')
@@ -41,12 +44,13 @@ function SignUpForm({
 
     [SIGNUP_FORM_NAMES.PHONE]: Yup.string()
       .required('Phone number is required')
+      .min(10, 'At least 10 characters long')
+      .max(15, 'Up to 15 characters')
       .matches(
         /^\+?[1-9]\d{1,14}$/,
         'Use international format, e.g., +1234567890',
-      )
-      .max(15, 'Up to 15 characters'),
-
+      ),
+      
     [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
       .required('Email is required')
       .min(5, 'At least 5 characters')
@@ -91,19 +95,21 @@ function SignUpForm({
             variant: 'success',
           })
           setTimeout(() => {
-            helpers.resetForm()
             onRegistrationSuccess()
+            helpers.resetForm()
           }, 2000)
+          navigate(TOOLS_APP_ROUTES.LOGIN)
         })
-        .catch(() => {
-          enqueueSnackbar('Registration failed.', { variant: 'error' })
+        .catch((error) => {
+          enqueueSnackbar(error, { variant: 'error' })
+          helpers.resetForm()
         })
     },
   })
 
   return (
     <SnackbarProvider maxSnack={3}>
-      <SignUpFormContainer onSubmit={formik.handleSubmit}>
+      <SignUpFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
           <Title $isActive={false} onClick={onSwitchToSignIn}>
             Sign In

@@ -14,6 +14,7 @@ export const LayoutWrapper = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   overflow: auto;
+  background-attachment: fixed;
 `
 
 export const AppMain = styled.main`
