@@ -11,6 +11,8 @@ const loginDataInitialState: LoginInitialState = {
   error: undefined,
 }
 
+const token = localStorage.getItem('accessToken')
+
 export const signInOutSlice = createAppSlice({
   name: 'LOGIN_USER',
   initialState: loginDataInitialState,
@@ -68,7 +70,7 @@ export const signInOutSlice = createAppSlice({
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+            Authorization: 'Bearer ' + token,
           },
         })
 
