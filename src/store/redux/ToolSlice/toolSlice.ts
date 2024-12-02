@@ -221,33 +221,39 @@ export const toolSlice = createAppSlice({
     ),
 
     deleteTool: create.asyncThunk(
-      async (toolId: string, { rejectWithValue }) => {
-        const response = await fetch(`/api/tools/${toolId}`, {
+      async (id: string, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/${id}`, {
           method: 'DELETE',
-        })
-
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        });
+    
         if (!response.ok) {
-          const result = await response.json()
-          return rejectWithValue(result.message || 'Failed to delete tool')
+          const result = await response.json();
+          return rejectWithValue(result.message || 'Failed to delete tool');
         }
-        return toolId
+        return id;
       },
       {
         pending: (state: ToolInitialState) => {
-          state.isLoading = true
-          state.error = undefined
+          state.isLoading = true;
+          state.error = undefined;
         },
         fulfilled: (state: ToolInitialState, action) => {
-          state.isLoading = false
-          state.tools = state.tools.filter(tool => tool.id !== action.payload)
-          state.error = undefined
+          state.isLoading = false;
+          state.tools = state.tools.filter(tool => tool.id !== action.payload);
+          state.userTools = state.userTools.filter(tool => tool.id !== action.payload);
+          state.error = undefined;
         },
         rejected: (state: ToolInitialState, action) => {
-          state.isLoading = false
-          state.error = action.payload as string
+          state.isLoading = false;
+          state.error = action.payload as string;
         },
-      },
+      }
     ),
+    
 
     searchTools: create.reducer(
       (state: ToolInitialState, action: PayloadAction<string>) => {

@@ -71,7 +71,7 @@ function Advert() {
             <PhotoFrame>
               {toolObj.imageUrls && toolObj.imageUrls.length > 0 ? (
                 <ProductImageControl
-                  src={toolObj.imageUrls[currentImageIndex]} // Поточне зображення
+                  src={toolObj.imageUrls[currentImageIndex]}
                   alt={`Image ${currentImageIndex + 1}`}
                 />
               ) : (

@@ -15,22 +15,24 @@ function MyAdvert() {
   const { userTools, isLoading, error } = useAppSelector(
     toolSliceSelectors.userTools_data,
   )
-console.log(userTools)
+  console.log(userTools)
   useEffect(() => {
     dispatch(toolSliceAction.fetchUserTools())
   }, [dispatch])
 
   const userToolCards = userTools.map(tool => (
     <ToolCard
+      id={tool.id}
       key={tool.id}
-      imageUrls={tool.imageUrls} 
+      imageUrls={tool.imageUrls}
       title={tool.title}
       price={tool.price}
       description={tool.description}
       onAddToCard={() => {}}
       onAddToFavourites={() => {}}
+      isMyAdvert
     />
-  ));
+  ))
 
   return (
     <PageWrapper>
