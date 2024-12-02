@@ -1,10 +1,9 @@
+import React, { ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { ChangeEvent } from 'react'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { AdvertRequestDto } from 'store/redux/addAdvert/types'
 import {
   toolSliceAction,
   toolSliceSelectors,
@@ -12,52 +11,41 @@ import {
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
-import { ButtonControl } from 'components/SignUpForm/styles'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import {
   NewAdvertFormContainer,
   Title,
   InputLabel,
   InputsContainer,
-  TitleContainer,
   DescriptionContainer,
+  ImagePreviewContainer,
+  ImagePreviewWrapper,
+  ButtonControlWrapper,
 } from './styles'
-import { NEWADVERT_FORM_NAMES, AdvertFormProps } from './types'
+import { NEWADVERT_FORM_NAMES } from './types'
 import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 
-function NewAdvertForm({ onCreate }: AdvertFormProps) {
+function NewAdvertForm() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { tools, error, isLoading } = useAppSelector(
-    toolSliceSelectors.tools_data,
-  )
+  const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
 
-  const addImageTool = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0]
-
-      // Создаем локальный превью для отображения
-      const imageURL = URL.createObjectURL(file)
-
-      // Устанавливаем превью изображения
-      const previewElement = document.getElementById(
-        'image-preview',
-      ) as HTMLImageElement
-      if (previewElement) {
-        previewElement.src = imageURL
+  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const files = Array.from(event.target.files)
+      try {
+        const resultAction = await dispatch(toolSliceAction.uploadImage(files))
+        if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
+          const imageUrls = resultAction.payload
+          formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE_URLS, [
+            ...(formik.values.imageUrls || []),
+            ...imageUrls,
+          ])
+        }
+      } catch (error) {
+        console.error('Failed to upload images:', error)
       }
-
-      // Заглушка: используем вашу ссылку на папку Google Drive
-      const googleDriveLink =
-        'https://drive.google.com/drive/u/0/folders/1MNjvF2M6-QciidHp_i5l3VFtiv--U-Js'
-
-      // Здесь вы можете настроить получение ссылки на файл, если используете API Google Drive
-      formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE, googleDriveLink)
-
-      // Очищение локального URL после загрузки превью
-      previewElement.onload = () => URL.revokeObjectURL(imageURL)
     }
   }
 
@@ -75,42 +63,48 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
       .required('Description is required field')
       .min(5, 'The min description length is 5 characters')
       .max(2000, 'The max description length is 2000 characters'),
-    [NEWADVERT_FORM_NAMES.IMAGE]: Yup.string()
-      .url('Image must be a valid URL')
-      .required('Image is required field'),
+    [NEWADVERT_FORM_NAMES.IMAGE_URLS]: Yup.array()
+      .of(Yup.string().url('Image must be a valid URL'))
+      .notRequired(),
   })
 
-  const formik = useFormik({
+  const formik = useFormik<ToolRequestDto>({
     initialValues: {
       [NEWADVERT_FORM_NAMES.TITLE]: '',
       [NEWADVERT_FORM_NAMES.DESCRIPTION]: '',
       [NEWADVERT_FORM_NAMES.STATUS]: 'AVAILABLE',
-      [NEWADVERT_FORM_NAMES.IMAGE]: '',
+      [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [] as string[],
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     validateOnChange: false,
-    onSubmit: (values: ToolRequestDto, helpers) => {
-      console.log(values)
-      dispatch(
-        toolSliceAction.createTool({
-          title: values.title,
-          description: values.description,
-          status: values.status,
-          imageUrl: values.imageUrl,
-          price: values.price,
-        }),
-      )
-      helpers.resetForm()
-      navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
+    onSubmit: async (values, helpers) => {
+      try {
+        const result = await dispatch(
+          toolSliceAction.createTool({
+            title: values.title,
+            description: values.description,
+            status: values.status,
+            price: values.price,
+            imageUrls: values.imageUrls || [],
+          }),
+        )
+
+        if (toolSliceAction.createTool.fulfilled.match(result)) {
+          helpers.resetForm()
+          navigate('/profile/my-adverts')
+        } else {
+          console.error('Failed to create advert:', result.error)
+        }
+      } catch (error) {
+        console.error('Submit error:', error)
+      }
     },
   })
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
-      <TitleContainer>
-        <Title>New Advert</Title>
-      </TitleContainer>
+      <Title>New Advert</Title>
       <InputsContainer>
         <Input
           id="advertform-title"
@@ -121,25 +115,6 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
           error={formik.errors.title}
         />
-        {/* <Input
-          id="advertform-category"
-          label="Category:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
-          type="text"
-          value={formik.values.status}
-          onChange={formik.handleChange}
-         error={formik.errors.status}
-        /> */}
-        {/* <Input
-          id="advertform-status"
-          label="Status:"
-          name={NEWADVERT_FORM_NAMES.STATUS}
-          type="text"
-          value={formik.values.status}
-          onChange={formik.handleChange}
-          error={formik.errors.status}
-
-        /> */}
         <Input
           id="advertform-price"
           label="Price (USD):"
@@ -157,40 +132,25 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           onChange={formik.handleChange}
         />
       </InputsContainer>
-
-      {/* Image Upload and Preview */}
-      <ButtonControl>
-        {/* Превью загруженного изображения */}
-        <img
-          id="image-preview"
-          src=""
-          alt="Preview"
-          style={{
-            maxWidth: '100px',
-            maxHeight: '100px',
-            display: formik.values.imageUrl ? 'block' : 'none',
-          }}
-        />
-
-        {/* Ссылка на Google Drive */}
-        {formik.values.imageUrl && (
-          <div>
-            <a
-              href={formik.values.imageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Image on Google Drive
-            </a>
-          </div>
-        )}
-
-        {/* Скрытый input для загрузки файла */}
+      {formik.values.imageUrls && formik.values.imageUrls.length > 0 && (
+        <ImagePreviewContainer>
+          {formik.values.imageUrls.map((url, index) => (
+            <ImagePreviewWrapper key={index}>
+              <img src={url} alt={`Preview ${index}`} />
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                View Image
+              </a>
+            </ImagePreviewWrapper>
+          ))}
+        </ImagePreviewContainer>
+      )}
+      <ButtonControlWrapper>
         <input
           type="file"
           id="image-upload"
           style={{ display: 'none' }}
           accept="image/*"
+          multiple
           onChange={addImageTool}
         />
         <Button
@@ -198,16 +158,14 @@ function NewAdvertForm({ onCreate }: AdvertFormProps) {
           name="Add the photos"
           onClick={() => document.getElementById('image-upload')?.click()}
         />
-      </ButtonControl>
-      <ButtonControl>
         <Button
           type="submit"
           name={isLoading ? 'Loading advert...' : 'Create new advert'}
-          onClick={onCreate}
           disabled={isLoading}
         />
-      </ButtonControl>
+      </ButtonControlWrapper>
     </NewAdvertFormContainer>
   )
 }
+
 export default NewAdvertForm

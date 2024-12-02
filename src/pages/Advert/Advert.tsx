@@ -9,7 +9,6 @@ import {
   ProductImageControl,
   ProfileImageControl,
   BackButtonControl,
-  // BackButtonWrapper,
 } from './styles'
 import Button from 'components/Button/Button'
 
@@ -22,11 +21,9 @@ import {
   toolSliceAction,
   toolSliceSelectors,
 } from 'store/redux/ToolSlice/toolSlice'
-import { toolSlice } from 'store/redux/ToolSlice/toolSlice'
-import ToolCard from 'components/ToolCard/ToolCard'
 
 function Advert() {
-  const [userData, setUserData] = useState<ToolProps | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Поточний індекс зображення
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
@@ -41,9 +38,20 @@ function Advert() {
     }
   }, [id, dispatch])
 
-  const nextImage = () => {}
+  const nextImage = () => {
+    if (
+      toolObj?.imageUrls &&
+      currentImageIndex < toolObj.imageUrls.length - 1
+    ) {
+      setCurrentImageIndex(currentImageIndex + 1)
+    }
+  }
 
-  const prevImage = () => {}
+  const prevImage = () => {
+    if (toolObj?.imageUrls && currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1)
+    }
+  }
 
   return (
     <PageWrapper>
@@ -61,7 +69,14 @@ function Advert() {
               <Button name="〈" isTransparent onClick={prevImage} />
             </ButtonControl>
             <PhotoFrame>
-              <ProductImageControl src={toolObj.imageUrl} />
+              {toolObj.imageUrls && toolObj.imageUrls.length > 0 ? (
+                <ProductImageControl
+                  src={toolObj.imageUrls[currentImageIndex]} // Поточне зображення
+                  alt={`Image ${currentImageIndex + 1}`}
+                />
+              ) : (
+                <p>No images available</p>
+              )}
             </PhotoFrame>
             <ButtonControl>
               <Button name="〉" isTransparent onClick={nextImage} />
@@ -69,15 +84,10 @@ function Advert() {
           </PhotoWrapper>
           <DescriptionFrame>
             <ToolInfo>
-              <ToolCard
-                // toolId={toolObj.id}
-                title={toolObj.title}
-                price={toolObj.price}
-                description={toolObj.description}
-                // imageUrl={toolObj.imageUrl}
-                onAddToCard={() => console.log('Add to cart')}
-                onAddToFavourites={() => console.log('Add to favourites')}
-              />
+              <h1>{toolObj.title}</h1>
+              <p>{toolObj.description}</p>
+              <p>Price: ${toolObj.price}</p>
+              <p>Status: {toolObj.status}</p>
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} />

@@ -6,13 +6,12 @@ import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
 
 import { toolSlice } from './redux/ToolSlice/toolSlice'
 
-import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
+// import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 
 const rootReducer = combineSlices(
   userSlice,
   signInOutSlice,
-  addAdvertSlice,
-  toolSlice,
+    toolSlice,
 )
 
 export type RootState = ReturnType<typeof rootReducer>

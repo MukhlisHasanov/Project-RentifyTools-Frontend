@@ -20,7 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 function ToolCard({
   toolId,
-  imageUrl,
+  imageUrls,
   title,
   price,
   status,
@@ -49,7 +49,11 @@ function ToolCard({
     <CardWrapper>
       <CardImage
         onClick={() => goAdvertPage(toolId)}
-        src={imageUrl}
+        src={
+          Array.isArray(imageUrls) && imageUrls.length > 0
+            ? imageUrls[0]
+            : '/placeholder.jpg'
+        }
         alt={title}
       />
       <CardContent>
