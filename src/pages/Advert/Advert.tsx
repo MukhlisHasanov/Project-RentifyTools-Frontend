@@ -23,7 +23,7 @@ import {
 } from 'store/redux/ToolSlice/toolSlice'
 
 function Advert() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Поточний індекс зображення
+  const [currentImageIndex, setCurrentImageIndex] = useState(0) 
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
@@ -71,7 +71,7 @@ function Advert() {
             <PhotoFrame>
               {toolObj.imageUrls && toolObj.imageUrls.length > 0 ? (
                 <ProductImageControl
-                  src={toolObj.imageUrls[currentImageIndex]} // Поточне зображення
+                  src={toolObj.imageUrls[currentImageIndex]}
                   alt={`Image ${currentImageIndex + 1}`}
                 />
               ) : (

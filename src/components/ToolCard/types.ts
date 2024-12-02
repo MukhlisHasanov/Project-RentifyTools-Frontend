@@ -1,5 +1,5 @@
 export interface CardProps {
-  toolId?: string
+  id: string
   imageUrls?: string[]
   title: string
   price: string
@@ -7,4 +7,5 @@ export interface CardProps {
   description: string
   onAddToCard: () => void
   onAddToFavourites: () => void
+  isMyAdvert?: boolean
 }
