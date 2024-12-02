@@ -7,7 +7,7 @@ import { UserContainer, UserDetails, UserActions } from './styles'
 import { UserProps } from './types'
 import { UserName } from 'components/LayoutProfile/styles'
 import { UserInfo } from './styles'
-import { useState, useEffect } from 'react'
+import { colors } from 'styles/colors'
 
 function UserCard({ userData, error }: UserProps) {
   const navigate = useNavigate()
@@ -25,10 +25,16 @@ function UserCard({ userData, error }: UserProps) {
       </UserDetails>
 
       <UserActions>
-        <IconButton onClick={()  => navigate('/edit-profile')} color="warning" >
+        <IconButton
+          onClick={() => navigate('/edit-profile')}
+          sx={{ color: colors.BUTTON }}
+        >
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => console.log('Delete user')} color="warning">
+        <IconButton
+          onClick={() => console.log('Delete user')}
+          sx={{ color: colors.BUTTON }}
+        >
           <DeleteIcon />
         </IconButton>
       </UserActions>

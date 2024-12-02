@@ -23,7 +23,7 @@ import {
 } from 'store/redux/ToolSlice/toolSlice'
 
 function Advert() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Поточний індекс зображення
+  const [currentImageIndex, setCurrentImageIndex] = useState(0) 
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
