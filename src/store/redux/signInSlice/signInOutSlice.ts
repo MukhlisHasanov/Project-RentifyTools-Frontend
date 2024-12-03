@@ -9,9 +9,9 @@ const token = localStorage.getItem('accessToken')
 const saveUser = localStorage.getItem('user')
 
 const loginDataInitialState: LoginInitialState = {
-  user: saveUser ? JSON.parse(saveUser) : undefined,
+  user: undefined,
   isLoading: false,
-  isAuthenticated: !!saveUser,
+  isAuthenticated: false,
   error: undefined,
 }
 
@@ -39,6 +39,7 @@ export const signInOutSlice = createAppSlice({
           return rejectWithValue('Incorrect password or email address')
         }
       },
+      
       {
         pending: (state: LoginInitialState) => {
           state.isLoading = true
@@ -48,7 +49,6 @@ export const signInOutSlice = createAppSlice({
         fulfilled: (state: LoginInitialState, action) => {
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
-          localStorage.setItem('user', JSON.stringify(action.payload.user))
           state.isLoading = false
           state.isAuthenticated = true
           state.user = action.payload.user
@@ -64,7 +64,6 @@ export const signInOutSlice = createAppSlice({
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
-      localStorage.removeItem('user')
       state.user = undefined
       state.isAuthenticated = false
       state.error = undefined
@@ -94,7 +93,6 @@ export const signInOutSlice = createAppSlice({
         fulfilled: (state: LoginInitialState, action) => {
           state.isLoading = false
           state.user = action.payload
-          localStorage.setItem('user', JSON.stringify(action.payload))
         },
         rejected: (state: LoginInitialState, action) => {
           state.isLoading = false
@@ -114,8 +112,3 @@ export const signInOutSlice = createAppSlice({
 
 export const signInOutSliceAction = signInOutSlice.actions
 export const signInOutSliceSelectors = signInOutSlice.selectors
-
-const tokenUser = localStorage.getItem('accessToken')
-if (tokenUser) {
-  signInOutSliceAction.getCurrentUser()
-}
