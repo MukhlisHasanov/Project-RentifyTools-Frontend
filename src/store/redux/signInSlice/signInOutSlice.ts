@@ -3,15 +3,17 @@ import { jwtDecode } from 'jwt-decode'
 import { createAppSlice } from 'store/createAppSlice'
 
 import { LoginInitialState, LoginRequestDto } from './types'
-
-const loginDataInitialState: LoginInitialState = {
-  user: undefined,
-  isLoading: false,
-  isAuthenticated: false,
-  error: undefined,
-}
+import { stat } from 'fs'
 
 const token = localStorage.getItem('accessToken')
+const saveUser = localStorage.getItem('user')
+
+const loginDataInitialState: LoginInitialState = {
+  user: saveUser ? JSON.parse(saveUser) : undefined,
+  isLoading: false,
+  isAuthenticated: !!saveUser,
+  error: undefined,
+}
 
 export const signInOutSlice = createAppSlice({
   name: 'LOGIN_USER',
@@ -46,8 +48,10 @@ export const signInOutSlice = createAppSlice({
         fulfilled: (state: LoginInitialState, action) => {
           localStorage.setItem('accessToken', action.payload.accessToken)
           localStorage.setItem('refreshToken', action.payload.refreshToken)
+          localStorage.setItem('user', JSON.stringify(action.payload.user))
           state.isLoading = false
           state.isAuthenticated = true
+          state.user = action.payload.user
           state.error = undefined
         },
         rejected: (state: LoginInitialState, action) => {
@@ -60,6 +64,7 @@ export const signInOutSlice = createAppSlice({
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
+      localStorage.removeItem('user')
       state.user = undefined
       state.isAuthenticated = false
       state.error = undefined
@@ -89,6 +94,7 @@ export const signInOutSlice = createAppSlice({
         fulfilled: (state: LoginInitialState, action) => {
           state.isLoading = false
           state.user = action.payload
+          localStorage.setItem('user', JSON.stringify(action.payload))
         },
         rejected: (state: LoginInitialState, action) => {
           state.isLoading = false
@@ -108,3 +114,8 @@ export const signInOutSlice = createAppSlice({
 
 export const signInOutSliceAction = signInOutSlice.actions
 export const signInOutSliceSelectors = signInOutSlice.selectors
+
+const tokenUser = localStorage.getItem('accessToken')
+if (tokenUser) {
+  signInOutSliceAction.getCurrentUser()
+}
