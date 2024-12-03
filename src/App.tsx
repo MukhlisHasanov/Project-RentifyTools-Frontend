@@ -11,11 +11,13 @@ import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
-import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+// import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
+import Messages from 'pages/Messages/Messages'
+import InboxMessage from 'components/InboxMessage/InboxMessage'
 
 function App() {
   return (
@@ -33,12 +35,12 @@ function App() {
           <Route path={TOOLS_APP_ROUTES.TOOLS} element={<Advert />} />
           <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
-            <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
+            <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<Messages />} />
             <Route path={TOOLS_APP_ROUTES.MY_ADVERTS} element={<MyAdvert />} />
-            <Route
+            {/* <Route
               path={TOOLS_APP_ROUTES.CHANGE_ADVERTS}
               element={<ChangeAdvertForm />}
-            />
+            /> */}
             <Route path={TOOLS_APP_ROUTES.FAVOURITES} element={<HomePlug />} />
             <Route
               path={TOOLS_APP_ROUTES.RENTED_TOOLS}

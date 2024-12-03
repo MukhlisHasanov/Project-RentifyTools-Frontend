@@ -47,6 +47,7 @@ function Layout() {
   return (
     <LayoutWrapper>
       <Header
+        onSearch={() => {}}
         isLogin={isLogin}
         toolName={toolName}
         onChangeValue={onChangeValue}

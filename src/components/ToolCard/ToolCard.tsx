@@ -1,3 +1,15 @@
+import { useNavigate } from 'react-router-dom'
+import { IconButton } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
+
+import { useAppDispatch } from 'store/hooks'
+import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
+
+import { colors } from 'styles/colors'
+
 import {
   CardContent,
   CardDescription,
@@ -8,16 +20,7 @@ import {
   CardTitle,
   CardWrapper,
 } from './styles'
-import { useAppDispatch } from 'store/hooks'
-import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
 import { CardProps } from './types'
-import { useNavigate } from 'react-router-dom'
-import { IconButton } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import { colors } from 'styles/colors'
 
 function ToolCard({
   id,
@@ -71,7 +74,7 @@ function ToolCard({
       />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>
-        <CardPrice>Price: {price}</CardPrice>
+        <CardPrice>Price: {price} $</CardPrice>
         <CardStatus>Status: {status}</CardStatus>
         <CardDescription>Description: {description}</CardDescription>
         <CardIcons>
@@ -104,7 +107,7 @@ function ToolCard({
               <IconButton
                 onClick={onAddToFavourites}
                 sx={{ color: colors.BUTTON }}
-                aria-label="addToFavorite"
+                aria-label="addToFavourite"
               >
                 <FavoriteIcon />
               </IconButton>

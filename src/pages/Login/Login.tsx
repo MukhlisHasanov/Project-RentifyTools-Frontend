@@ -21,21 +21,18 @@ function Login() {
   const isRegistered = Boolean(localStorage.getItem('accessToken'))
 
   const [isSignInMode, setIsSignInMode] = useState<boolean>(true)
-  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false)
+ 
 
   const onSignUpClick = () => setIsSignInMode(false)
   const onSignInClick = () => setIsSignInMode(true)
 
   const registrationSuccess = () => {
     setIsSignInMode(true)
-    setShowSuccessMessage(true)
-    setTimeout(() => setShowSuccessMessage(false), 3000)
+    
   }
   return (
     <PageWrapper>
-      {showSuccessMessage && (
-        <SuccessMessage>Registration successful! Please sign in</SuccessMessage>
-      )}
+     
 
       {isSignInMode || isRegistered ? (
         <SignInForm onSwitchToSignUp={onSignUpClick} />

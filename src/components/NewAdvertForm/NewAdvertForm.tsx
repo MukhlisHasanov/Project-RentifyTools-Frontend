@@ -137,9 +137,6 @@ function NewAdvertForm() {
           {formik.values.imageUrls.map((url, index) => (
             <ImagePreviewWrapper key={index}>
               <img src={url} alt={`Preview ${index}`} />
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                View Image
-              </a>
             </ImagePreviewWrapper>
           ))}
         </ImagePreviewContainer>
