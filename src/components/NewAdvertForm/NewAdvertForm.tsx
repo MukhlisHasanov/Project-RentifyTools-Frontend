@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -19,54 +19,55 @@ import {
   InputsContainer,
   DescriptionContainer,
   ImagePreviewContainer,
-  ImagePreviewWrapper,
   ButtonControlWrapper,
 } from './styles'
 import { NEWADVERT_FORM_NAMES } from './types'
 import { ToolRequestDto } from 'store/redux/ToolSlice/types'
+import ImagePreviewList from './ImagePrevievList'
 
 function NewAdvertForm() {
+  const [localImages, setLocalImages] = useState<File[]>([])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
 
-  const addImageTool = async (event: ChangeEvent<HTMLInputElement>) => {
+  const addLocalImages = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const files = Array.from(event.target.files)
-      try {
-        const resultAction = await dispatch(toolSliceAction.uploadImage(files))
-        if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
-          const imageUrls = resultAction.payload
-          formik.setFieldValue(NEWADVERT_FORM_NAMES.IMAGE_URLS, [
-            ...(formik.values.imageUrls || []),
-            ...imageUrls,
-          ])
-        }
-      } catch (error) {
-        console.error('Failed to upload images:', error)
+      const validFiles = files.filter(file => file.size <= 10 * 1024 * 1024)
+      if (validFiles.length < files.length) {
+        alert('Some files are too large and were not added.')
       }
+      setLocalImages(prev => [...prev, ...validFiles])
     }
   }
 
-  const validationSchema = Yup.object().shape({
-    [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
-      .required('Title is required field')
-      .min(2, 'The min title length is 2 characters')
-      .max(50, 'The max title length is 50 characters'),
-    [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
-      .typeError('Price must be a number')
-      .required('Price is required field')
-      .min(0, 'Price must be at least 0')
-      .max(500000, 'Price can not exceed 500,000'),
-    [NEWADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
-      .required('Description is required field')
-      .min(5, 'The min description length is 5 characters')
-      .max(2000, 'The max description length is 2000 characters'),
-    [NEWADVERT_FORM_NAMES.IMAGE_URLS]: Yup.array()
-      .of(Yup.string().url('Image must be a valid URL'))
-      .notRequired(),
-  })
+  const removeLocalImage = (index: number) => {
+    setLocalImages(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const uploadImages = async () => {
+    if (localImages.length === 0) {
+      alert('Please add images to upload.')
+      return []
+    }
+
+    try {
+      const resultAction = await dispatch(
+        toolSliceAction.uploadImage(localImages),
+      )
+      if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
+        return resultAction.payload
+      } else {
+        console.error('Failed to upload images:', resultAction.error)
+        return []
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+      return []
+    }
+  }
 
   const formik = useFormik<ToolRequestDto>({
     initialValues: {
@@ -76,28 +77,44 @@ function NewAdvertForm() {
       [NEWADVERT_FORM_NAMES.IMAGE_URLS]: [] as string[],
       [NEWADVERT_FORM_NAMES.PRICE]: '',
     },
-    validationSchema,
+    validationSchema: Yup.object().shape({
+      [NEWADVERT_FORM_NAMES.TITLE]: Yup.string()
+        .required('Title is required field')
+        .min(2, 'The min title length is 2 characters')
+        .max(50, 'The max title length is 50 characters'),
+      [NEWADVERT_FORM_NAMES.PRICE]: Yup.number()
+        .typeError('Price must be a number')
+        .required('Price is required field')
+        .min(0, 'Price must be at least 0')
+        .max(500000, 'Price can not exceed 500,000'),
+      [NEWADVERT_FORM_NAMES.DESCRIPTION]: Yup.string()
+        .required('Description is required field')
+        .min(5, 'The min description length is 5 characters')
+        .max(2000, 'The max description length is 2000 characters'),
+    }),
     validateOnChange: false,
     onSubmit: async (values, helpers) => {
-      try {
-        const result = await dispatch(
-          toolSliceAction.createTool({
-            title: values.title,
-            description: values.description,
-            status: values.status,
-            price: values.price,
-            imageUrls: values.imageUrls || [],
-          }),
-        )
+      const uploadedUrls = await uploadImages()
+      if (uploadedUrls.length > 0) {
+        try {
+          const result = await dispatch(
+            toolSliceAction.createTool({
+              ...values,
+              imageUrls: uploadedUrls,
+            }),
+          )
 
-        if (toolSliceAction.createTool.fulfilled.match(result)) {
-          helpers.resetForm()
-          navigate('/profile/my-adverts')
-        } else {
-          console.error('Failed to create advert:', result.error)
+          if (toolSliceAction.createTool.fulfilled.match(result)) {
+            helpers.resetForm()
+            navigate('/profile/my-adverts')
+          } else {
+            console.error('Failed to create advert:', result.error)
+          }
+        } catch (error) {
+          console.error('Submit error:', error)
         }
-      } catch (error) {
-        console.error('Submit error:', error)
+      } else {
+        alert('No images uploaded. Cannot create advert.')
       }
     },
   })
@@ -132,16 +149,9 @@ function NewAdvertForm() {
           onChange={formik.handleChange}
         />
       </InputsContainer>
-      {formik.values.imageUrls && formik.values.imageUrls.length > 0 && (
+      {localImages.length > 0 && (
         <ImagePreviewContainer>
-          {formik.values.imageUrls.map((url, index) => (
-            <ImagePreviewWrapper key={index}>
-              <img src={url} alt={`Preview ${index}`} />
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                View Image
-              </a>
-            </ImagePreviewWrapper>
-          ))}
+          <ImagePreviewList images={localImages} onRemove={removeLocalImage} />
         </ImagePreviewContainer>
       )}
       <ButtonControlWrapper>
@@ -151,7 +161,7 @@ function NewAdvertForm() {
           style={{ display: 'none' }}
           accept="image/*"
           multiple
-          onChange={addImageTool}
+          onChange={addLocalImages}
         />
         <Button
           type="button"
