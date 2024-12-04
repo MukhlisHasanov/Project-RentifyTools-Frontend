@@ -3,6 +3,10 @@ import { jwtDecode } from 'jwt-decode'
 import { createAppSlice } from 'store/createAppSlice'
 
 import { LoginInitialState, LoginRequestDto } from './types'
+import { stat } from 'fs'
+
+const token = localStorage.getItem('accessToken')
+const saveUser = localStorage.getItem('user')
 
 const loginDataInitialState: LoginInitialState = {
   user: undefined,
@@ -10,8 +14,6 @@ const loginDataInitialState: LoginInitialState = {
   isAuthenticated: false,
   error: undefined,
 }
-
-const token = localStorage.getItem('accessToken')
 
 export const signInOutSlice = createAppSlice({
   name: 'LOGIN_USER',
@@ -37,6 +39,7 @@ export const signInOutSlice = createAppSlice({
           return rejectWithValue('Incorrect password or email address')
         }
       },
+      
       {
         pending: (state: LoginInitialState) => {
           state.isLoading = true
@@ -48,6 +51,7 @@ export const signInOutSlice = createAppSlice({
           localStorage.setItem('refreshToken', action.payload.refreshToken)
           state.isLoading = false
           state.isAuthenticated = true
+          state.user = action.payload.user
           state.error = undefined
         },
         rejected: (state: LoginInitialState, action) => {
