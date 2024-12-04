@@ -8,10 +8,10 @@ import MyAdvert from 'pages/MyAdvert/MyAdvert'
 import SignUpForm from 'pages/Login/Login'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
-import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
+// import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
-import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+// import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
@@ -35,10 +35,10 @@ function App() {
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
             <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
             <Route path={TOOLS_APP_ROUTES.MY_ADVERTS} element={<MyAdvert />} />
-            <Route
+            {/* <Route
               path={TOOLS_APP_ROUTES.CHANGE_ADVERTS}
               element={<ChangeAdvertForm />}
-            />
+            /> */}
             <Route path={TOOLS_APP_ROUTES.FAVOURITES} element={<HomePlug />} />
             <Route
               path={TOOLS_APP_ROUTES.RENTED_TOOLS}
