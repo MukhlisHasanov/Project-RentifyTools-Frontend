@@ -72,12 +72,13 @@ function Home() {
 
   const toolCards = tools.map(tool => (
     <ToolCard
-      toolId={tool.id}
+      id={tool.id}
       key={tool.id}
-      imageUrl={tool.imageUrl}
+      imageUrls={tool.imageUrls}
       title={tool.title}
       price={tool.price}
       description={tool.description}
+      status={tool.status}
       onAddToCard={() => {}}
       onAddToFavourites={() => {}}
     />

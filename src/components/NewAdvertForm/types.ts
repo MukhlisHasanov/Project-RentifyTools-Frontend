@@ -2,12 +2,17 @@ export enum NEWADVERT_FORM_NAMES {
   TITLE = 'title',
   DESCRIPTION = 'description',
   STATUS = 'status',
-  IMAGE = 'imageUrl',
+  IMAGE_URLS = 'imageUrls',
   PRICE = 'price',
-  // CATEGORY = "category",
 }
 
 export interface AdvertFormProps {
   onCreate?: () => void
   isProductsPage?: boolean
+}
+
+
+export interface ImagePreviewListProps {
+  images: File[];
+  onRemove: (index: number) => void;
 }

@@ -44,7 +44,41 @@ export const HeaderLink = styled(NavLink)`
   border-radius: 20px;
 
   &.active {
-    font-weight: bold;
+    font-weight: 'bold';
+    color: ${colors.BUTTON};
+  }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-right: 10px;
+  }
+`
+
+export const LogoutContainer = styled.div`
+  font-size: 20px;
+  font-weight: 400px;
+  text-decoration: none;
+  line-height: 24.2px;
+  color: ${colors.WHITE};
+  margin-right: 50px;
+  border-radius: 20px;
+
+  &.active {
+    font-weight: 'bold';
+    color: ${colors.BUTTON};
+  }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-right: 10px;
   }
 `
 export const SearchContainer = styled.div`

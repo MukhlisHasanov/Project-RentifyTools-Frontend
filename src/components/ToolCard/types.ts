@@ -1,10 +1,11 @@
 export interface CardProps {
-  toolId?: string | undefined
+  id: string
+  imageUrls?: string[]
   title: string
   price: string
-  description: string
-  imageUrl?: string | undefined
   status?: string
-  onAddToCard?: () => void
-  onAddToFavourites?: () => void
+  description: string
+  onAddToCard: () => void
+  onAddToFavourites: () => void
+  isMyAdvert?: boolean
 }
