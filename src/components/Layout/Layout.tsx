@@ -49,8 +49,9 @@ function Layout() {
       <Header
         isLogin={isLogin}
         toolName={toolName}
-        onChangeValue={onChangeValue}
-      />
+        onChangeValue={onChangeValue} onSearch={function (): void {
+          throw new Error('Function not implemented.')
+        } }      />
       <AppMain>
         <Outlet />
       </AppMain>
