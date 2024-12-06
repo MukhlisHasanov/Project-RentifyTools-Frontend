@@ -7,7 +7,7 @@ import { ImagePreviewListProps } from './types'
 function ImagePreviewList({ images, onRemove }: ImagePreviewListProps) {
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
-      {images.map((file, index) => (
+      {images.map((image, index) => (
         <Box key={index} sx={{ textAlign: 'center', maxWidth: 120 }}>
           <Card
             sx={{
@@ -25,7 +25,7 @@ function ImagePreviewList({ images, onRemove }: ImagePreviewListProps) {
           >
             <CardMedia
               component="img"
-              image={URL.createObjectURL(file)}
+              image={image instanceof File ? URL.createObjectURL(image) : image}
               alt={`Preview ${index}`}
               sx={{
                 maxWidth: '100%',
@@ -40,7 +40,7 @@ function ImagePreviewList({ images, onRemove }: ImagePreviewListProps) {
                 color: colors.BUTTON,
                 fontSize: 20,
               }}
-              href={URL.createObjectURL(file)}
+              href={image instanceof File ? URL.createObjectURL(image) : image}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="open"
