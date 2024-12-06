@@ -11,8 +11,7 @@ export interface AdvertFormProps {
   isProductsPage?: boolean
 }
 
-
 export interface ImagePreviewListProps {
-  images: File[];
-  onRemove: (index: number) => void;
+  images: (string | File)[]
+  onRemove: (index: number) => void
 }

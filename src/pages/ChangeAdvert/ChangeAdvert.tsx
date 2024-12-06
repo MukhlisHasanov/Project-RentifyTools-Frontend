@@ -1,34 +1,13 @@
-// import { useNavigate } from 'react-router-dom'
-// import { useState, ChangeEvent, useEffect } from 'react'
+import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+import { PageWrapper, PageTitle } from './styles'
 
-// import { useAppDispatch, useAppSelector } from 'store/hooks'
+function ChangeAdvert() {
+  return (
+    <PageWrapper>
+      <PageTitle>Edit Your Advert</PageTitle>
+      <ChangeAdvertForm />
+    </PageWrapper>
+  )
+}
 
-// import {
-//   addAdvertSliceSelectors,
-//   addAdvertSliceAction,
-// } from 'store/redux/addAdvert/addAdvertSlice'
-// import { AdvertResponseDto } from 'store/redux/addAdvert/types'
-// import ChangeAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
-
-// import { PageWrapper } from './styles'
-// import {
-//   toolSliceAction,
-//   toolSliceSelectors,
-// } from 'store/redux/ToolSlice/toolSlice'
-
-// function ChangeAdvert() {
-//   const dispatch = useAppDispatch()
-//   const { userAdverts, error, isLoading } = useAppSelector(
-//     addAdvertSliceSelectors.userAdverts_data,
-//   )
-
-//   // const changeAdvert = ()=>{
-//   //   dispatch(toolSliceAction.updateTool())
-//   // }
-//   return (
-//     <PageWrapper>
-//       <ChangeAdvertForm />
-//     </PageWrapper>
-//   )
-// }
-// export default ChangeAdvert
+export default ChangeAdvert

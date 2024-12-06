@@ -38,7 +38,7 @@ function ToolCard({
 
   const handleEdit = () => {
     console.log('Edit button clicked')
-    navigate(`change/edit/${id}`)
+    navigate(`/profile/my-adverts/change-advert/${id}`)
   }
 
   const dispatch = useAppDispatch()
