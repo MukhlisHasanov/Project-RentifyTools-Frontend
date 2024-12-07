@@ -57,12 +57,10 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
-      console.log(values)
       dispatch(signInOutSliceAction.loginUser(values))
         .unwrap()
         .then(() => {
           dispatch(signInOutSliceAction.getCurrentUser())
-          console.log(user)
           enqueueSnackbar('Login successful !', { variant: 'success' })
           setTimeout(() => {
             helpers.resetForm()

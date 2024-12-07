@@ -3,13 +3,14 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { IconButton } from '@mui/material'
 
-import { UserContainer, UserDetails, UserActions } from './styles'
-import { UserProps } from './types'
 import { UserName } from 'components/LayoutProfile/styles'
-import { UserInfo } from './styles'
 import { colors } from 'styles/colors'
 
-function UserCard({ userData, error }: UserProps) {
+import { UserContainer, UserDetails, UserActions } from './styles'
+import { UserProps } from './types'
+import { UserInfo } from './styles'
+
+function UserCard({ userData}: UserProps) {
   const navigate = useNavigate()
 
   return (
