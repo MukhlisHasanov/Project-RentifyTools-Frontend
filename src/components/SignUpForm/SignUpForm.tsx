@@ -29,7 +29,7 @@ function SignUpForm({
   onRegistrationSuccess,
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
-  const { error,isLoading } = useAppSelector(userSliceSelectors.user_data)
+  const { isLoading } = useAppSelector(userSliceSelectors.user_data)
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
@@ -86,7 +86,6 @@ function SignUpForm({
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
-      console.log(values)
       const { repeatPassword, ...userData } = values
       dispatch(userSliceAction.createUser(userData))
         .unwrap()
@@ -108,7 +107,6 @@ function SignUpForm({
   })
 
   return (
-    <SnackbarProvider maxSnack={3}>
       <SignUpFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
           <Title $isActive={false} onClick={onSwitchToSignIn}>
@@ -184,7 +182,6 @@ function SignUpForm({
           Privacy Policy
         </Text>
       </SignUpFormContainer>
-    </SnackbarProvider>
   )
 }
 export default SignUpForm

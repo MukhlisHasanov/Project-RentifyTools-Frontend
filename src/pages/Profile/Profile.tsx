@@ -2,17 +2,11 @@ import { useAppSelector } from 'store/hooks'
 
 import { PageWrapper, ProfileContainer } from './styles'
 
-import UserCard from 'components/UseCard/UserCard'
+import UserCard from 'components/UserCard/UserCard'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
-import { useEffect } from 'react'
 
 function Profile() {
-  
   const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
-
-
-
-
 
   console.log(user)
   return (
@@ -26,4 +20,3 @@ function Profile() {
   )
 }
 export default Profile
-

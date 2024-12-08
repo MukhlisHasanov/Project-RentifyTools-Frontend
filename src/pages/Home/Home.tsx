@@ -53,7 +53,7 @@ const imagesWithTitles = [
 function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { tools, isLoading, error } = useAppSelector(
+  const { tools} = useAppSelector(
     toolSliceSelectors.tools_data,
   )
 
