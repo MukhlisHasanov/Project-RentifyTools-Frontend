@@ -1,16 +1,16 @@
-import { ChangeEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
+import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice';
 
-import Input from 'components/Input/Input'
-import Button from 'components/Button/Button'
+import Input from 'components/Input/Input';
+import Button from 'components/Button/Button';
 
 import {
   NewAdvertFormContainer,
@@ -20,54 +20,53 @@ import {
   DescriptionContainer,
   ImagePreviewContainer,
   ButtonControlWrapper,
-} from './styles'
-import { NEWADVERT_FORM_NAMES } from './types'
-import { ToolRequestDto } from 'store/redux/ToolSlice/types'
-import ImagePreviewList from './ImagePrevievList'
+} from './styles';
+import { NEWADVERT_FORM_NAMES } from './types';
+import { ToolRequestDto } from 'store/redux/ToolSlice/types';
+import ImagePreviewList from './ImagePrevievList';
 
 function NewAdvertForm() {
-  const [localImages, setLocalImages] = useState<File[]>([])
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const [localImages, setLocalImages] = useState<File[]>([]);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
+  const { isLoading } = useAppSelector(toolSliceSelectors.tools_data);
 
   const addLocalImages = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      const files = Array.from(event.target.files)
-      const validFiles = files.filter(file => file.size <= 10 * 1024 * 1024)
+      const files = Array.from(event.target.files);
+      const validFiles = files.filter(file => file.size <= 10 * 1024 * 1024);
       if (validFiles.length < files.length) {
-        alert('Some files are too large and were not added.')
+        alert('Some files are too large and were not added.');
       }
-      setLocalImages(prev => [...prev, ...validFiles])
+      setLocalImages(prev => [...prev, ...validFiles]);
     }
-  }
+  };
 
   const removeLocalImage = (index: number) => {
-    setLocalImages(prev => prev.filter((_, i) => i !== index))
-  }
+    setLocalImages(prev => prev.filter((_, i) => i !== index));
+  };
 
-  const uploadImages = async () => {
+  const uploadImages = async (): Promise<string[]> => {
     if (localImages.length === 0) {
-      alert('Please add images to upload.')
-      return []
+      return []; // Якщо немає фото, повертаємо порожній масив
     }
 
     try {
       const resultAction = await dispatch(
         toolSliceAction.uploadImage(localImages),
-      )
+      );
       if (toolSliceAction.uploadImage.fulfilled.match(resultAction)) {
-        return resultAction.payload
+        return resultAction.payload;
       } else {
-        console.error('Failed to upload images:', resultAction.error)
-        return []
+        console.error('Failed to upload images:', resultAction.error);
+        return [];
       }
     } catch (error) {
-      console.error('Upload error:', error)
-      return []
+      console.error('Upload error:', error);
+      return [];
     }
-  }
+  };
 
   const formik = useFormik<ToolRequestDto>({
     initialValues: {
@@ -94,30 +93,26 @@ function NewAdvertForm() {
     }),
     validateOnChange: false,
     onSubmit: async (values, helpers) => {
-      const uploadedUrls = await uploadImages()
-      if (uploadedUrls.length > 0) {
-        try {
-          const result = await dispatch(
-            toolSliceAction.createTool({
-              ...values,
-              imageUrls: uploadedUrls,
-            }),
-          )
+      try {
+        const uploadedUrls = await uploadImages();
+        const result = await dispatch(
+          toolSliceAction.createTool({
+            ...values,
+            imageUrls: uploadedUrls,
+          }),
+        );
 
-          if (toolSliceAction.createTool.fulfilled.match(result)) {
-            helpers.resetForm()
-            navigate('/profile/my-adverts')
-          } else {
-            console.error('Failed to create advert:', result.error)
-          }
-        } catch (error) {
-          console.error('Submit error:', error)
+        if (toolSliceAction.createTool.fulfilled.match(result)) {
+          helpers.resetForm();
+          navigate('/profile/my-adverts');
+        } else {
+          console.error('Failed to create advert:', result.error);
         }
-      } else {
-        alert('No images uploaded. Cannot create advert.')
+      } catch (error) {
+        console.error('Submit error:', error);
       }
     },
-  })
+  });
 
   return (
     <NewAdvertFormContainer onSubmit={formik.handleSubmit}>
@@ -175,7 +170,7 @@ function NewAdvertForm() {
         />
       </ButtonControlWrapper>
     </NewAdvertFormContainer>
-  )
+  );
 }
 
-export default NewAdvertForm
+export default NewAdvertForm;
