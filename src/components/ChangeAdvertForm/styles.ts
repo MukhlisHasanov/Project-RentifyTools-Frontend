@@ -15,6 +15,14 @@ export const ChangeAdvertFormContainer = styled.form`
   background: ${colors.HEADER};
   gap: 20px;
 `
+
+export const ButtonControlWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+  align-items: center;
+`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;

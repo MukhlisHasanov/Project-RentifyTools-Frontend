@@ -17,13 +17,20 @@ import { UserImg } from 'assets'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors, signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
+import { useEffect } from 'react'
 
 function LayoutProfile() {
   const navigate = useNavigate()
 
   const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(signInOutSliceAction.getCurrentUser())
+    }
+  }, [user, dispatch])
 
   const goToProfile = () => {
     navigate(TOOLS_APP_ROUTES.PROFILE)

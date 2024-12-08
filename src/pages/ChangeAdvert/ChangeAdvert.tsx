@@ -1,30 +1,13 @@
-import { useNavigate } from 'react-router-dom'
-
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-
-import {
-  toolSliceSelectors,
-  toolSliceAction,
-} from 'store/redux/ToolSlice/toolSlice'
-
-import ChangeAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
-
-import { PageWrapper } from './styles'
-
+import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+import { PageWrapper, PageTitle } from './styles'
 
 function ChangeAdvert() {
-  const dispatch = useAppDispatch()
-  const { userTools, error, isLoading } = useAppSelector(
-    toolSliceSelectors.userTools_data,
-  )
-
-  // const changeAdvert = ()=>{
-  //   dispatch(toolSliceAction.updateTool())
-  // }
   return (
     <PageWrapper>
+      <PageTitle>Edit Your Advert</PageTitle>
       <ChangeAdvertForm />
     </PageWrapper>
   )
 }
+
 export default ChangeAdvert

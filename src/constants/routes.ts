@@ -5,7 +5,7 @@ export enum TOOLS_APP_ROUTES {
   PROFILE = '/profile',
   MESSAGES = '/profile/messages',
   MY_ADVERTS = '/profile/my-adverts',
-  CHANGE_ADVERTS = '/profile/my-adverts',
+  CHANGE_ADVERTS = '/profile/my-adverts/change-advert',
   FAVOURITES = '/profile/favourites',
   RENTED_TOOLS = '/profile/rented-tools',
   FIND_USERS = '/profile/find-users',
