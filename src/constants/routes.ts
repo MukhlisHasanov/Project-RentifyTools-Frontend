@@ -5,7 +5,7 @@ export enum TOOLS_APP_ROUTES {
   PROFILE = '/profile',
   MESSAGES = '/profile/messages',
   MY_ADVERTS = '/profile/my-adverts',
-  CHANGE_ADVERTS = '/profile/my-adverts/change-advert',
+  CHANGE_ADVERTS = '/profile/my-adverts',
   FAVOURITES = '/profile/favourites',
   RENTED_TOOLS = '/profile/rented-tools',
   HELP = '/help',
@@ -19,4 +19,5 @@ export enum TOOLS_APP_ROUTES {
   NOT_FOUND = '*',
   TOOLS = '/tools',
   SEARCH_RESULTS = '/search-results',
+  CHANGE_USER = "/profile/chage-user"
 }

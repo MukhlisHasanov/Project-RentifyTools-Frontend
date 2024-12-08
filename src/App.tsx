@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
-
+import ChangeUser from 'pages/ChangeUser/ChangeUser'
 import Layout from 'components/Layout/Layout'
 import LayoutProfile from 'components/LayoutProfile/LayoutProfile'
 import Home from 'pages/Home/Home'
@@ -11,7 +11,7 @@ import NewAdvertForm from 'components/NewAdvertForm/NewAdvertForm'
 // import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
 import SignInForm from 'components/SignInForm/SignInForm'
-// import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
@@ -42,6 +42,7 @@ function App() {
                 path={TOOLS_APP_ROUTES.MY_ADVERTS}
                 element={<MyAdvert />}
               />
+              <Route path={'/profile/change-user'} element={<ChangeUser/>}/>
               <Route
                 path={'/profile/my-adverts/change-advert/:id'}
                 element={<ChangeAdvertForm />}

@@ -33,6 +33,11 @@ function UserCard({ userData, error }: UserProps) {
     }
   }
 
+  const handleUpdate = () => {
+    
+    navigate('/profile/change-user')
+  }
+
   return (
     <UserContainer>
       <UserDetails>
@@ -47,8 +52,8 @@ function UserCard({ userData, error }: UserProps) {
 
       <UserActions>
         <IconButton
-          onClick={() => navigate('/edit-profile')}
-          sx={{ color: colors.BUTTON }}
+            onClick={handleUpdate} 
+            sx={{ color: colors.BUTTON }}
         >
           <EditIcon />
         </IconButton>
