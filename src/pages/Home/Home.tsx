@@ -108,13 +108,13 @@ console.log(imageContainers)
   return (
     <PageWrapper>
       {selectCategory ? (
-        <CategoryContainer>
+        <>
           <PageTitle>
             {categories.find(category => category.id === selectCategory)?.title}
           </PageTitle>
           <BackButtonControl onClick={handleBack}>Back</BackButtonControl>
           <CardsContainer>{toolCards}</CardsContainer>
-        </CategoryContainer>
+        </>
       ) : (
         <>
           <CategoryContainer>
