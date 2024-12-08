@@ -16,13 +16,15 @@ import {
   TitleContainer,
   Title,
   ButtonControl,
-  UserContainer,
+  CardsContainer,
+  CardWrapper,
   UserDetails,
   UserInfo,
 } from './styles'
 import { SearchUserRequestDto } from 'store/redux/adminSlice/types'
+import { FindUsersProps } from 'components/FindUserForm/types'
 
-function FindUsers() {
+function FindUsers({onSearch}:FindUsersProps) {
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -39,14 +41,14 @@ function FindUsers() {
     }
   }, [isAdmin, dispatch])
 
-//   useEffect(() => {
-//     if (!isAdmin) {
-//       dispatch(adminSliceAction.searchUsers())
-//     }
-//   }, [isAdmin, dispatch])
+  // useEffect(() => {
+   
+  //     dispatch(adminSliceAction.searchUsers(user.id))
 
-  const onSearchUsers = (searchParams: SearchUserRequestDto) => {
-    dispatch(adminSliceAction.searchUsers(searchParams))
+  // }, [dispatch])
+
+  const onSearchUsers = () => {
+    dispatch(adminSliceAction.searchUsers())
   }
 
   const onDeleteUser = (userId: string) => {
@@ -64,24 +66,27 @@ function FindUsers() {
   }
 
   const userCards = foundUsers.map(user => (
-    <UserCard key={user.id} userData={user}  />
-    
-    // <UserDetails key={user.id}>
-    //   <UserInfo>First Name: {user.firstname}</UserInfo>
-    //   <UserInfo>Last Name: {user.lastname}</UserInfo>
-    //   <UserInfo>Email: {user.email}</UserInfo>
-    //   <UserInfo>Phone: {user.phone}</UserInfo>
-    //   <ButtonControl>
-    //     <Button name = 'Delete 'onClick={() => onDeleteUser(user.id)} />
-    //   </ButtonControl>
-    // </UserDetails>
+    // <UserCard key={user.id} userData={user}  />
+    <CardsContainer> 
+      <CardWrapper> 
+    <UserDetails key={user.id}>
+      <UserInfo>First Name: {user.firstname}</UserInfo>
+      <UserInfo>Last Name: {user.lastname}</UserInfo>
+      <UserInfo>Email: {user.email}</UserInfo>
+      <UserInfo>Phone: {user.phone}</UserInfo>
+      <ButtonControl>
+        <Button name = 'Delete 'onClick={() => onDeleteUser(user.id)} />
+      </ButtonControl>
+    </UserDetails>
+    </CardWrapper>
+    </CardsContainer>
   ))
 
   return (
     <PageWrapper>
       <FindUsersForm />
       {/* Показываем сообщение о доступе, если пользователь не администратор */}
-      {!isAdmin ? (
+      {isAdmin ? (
   <>
     <Title>All Users</Title>
     {isLoading ? (
@@ -91,7 +96,7 @@ function FindUsers() {
     ) : !foundUsers.length ? (
       <p>No users found</p>
     ) : (
-      <UserContainer>{userCards}</UserContainer>
+      <CardsContainer>{userCards}</CardsContainer>
     )}
   </>
 ) : (

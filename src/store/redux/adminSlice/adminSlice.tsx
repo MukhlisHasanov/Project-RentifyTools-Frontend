@@ -7,8 +7,10 @@ import {
 } from './types'
 
 const searchUserDataInitialState: SearchUserInitialState = {
+  users: [],
   userData: undefined,
   foundUsers: [],
+  initialUsers: [],
   isLoading: false,
   error: undefined,
 }
@@ -18,19 +20,14 @@ export const adminSlice = createAppSlice({
   initialState: searchUserDataInitialState,
   reducers: create => ({
     searchUsers: create.asyncThunk(
-      async (
-        searchParams: SearchUserRequestDto,
-        { rejectWithValue, getState },
-      ) => {
+      async (_, { rejectWithValue }) => {
         try {
-          console.log('Request Body:', searchParams)
           const response = await fetch('/api/users/search', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(searchParams),
+            method: 'GET',
+            // headers: {
+            //   Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            //   'Content-Type': 'application/json',
+            // },
           })
 
           const result = await response.json()
@@ -41,7 +38,7 @@ export const adminSlice = createAppSlice({
           //   if (!Array.isArray(result)) {
           //     return rejectWithValue('Unexpected server response');
           //   }
-          return result as SearchUserResponseDto
+          return result as SearchUserResponseDto[]
         } catch (error) {
           return rejectWithValue('An unexpected error occurred')
         }
@@ -54,8 +51,9 @@ export const adminSlice = createAppSlice({
         fulfilled: (state: SearchUserInitialState, action) => {
           console.log('Payload received:', action.payload)
           state.isLoading = false
-          state.userData = action.payload
-          state.foundUsers.push(action.payload)
+          state.users = action.payload
+          state.initialUsers = action.payload
+          // state.foundUsers.push(action.payload)
           state.error = undefined
         },
         rejected: (state: SearchUserInitialState, action) => {

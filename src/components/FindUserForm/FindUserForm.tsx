@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { SnackbarProvider, useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -68,7 +68,7 @@ function FindUsersForm() {
     validateOnChange: false,
     onSubmit: (values, helpers) => {
       console.log('Sending data:', values)
-      dispatch(adminSliceAction.searchUsers(values))
+      dispatch(adminSliceAction.searchUsers())
         .unwrap()
         .then(() => {
           enqueueSnackbar('User found !', { variant: 'success' })

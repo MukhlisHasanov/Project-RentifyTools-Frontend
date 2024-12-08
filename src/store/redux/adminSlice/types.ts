@@ -14,7 +14,9 @@ export interface SearchUserRequestDto {
 
   export interface SearchUserInitialState {
     userData: SearchUserResponseDto | undefined
+    users: SearchUserResponseDto []
     foundUsers: SearchUserResponseDto []
+    initialUsers: SearchUserResponseDto []
     isLoading: boolean
     error: string | undefined
   }

@@ -3,18 +3,13 @@ import styled from '@emotion/styled'
 import { colors } from 'styles/colors'
 
 export const PageWrapper = styled.div`
-  display: flex;
+   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  /* justify-content: center; */
+  box-sizing: border-box;
+  justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 4px;
-  /* Новый стиль для обеспечения переноса и прокрутки */
-  flex-wrap: wrap; /* Позволяет элементам переходить на следующую строку */
-  overflow-y: auto; /* Добавляет прокрутку по вертикали */
-  max-height: 100vh; /* Устанавливаем ограничение по высоте */
-  padding: 16px; /* Отступы для красоты */
+  gap: 20px;
 `
 export const TitleContainer = styled.div`
   display: flex;
@@ -32,13 +27,34 @@ export const ButtonControl = styled.div`
   width: 250px;
   height: 55px;
 `
-export const UserContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+// export const UserContainer = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// `
+export const CardsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
   align-items: center;
+  width: fit-content;
+  padding: 20px;
 `
-
+export const CardWrapper = styled.div`
+ display: flex;
+justify-content:center;
+  width: 300px;
+  height: 250px;
+  padding: 15px;
+  
+ 
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: ${colors.HEADER};
+`
 export const UserDetails = styled.div`
   display: flex;
   flex-direction: column;
