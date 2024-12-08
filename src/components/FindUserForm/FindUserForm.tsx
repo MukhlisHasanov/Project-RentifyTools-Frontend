@@ -31,9 +31,9 @@ function FindUsersForm() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
-  const { isLoading } = useAppSelector(adminSliceSelectors.search_users)
+  const { isLoading, foundUsers } = useAppSelector(adminSliceSelectors.search_users)
 
-  const [showResults, setShowResults] = useState(false)
+  const [showResults, setShowResults] = useState(true)
 
   const validationSchema = Yup.object().shape({
     [FINDUSER_FORM_NAMES.LAST_NAME]: Yup.string().max(
@@ -68,7 +68,7 @@ function FindUsersForm() {
     validateOnChange: false,
     onSubmit: (values, helpers) => {
       console.log('Sending data:', values)
-      dispatch(adminSliceAction.searchUsers())
+      dispatch(adminSliceAction.searchUsers(values))
         .unwrap()
         .then(() => {
           enqueueSnackbar('User found !', { variant: 'success' })
@@ -88,27 +88,27 @@ function FindUsersForm() {
     setShowResults(false)
     formik.resetForm()
   }
-  //   if (showResults && foundUsers.length > 0) {
-  //     return (
-  //       <SnackbarProvider maxSnack={3}>
-  //         <TitleContainer>
-  //           <Title>Search Results</Title>
-  //         </TitleContainer>
-  //         <UserContainer>
-  //           {foundUsers.map(user => (
-  //             <UserDetails key={user.id}>
-  //               <UserInfo>Last Name: {user.lastname}</UserInfo>
-  //               <UserInfo>Email: {user.email}</UserInfo>
-  //               <UserInfo>Phone:{user.phone}</UserInfo>
-  //             </UserDetails>
-  //           ))}
-  //         </UserContainer>
-  //         <ButtonControl>
-  //           <Button onClick={onBackToForm} name="Back to Search" />
-  //         </ButtonControl>
-  //       </SnackbarProvider>
-  //     )
-  //   }
+    if (showResults && foundUsers.length > 0) {
+      return (
+        <div>
+          <TitleContainer>
+            <Title>Search Results</Title>
+          </TitleContainer>
+          <UserContainer>
+            {foundUsers.map(user => (
+              <UserDetails key={user.id}>
+                <UserInfo>Last Name: {user.lastname}</UserInfo>
+                <UserInfo>Email: {user.email}</UserInfo>
+                <UserInfo>Phone: {user.phone}</UserInfo>
+              </UserDetails>
+            ))}
+          </UserContainer>
+          <ButtonControl>
+            <Button onClick={onBackToForm} name="Back to Search" />
+          </ButtonControl>
+        </div>
+      );
+    }
   return (
     <FindUserFormContainer onSubmit={formik.handleSubmit} noValidate>
       <TitleContainer>
@@ -116,7 +116,7 @@ function FindUsersForm() {
       </TitleContainer>
       <InputsContainer>
         <Input
-          id="signupform-surname"
+          id="searchform-surname"
           label="Last name:"
           name={FINDUSER_FORM_NAMES.LAST_NAME}
           type="text"
@@ -125,7 +125,7 @@ function FindUsersForm() {
           error={formik.errors.lastname}
         />
         <Input
-          id="signupform-phone"
+          id="searchform-phone"
           label="Phone:"
           name={FINDUSER_FORM_NAMES.PHONE}
           type="tel"
@@ -134,7 +134,7 @@ function FindUsersForm() {
           error={formik.errors.phone}
         />
         <Input
-          id="signupform-email"
+          id="searchform-email"
           label="Email:"
           name={FINDUSER_FORM_NAMES.EMAIL}
           type="email"

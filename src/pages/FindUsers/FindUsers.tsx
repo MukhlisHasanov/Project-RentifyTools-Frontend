@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
+import { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -24,7 +25,7 @@ import {
 import { SearchUserRequestDto } from 'store/redux/adminSlice/types'
 import { FindUsersProps } from 'components/FindUserForm/types'
 
-function FindUsers({onSearch}:FindUsersProps) {
+function FindUsers() {
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -34,22 +35,42 @@ function FindUsers({onSearch}:FindUsersProps) {
     adminSliceSelectors.search_users,
   )
   const isAdmin = user?.roles?.some(role => role.title === 'ADMIN') || false
-
+  // const [searchParams, setSearchParams] = useState('')
   useEffect(() => {
     if (isAdmin) {
       dispatch(adminSliceAction.getAllUsers())
     }
   }, [isAdmin, dispatch])
 
-  // useEffect(() => {
-   
-  //     dispatch(adminSliceAction.searchUsers(user.id))
+  const [searchParams, setSearchParams] = useState({
+    lastname: '',
+    email: '',
+    phone: '',
+  });
 
-  // }, [dispatch])
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setSearchParams(prev => ({ ...prev, [name]: value }));
+  };
 
   const onSearchUsers = () => {
-    dispatch(adminSliceAction.searchUsers())
-  }
+    if (
+      searchParams.lastname.trim() ||
+      searchParams.email.trim() ||
+      searchParams.phone.trim()
+    ) {
+      dispatch(adminSliceAction.searchUsers(searchParams))
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar('User found!', { variant: 'success' });
+        })
+        .catch(err => {
+          enqueueSnackbar(`Error: ${err}`, { variant: 'error' });
+        });
+    } else {
+      enqueueSnackbar('Please provide at least one search parameter.', { variant: 'warning' });
+    }
+  };
 
   const onDeleteUser = (userId: string) => {
     dispatch(adminSliceAction.deleteUser(userId))
@@ -66,19 +87,18 @@ function FindUsers({onSearch}:FindUsersProps) {
   }
 
   const userCards = foundUsers.map(user => (
-    // <UserCard key={user.id} userData={user}  />
-    <CardsContainer> 
-      <CardWrapper> 
-    <UserDetails key={user.id}>
-      <UserInfo>First Name: {user.firstname}</UserInfo>
-      <UserInfo>Last Name: {user.lastname}</UserInfo>
-      <UserInfo>Email: {user.email}</UserInfo>
-      <UserInfo>Phone: {user.phone}</UserInfo>
-      <ButtonControl>
-        <Button name = 'Delete 'onClick={() => onDeleteUser(user.id)} />
-      </ButtonControl>
-    </UserDetails>
-    </CardWrapper>
+    <CardsContainer>
+      <CardWrapper>
+        <UserDetails key={user.id}>
+          <UserInfo>First Name: {user.firstname}</UserInfo>
+          <UserInfo>Last Name: {user.lastname}</UserInfo>
+          <UserInfo>Email: {user.email}</UserInfo>
+          <UserInfo>Phone: {user.phone}</UserInfo>
+          <ButtonControl>
+            <Button name="Delete " onClick={() => onDeleteUser(user.id)} />
+          </ButtonControl>
+        </UserDetails>
+      </CardWrapper>
     </CardsContainer>
   ))
 
@@ -87,22 +107,22 @@ function FindUsers({onSearch}:FindUsersProps) {
       <FindUsersForm />
       {/* Показываем сообщение о доступе, если пользователь не администратор */}
       {isAdmin ? (
-  <>
-    <Title>All Users</Title>
-    {isLoading ? (
-      <p>Loading...</p>
-    ) : error ? (
-      <p>Error loading users: {error}</p>
-    ) : !foundUsers.length ? (
-      <p>No users found</p>
-    ) : (
-      <CardsContainer>{userCards}</CardsContainer>
-    )}
-  </>
-) : (
-  <p>Access denied: You do not have permission to view this page.</p>
-)}
-</PageWrapper>
+        <>
+          <Title>All Users</Title>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Error loading users: {error}</p>
+          ) : !foundUsers.length ? (
+            <p>No users found</p>
+          ) : (
+            <CardsContainer>{userCards}</CardsContainer>
+          )}
+        </>
+      ) : (
+        <p>Access denied: You do not have permission to view this page.</p>
+      )}
+    </PageWrapper>
   )
 }
 export default FindUsers

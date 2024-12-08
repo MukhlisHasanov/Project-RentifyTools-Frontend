@@ -7,10 +7,7 @@ import {
 } from './types'
 
 const searchUserDataInitialState: SearchUserInitialState = {
-  users: [],
-  userData: undefined,
   foundUsers: [],
-  initialUsers: [],
   isLoading: false,
   error: undefined,
 }
@@ -20,14 +17,15 @@ export const adminSlice = createAppSlice({
   initialState: searchUserDataInitialState,
   reducers: create => ({
     searchUsers: create.asyncThunk(
-      async (_, { rejectWithValue }) => {
+      async (searchParams: SearchUserRequestDto, { rejectWithValue }) => {
         try {
           const response = await fetch('/api/users/search', {
             method: 'GET',
-            // headers: {
-            //   Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            //   'Content-Type': 'application/json',
-            // },
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchParams),
           })
 
           const result = await response.json()
@@ -35,10 +33,7 @@ export const adminSlice = createAppSlice({
           if (!response.ok) {
             return rejectWithValue(result.message || 'Failed to find user')
           }
-          //   if (!Array.isArray(result)) {
-          //     return rejectWithValue('Unexpected server response');
-          //   }
-          return result as SearchUserResponseDto[]
+          return result as SearchUserResponseDto []
         } catch (error) {
           return rejectWithValue('An unexpected error occurred')
         }
@@ -51,10 +46,7 @@ export const adminSlice = createAppSlice({
         fulfilled: (state: SearchUserInitialState, action) => {
           console.log('Payload received:', action.payload)
           state.isLoading = false
-          state.users = action.payload
-          state.initialUsers = action.payload
-          // state.foundUsers.push(action.payload)
-          state.error = undefined
+          state.foundUsers = action.payload
         },
         rejected: (state: SearchUserInitialState, action) => {
           state.isLoading = false
@@ -76,9 +68,7 @@ export const adminSlice = createAppSlice({
           if (!response.ok) {
             return rejectWithValue(result.message || 'Failed to load users')
           }
-          if (!Array.isArray(result)) {
-            return rejectWithValue('Unexpected server response')
-          }
+
           return result
         } catch (error) {
           return rejectWithValue('An unexpected error occurred')
@@ -134,7 +124,6 @@ export const adminSlice = createAppSlice({
   }),
   selectors: {
     search_users: (state: SearchUserInitialState) => ({
-      userData: state.userData,
       foundUsers: state.foundUsers,
       isLoading: state.isLoading,
       error: state.error,
