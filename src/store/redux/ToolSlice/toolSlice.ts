@@ -1,5 +1,5 @@
 import { createAppSlice } from 'store/createAppSlice'
-import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
+import { ToolRequestDto, ToolUserResponseDto, ToolInitialState } from './types'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useParams } from 'react-router-dom'
 
@@ -73,7 +73,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to create advert')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -105,7 +105,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -134,7 +134,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -168,7 +168,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch user tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -188,7 +188,7 @@ export const toolSlice = createAppSlice({
     ),
 
     updateTool: create.asyncThunk(
-      async (toolData: ToolResponseDto, { rejectWithValue }) => {
+      async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
         const response = await fetch(`/api/tools/${toolData.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -199,7 +199,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to update tool')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {

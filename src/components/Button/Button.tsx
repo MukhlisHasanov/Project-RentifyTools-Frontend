@@ -2,6 +2,7 @@ import { ButtonProps } from './types'
 import { ButtonComponent } from './styles'
 
 function Button({
+  id,
   type = 'button',
   name,
   onClick,

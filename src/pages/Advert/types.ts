@@ -6,3 +6,13 @@ export interface ToolProps {
   status: string
   user_id: string
 }
+
+export interface User {
+  firstname: string
+  lastname: string
+  phone?: string
+}
+
+export interface PhoneButtonProps {
+  user?: User | null
+}
