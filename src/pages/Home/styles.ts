@@ -91,3 +91,9 @@ export const TextContainer = styled.h2`
   padding: 5px;
   border-radius: 7px;
 `
+export const BackButtonControl = styled.div`
+  width: 80px;
+  position: fixed;
+  left: 100px;
+  top: 100px;
+`

@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent } from 'react'
 
 export interface SearchProps {
-    toolName: string
-    onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void
-    onSearch: () => void
-  }
+  toolName: string
+  onChangeValue: (event: ChangeEvent<HTMLInputElement>) => void
+}

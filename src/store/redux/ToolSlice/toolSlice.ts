@@ -1,7 +1,6 @@
 import { createAppSlice } from 'store/createAppSlice'
-import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
+import { ToolRequestDto, ToolUserResponseDto, ToolInitialState } from './types'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { useParams } from 'react-router-dom'
 
 const toolDataInitialState: ToolInitialState = {
   userTools: [],
@@ -73,7 +72,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to create advert')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -105,7 +104,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -134,7 +133,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -154,6 +153,33 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    fetchToolsByCategory: create.asyncThunk(
+      async (id: number, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/category/${id}`)
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(
+            result.message || 'Error fetching tools by category',
+          )
+        }
+        return result as ToolResponseDto[]
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = action.payload
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {
@@ -168,7 +194,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch user tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -188,18 +214,39 @@ export const toolSlice = createAppSlice({
     ),
 
     updateTool: create.asyncThunk(
-      async (toolData: ToolResponseDto, { rejectWithValue }) => {
+      async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
         const response = await fetch(`/api/tools/${toolData.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(toolData),
         })
 
-        const result = await response.json()
-        if (!response.ok) {
-          return rejectWithValue(result.message || 'Failed to update tool')
+
+        try {
+          const response = await fetch(`/api/tools/${sanitizedToolData.id}`, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            },
+            body: JSON.stringify(sanitizedToolData),
+          })
+
+          if (!response.ok) {
+            const errorResult = await response.json().catch(() => null)
+            return rejectWithValue(
+              errorResult?.message || 'Failed to update tool',
+            )
+          }
+
+          const result = await response.json()
+          return result as ToolResponseDto
+        } catch (error) {
+          console.error('Update Tool Error:', error)
+          return rejectWithValue('Network error or invalid JSON response')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -228,32 +275,33 @@ export const toolSlice = createAppSlice({
             Accept: 'application/json',
             Authorization: 'Bearer ' + token,
           },
-        });
-    
+        })
+
         if (!response.ok) {
-          const result = await response.json();
-          return rejectWithValue(result.message || 'Failed to delete tool');
+          const result = await response.json()
+          return rejectWithValue(result.message || 'Failed to delete tool')
         }
-        return id;
+        return id
       },
       {
         pending: (state: ToolInitialState) => {
-          state.isLoading = true;
-          state.error = undefined;
+          state.isLoading = true
+          state.error = undefined
         },
         fulfilled: (state: ToolInitialState, action) => {
-          state.isLoading = false;
-          state.tools = state.tools.filter(tool => tool.id !== action.payload);
-          state.userTools = state.userTools.filter(tool => tool.id !== action.payload);
-          state.error = undefined;
+          state.isLoading = false
+          state.tools = state.tools.filter(tool => tool.id !== action.payload)
+          state.userTools = state.userTools.filter(
+            tool => tool.id !== action.payload,
+          )
+          state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
-          state.isLoading = false;
-          state.error = action.payload as string;
+          state.isLoading = false
+          state.error = action.payload as string
         },
-      }
+      },
     ),
-    
 
     searchTools: create.reducer(
       (state: ToolInitialState, action: PayloadAction<string>) => {

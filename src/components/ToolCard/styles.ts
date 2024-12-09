@@ -49,11 +49,18 @@ export const CardPrice = styled.p`
   color: ${colors.WHITE};
   margin-bottom: 10px;
 `
+export const CardCategory = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${colors.WHITE};
+  margin-bottom: 10px;
+`
 
 export const CardDescription = styled.div`
   font-size: 16px;
   color: ${colors.WHITE};
   margin-bottom: auto;
+  font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
