@@ -14,33 +14,36 @@ import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
-import { FINDUSER_FORM_NAMES } from './types'
+import { FINDUSER_FORM_NAMES, FindUsersProps } from './types'
 
 import {
   FindUserFormContainer,
   TitleContainer,
   Title,
   InputsContainer,
+  PageWrapper,
   ButtonControl,
-  UserContainer,
+  CardsContainer,
+  CardWrapper,
   UserDetails,
   UserInfo,
 } from './styles'
 
-function FindUsersForm() {
+function FindUsersForm({ value, onChange, onSubmit }: FindUsersProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
-  const { isLoading, foundUsers } = useAppSelector(adminSliceSelectors.search_users)
+  const { isLoading, foundUsers } = useAppSelector(
+    adminSliceSelectors.search_users,
+  )
 
-  const [showResults, setShowResults] = useState(true)
+  const [showResults, setShowResults] = useState(false)
 
   const validationSchema = Yup.object().shape({
     [FINDUSER_FORM_NAMES.LAST_NAME]: Yup.string().max(
       15,
       'Up to 15 characters',
     ),
-
     [FINDUSER_FORM_NAMES.PHONE]: Yup.string()
       .min(10, 'At least 10 characters long')
       .max(15, 'Up to 15 characters')
@@ -48,7 +51,6 @@ function FindUsersForm() {
         /^\+?[1-9]\d{1,14}$/,
         'Use international format, e.g., +1234567890',
       ),
-
     [FINDUSER_FORM_NAMES.EMAIL]: Yup.string()
       .min(5, 'At least 5 characters')
       .max(30, 'Up to 30 characters')
@@ -71,44 +73,48 @@ function FindUsersForm() {
       dispatch(adminSliceAction.searchUsers(values))
         .unwrap()
         .then(() => {
-          enqueueSnackbar('User found !', { variant: 'success' })
+          enqueueSnackbar('Users found!', { variant: 'success' })
           setShowResults(true)
-          setTimeout(() => {
-            helpers.resetForm()
-            navigate(TOOLS_APP_ROUTES.FIND_USERS)
-          }, 2000)
         })
-        .catch(() => {
+        .catch(err => {
           enqueueSnackbar('Check the input data!', { variant: 'error' })
           helpers.resetForm()
         })
     },
   })
+
   const onBackToForm = () => {
     setShowResults(false)
     formik.resetForm()
   }
-    if (showResults && foundUsers.length > 0) {
-      return (
-        <div>
-          <TitleContainer>
-            <Title>Search Results</Title>
-          </TitleContainer>
-          <UserContainer>
-            {foundUsers.map(user => (
-              <UserDetails key={user.id}>
-                <UserInfo>Last Name: {user.lastname}</UserInfo>
-                <UserInfo>Email: {user.email}</UserInfo>
-                <UserInfo>Phone: {user.phone}</UserInfo>
-              </UserDetails>
-            ))}
-          </UserContainer>
-          <ButtonControl>
-            <Button onClick={onBackToForm} name="Back to Search" />
-          </ButtonControl>
-        </div>
-      );
-    }
+
+  const userCards = foundUsers.map(user => (
+    <CardsContainer key={user.id}>
+      <CardWrapper>
+        <UserDetails>
+          <UserInfo>First Name: {user.firstname}</UserInfo>
+          <UserInfo>Last Name: {user.lastname}</UserInfo>
+          <UserInfo>Email: {user.email}</UserInfo>
+          <UserInfo>Phone: {user.phone}</UserInfo>
+        </UserDetails>
+      </CardWrapper>
+    </CardsContainer>
+  ))
+
+  if (showResults && foundUsers.length > 0) {
+    return (
+      <PageWrapper>
+        <TitleContainer>
+          <Title>Search Results</Title>
+        </TitleContainer>
+        <ButtonControl>
+          <Button onClick={onBackToForm} name="Back to Search" />
+        </ButtonControl>
+        <CardsContainer>{userCards}</CardsContainer>
+      </PageWrapper>
+    )
+  }
+
   return (
     <FindUserFormContainer onSubmit={formik.handleSubmit} noValidate>
       <TitleContainer>
@@ -153,4 +159,5 @@ function FindUsersForm() {
     </FindUserFormContainer>
   )
 }
+
 export default FindUsersForm

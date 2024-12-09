@@ -42,12 +42,58 @@ export const ButtonControl = styled.div`
   width: 350px;
   height: 55px;
 `
-export const UserContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+export const PageWrapper = styled.div`
+   display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
   align-items: center;
+  flex: 1;
+  gap: 20px;
 `
+export const CardsContainer = styled.div`
+width: 100%;
+ display: flex;
+ /* justify-content: center;
+ align-items: center;  */
+ flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  gap: 20px;
+
+
+
+
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 20px; */
+`
+
+export const CardWrapper = styled.div`
+ display: flex;
+justify-content:center;
+  width: 300px;
+  height: 250px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: ${colors.HEADER};
+`
+
+
+// export const UserContainer = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// `
 
 export const UserDetails = styled.div`
   display: flex;

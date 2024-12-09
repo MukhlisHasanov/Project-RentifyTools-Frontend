@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -26,6 +27,7 @@ import { SearchUserRequestDto } from 'store/redux/adminSlice/types'
 import { FindUsersProps } from 'components/FindUserForm/types'
 
 function FindUsers() {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -35,7 +37,7 @@ function FindUsers() {
     adminSliceSelectors.search_users,
   )
   const isAdmin = user?.roles?.some(role => role.title === 'ADMIN') || false
-  // const [searchParams, setSearchParams] = useState('')
+  const [showResults, setShowResults] = useState(true)
   useEffect(() => {
     if (isAdmin) {
       dispatch(adminSliceAction.getAllUsers())
@@ -46,12 +48,12 @@ function FindUsers() {
     lastname: '',
     email: '',
     phone: '',
-  });
+  })
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setSearchParams(prev => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = event.target
+    setSearchParams(prev => ({ ...prev, [name]: value }))
+  }
 
   const onSearchUsers = () => {
     if (
@@ -62,30 +64,42 @@ function FindUsers() {
       dispatch(adminSliceAction.searchUsers(searchParams))
         .unwrap()
         .then(() => {
-          enqueueSnackbar('User found!', { variant: 'success' });
+          enqueueSnackbar('User found!', { variant: 'success' })
+          setShowResults(true)
         })
         .catch(err => {
-          enqueueSnackbar(`Error: ${err}`, { variant: 'error' });
-        });
-    } else {
-      enqueueSnackbar('Please provide at least one search parameter.', { variant: 'warning' });
-    }
-  };
-
-  const onDeleteUser = (userId: string) => {
-    dispatch(adminSliceAction.deleteUser(userId))
-      .unwrap()
-      .then(() => {
-        enqueueSnackbar('User deleted successfully', {
-          variant: 'success',
+          enqueueSnackbar(`Error: ${err}`, { variant: 'error' })
         })
-        dispatch(adminSliceAction.getAllUsers())
+    } else {
+      enqueueSnackbar('Please provide at least one search parameter.', {
+        variant: 'warning',
       })
-      .catch(error => {
-        enqueueSnackbar(error, { variant: 'error' })
-      })
+    }
   }
 
+  const onDeleteUser = (userId: string) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      dispatch(adminSliceAction.deleteUser(userId))
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar('User deleted successfully', {
+            variant: 'success',
+          })
+          dispatch(adminSliceAction.getAllUsers())
+        })
+        .catch(error => {
+          enqueueSnackbar(error, { variant: 'error' })
+        })
+    }
+  }
+
+  const onBackToForm = () => {
+    setShowResults(false)
+  }
+
+  const goBackToList = () => {
+    navigate(-1)
+  }
   const userCards = foundUsers.map(user => (
     <CardsContainer>
       <CardWrapper>
@@ -104,25 +118,37 @@ function FindUsers() {
 
   return (
     <PageWrapper>
-      <FindUsersForm />
-      {/* Показываем сообщение о доступе, если пользователь не администратор */}
       {isAdmin ? (
-        <>
-          <Title>All Users</Title>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error loading users: {error}</p>
-          ) : !foundUsers.length ? (
-            <p>No users found</p>
-          ) : (
-            <CardsContainer>{userCards}</CardsContainer>
-          )}
-        </>
+        showResults ? (
+          <>
+            <ButtonControl>
+              <Button onClick={onBackToForm} name="Back to Search" />
+            </ButtonControl>
+            <Title>List of Users</Title>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error loading users: {error}</p>
+            ) : !foundUsers.length ? (
+              <p>No users found</p>
+            ) : (
+              <CardsContainer>{userCards}</CardsContainer>
+            )}
+          </>
+        ) : (
+          <FindUsersForm
+            value={searchParams}
+            onChange={handleSearchChange}
+            onSubmit={onSearchUsers}
+          />
+        )
       ) : (
-        <p>Access denied: You do not have permission to view this page.</p>
+        <ButtonControl>
+          <Button onClick={goBackToList} name="Back to List" />
+        </ButtonControl>
       )}
     </PageWrapper>
   )
 }
+
 export default FindUsers
