@@ -153,6 +153,33 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    fetchToolsByCategory: create.asyncThunk(
+      async (id: number, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/category/${id}`)
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(
+            result.message || 'Error fetching tools by category',
+          )
+        }
+        return result as ToolResponseDto[]
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = action.payload
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {

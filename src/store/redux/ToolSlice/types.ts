@@ -4,6 +4,7 @@ export interface ToolRequestDto {
   price: string
   imageUrls?: string[]
   status: string
+  categoryIds: number[]
 }
 
 export interface ToolResponseDto {
