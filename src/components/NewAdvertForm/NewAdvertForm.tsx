@@ -28,12 +28,7 @@ import {
 import { NEWADVERT_FORM_NAMES } from './types'
 import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 import ImagePreviewList from './ImagePrevievList'
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel as MuiInputLabel,
-} from '@mui/material'
+import { Select, MenuItem, FormControl, } from '@mui/material'
 import { colors } from 'styles/colors'
 
 function NewAdvertForm() {
