@@ -1,4 +1,5 @@
 import {
+  CardCategory,
   CardContent,
   CardDescription,
   CardIcons,
@@ -67,7 +68,7 @@ function ToolCard({
             ? imageUrls[0]
             : '/placeholder.jpg'
         }
-        alt={title}
+        alt={title || undefined}
       />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>

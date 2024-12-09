@@ -39,6 +39,7 @@ import {
   TextContainer,
   BackButtonControl,
 } from './styles'
+import Button from 'components/Button/Button'
 
 // const imagesWithTitles = [
 //   { src: CategoryImg1, title: 'Excavators & Mini Excavators' },
@@ -112,7 +113,9 @@ console.log(imageContainers)
           <PageTitle>
             {categories.find(category => category.id === selectCategory)?.title}
           </PageTitle>
-          <BackButtonControl onClick={handleBack}>Back</BackButtonControl>
+          <BackButtonControl>
+            <Button name="< Back" onClick={handleBack} />
+          </BackButtonControl>
           <CardsContainer>{toolCards}</CardsContainer>
         </>
       ) : (
