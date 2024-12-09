@@ -8,6 +8,8 @@ export enum TOOLS_APP_ROUTES {
   CHANGE_ADVERTS = '/profile/my-adverts/change-advert',
   FAVOURITES = '/profile/favourites',
   RENTED_TOOLS = '/profile/rented-tools',
+  FIND_USERS = '/profile/find-users',
+  CATEGORY = '/profile/category',
   HELP = '/help',
   ADVERTISING = '/advertising',
   ABOUT_US = '/about-us',

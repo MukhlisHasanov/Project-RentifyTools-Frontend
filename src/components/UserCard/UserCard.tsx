@@ -9,7 +9,7 @@ import { UserName } from 'components/LayoutProfile/styles'
 import { UserInfo } from './styles'
 import { colors } from 'styles/colors'
 
-function UserCard({ userData, error }: UserProps) {
+function UserCard({ userData, error, onDelete, onUpdate }: UserProps) {
   const navigate = useNavigate()
 
   return (
@@ -26,13 +26,13 @@ function UserCard({ userData, error }: UserProps) {
 
       <UserActions>
         <IconButton
-          onClick={() => navigate('/edit-profile')}
+          onClick={onUpdate}
           sx={{ color: colors.BUTTON }}
         >
           <EditIcon />
         </IconButton>
         <IconButton
-          onClick={() => console.log('Delete user')}
+          onClick={onDelete}
           sx={{ color: colors.BUTTON }}
         >
           <DeleteIcon />
