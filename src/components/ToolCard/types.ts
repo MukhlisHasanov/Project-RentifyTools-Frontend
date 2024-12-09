@@ -8,10 +8,10 @@ export interface CardProps {
   id: string
   userTool?: UserTool | null
   imageUrls?: string[]
-  title: string
-  price: string
-  status?: string
-  description: string
+  title: string | null
+  price: string | null
+  status?: string | null
+  description: string | null
   onAddToCard: () => void
   onAddToFavourites: () => void
   isMyAdvert?: boolean

@@ -3,7 +3,8 @@ export interface ToolRequestDto {
   description: string
   price: string
   imageUrls?: string[]
-  status?: string
+  status: string
+  categoryIds: number[]
 }
 
 export interface User {
@@ -21,6 +22,7 @@ export interface ToolUserResponseDto {
   imageUrls: string[]
   price: string
   user?: User
+
 }
 
 export interface ToolInitialState {

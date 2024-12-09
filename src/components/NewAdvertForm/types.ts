@@ -4,6 +4,7 @@ export enum NEWADVERT_FORM_NAMES {
   STATUS = 'status',
   IMAGE_URLS = 'imageUrls',
   PRICE = 'price',
+  CATEGORY_IDS = 'categoryIds',
 }
 
 export interface AdvertFormProps {
@@ -11,8 +12,7 @@ export interface AdvertFormProps {
   isProductsPage?: boolean
 }
 
-
 export interface ImagePreviewListProps {
-  images: File[];
-  onRemove: (index: number) => void;
+  images: (string | File)[]
+  onRemove: (index: number) => void
 }

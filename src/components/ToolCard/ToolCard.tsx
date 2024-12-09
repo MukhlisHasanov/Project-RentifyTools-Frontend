@@ -1,4 +1,5 @@
 import {
+  CardCategory,
   CardContent,
   CardDescription,
   CardIcons,
@@ -39,7 +40,7 @@ function ToolCard({
 
   const handleEdit = () => {
     console.log('Edit button clicked')
-    navigate(`change/edit/${id}`)
+    navigate(`/profile/my-adverts/change-advert/${id}`)
   }
 
   const dispatch = useAppDispatch()
@@ -68,7 +69,7 @@ function ToolCard({
             ? imageUrls[0]
             : '/placeholder.jpg'
         }
-        alt={title}
+        alt={title || undefined}
       />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>
