@@ -51,6 +51,19 @@ function FindUsers() {
       })
   }
 
+  const onUpdateRole = (userId: string, role: string) => {
+    dispatch(adminSliceAction.setUserRole({ userId, role }))
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar('User role updated successfully', {
+          variant: 'success',
+        })
+      })
+      .catch(error => {
+        enqueueSnackbar(error, { variant: 'error' })
+      })
+  }
+
   const handleIsFound = () => {
     if (foundUsers.length) {
       setIsFound(true)
@@ -65,7 +78,12 @@ function FindUsers() {
 
   const userCards = foundUsers.map(user => (
     <CardsContainer>
-    <UserCard key={user.id} userData={user} onDelete={() => onDeleteUser} />
+      <UserCard
+        key={user.id}
+        userData={user}
+        onDelete={() => onDeleteUser(user.id)}
+        onUpdate={() => onUpdateRole(user.id, 'ADMIN')}
+      />
     </CardsContainer>
   ))
 
@@ -76,9 +94,8 @@ function FindUsers() {
       ) : (
         <CardWrapper>
           {userCards}
-          <Button onClick={handleNewSearch} name='New search'/>
+          <Button onClick={handleNewSearch} name="New search" />
         </CardWrapper>
-        
       )}
     </PageWrapper>
   )
