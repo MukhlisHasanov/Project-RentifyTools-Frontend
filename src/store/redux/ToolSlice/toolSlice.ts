@@ -162,7 +162,7 @@ export const toolSlice = createAppSlice({
             result.message || 'Error fetching tools by category',
           )
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -215,12 +215,13 @@ export const toolSlice = createAppSlice({
 
     updateTool: create.asyncThunk(
       async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
-        const response = await fetch(`/api/tools/${toolData.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(toolData),
-        })
-
+        const sanitizedToolData = {
+          ...toolData,
+          title: toolData.title || null,
+          description: toolData.description || null,
+          price: toolData.price || null,
+          status: toolData.status || 'AVAILABLE',
+        }
 
         try {
           const response = await fetch(`/api/tools/${sanitizedToolData.id}`, {
@@ -241,12 +242,11 @@ export const toolSlice = createAppSlice({
           }
 
           const result = await response.json()
-          return result as ToolResponseDto
+          return result as ToolUserResponseDto
         } catch (error) {
           console.error('Update Tool Error:', error)
           return rejectWithValue('Network error or invalid JSON response')
         }
-        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
