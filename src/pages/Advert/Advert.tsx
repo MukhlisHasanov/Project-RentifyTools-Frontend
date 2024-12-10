@@ -9,27 +9,33 @@ import {
   ProductImageControl,
   ProfileImageControl,
   BackButtonControl,
+  UserName,
+  MessageBox,
 } from './styles'
 import Button from 'components/Button/Button'
 
 import { UserImg } from 'assets'
 import { useState, useEffect } from 'react'
-import { ToolProps } from './types'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
 } from 'store/redux/ToolSlice/toolSlice'
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function Advert() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0) 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isMessageBoxVisible, setIsMessageBoxVisible] = useState(false)
+  const [message, setMessage] = useState('')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
   )
+  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -39,19 +45,55 @@ function Advert() {
   }, [id, dispatch])
 
   const nextImage = () => {
-    if (
-      toolObj?.imageUrls &&
-      currentImageIndex < toolObj.imageUrls.length - 1
-    ) {
-      setCurrentImageIndex(currentImageIndex + 1)
+    if (toolObj?.imageUrls) {
+      setCurrentImageIndex((currentImageIndex + 1) % toolObj.imageUrls.length)
     }
   }
 
   const prevImage = () => {
-    if (toolObj?.imageUrls && currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1)
+    if (toolObj?.imageUrls) {
+      setCurrentImageIndex(
+        (currentImageIndex - 1 + toolObj.imageUrls.length) %
+          toolObj.imageUrls.length,
+      )
     }
   }
+
+  const goToLogin = () => {
+    navigate(TOOLS_APP_ROUTES.LOGIN)
+  }
+
+  const toggleMessageBox = () => {
+    if (!user) {
+      navigate(TOOLS_APP_ROUTES.LOGIN)
+    } else {
+      setIsMessageBoxVisible(true)
+    }
+  }
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      console.log(`Message sent: ${message}`)
+      setMessage('')
+      setIsMessageBoxVisible(false)
+    }
+  }
+
+  const [buttonText, setButtonText] = useState('Show phone')
+
+  const handleClick = () => {
+    if (user) {
+      setButtonText(toolObj?.user?.phone || 'Phone not available')
+    } else if (buttonText === 'Please Log in') {
+      navigate(TOOLS_APP_ROUTES.LOGIN)
+    } else {
+      setButtonText('Please Log in')
+    }
+  }
+
+  const userName = toolObj
+    ? `${toolObj.user?.firstname} ${toolObj.user?.lastname}`
+    : 'User Name'
 
   return (
     <PageWrapper>
@@ -90,10 +132,30 @@ function Advert() {
               <p>Status: {toolObj.status}</p>
             </ToolInfo>
             <UserInfo>
-              <ProfileImageControl src={UserImg} />
-              <p>Username</p>
-              <Button name="Send message" />
-              <Button name="Show phone" />
+              <ProfileImageControl src={UserImg} alt="User Photo" />
+              <UserName>{userName}</UserName>
+              {!user ? (
+                <Button name="Login for message " onClick={goToLogin} />
+              ) : (
+                <>
+                  {isMessageBoxVisible && (
+                    <MessageBox
+                      value={message}
+                      onChange={e => setMessage(e.target.value)}
+                      placeholder="Write your message here..."
+                    />
+                  )}
+                  {!isMessageBoxVisible ? (
+                    <Button
+                      name="Write the message"
+                      onClick={toggleMessageBox}
+                    />
+                  ) : (
+                    <Button name="Send message" onClick={handleSendMessage} />
+                  )}
+                </>
+              )}
+              <Button name={buttonText} onClick={handleClick} />
             </UserInfo>
           </DescriptionFrame>
         </>

@@ -1,5 +1,5 @@
 import { createAppSlice } from 'store/createAppSlice'
-import { ToolRequestDto, ToolResponseDto, ToolInitialState } from './types'
+import { ToolRequestDto, ToolUserResponseDto, ToolInitialState } from './types'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 const toolDataInitialState: ToolInitialState = {
@@ -72,7 +72,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to create advert')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -104,7 +104,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -133,7 +133,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -153,6 +153,33 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    fetchToolsByCategory: create.asyncThunk(
+      async (id: number, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/category/${id}`)
+        const result = await response.json()
+        if (!response.ok) {
+          return rejectWithValue(
+            result.message || 'Error fetching tools by category',
+          )
+        }
+        return result as ToolResponseDto[]
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = action.payload
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {
@@ -167,7 +194,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch user tools')
         }
-        return result as ToolResponseDto[]
+        return result as ToolUserResponseDto[]
       },
       {
         pending: (state: ToolInitialState) => {
@@ -187,14 +214,13 @@ export const toolSlice = createAppSlice({
     ),
 
     updateTool: create.asyncThunk(
-      async (toolData: ToolResponseDto, { rejectWithValue }) => {
-        const sanitizedToolData = {
-          ...toolData,
-          title: toolData.title || null,
-          description: toolData.description || null,
-          price: toolData.price || null,
-          status: toolData.status || 'AVAILABLE',
-        }
+      async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
+        const response = await fetch(`/api/tools/${toolData.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(toolData),
+        })
+
 
         try {
           const response = await fetch(`/api/tools/${sanitizedToolData.id}`, {
@@ -220,6 +246,7 @@ export const toolSlice = createAppSlice({
           console.error('Update Tool Error:', error)
           return rejectWithValue('Network error or invalid JSON response')
         }
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
