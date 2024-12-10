@@ -22,7 +22,6 @@ export interface ToolUserResponseDto {
   imageUrls: string[]
   price: string
   user?: User
-
 }
 
 export interface ToolInitialState {

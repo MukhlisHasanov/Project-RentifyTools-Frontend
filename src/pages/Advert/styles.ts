@@ -84,24 +84,8 @@ export const UserInfo = styled.div`
 export const ButtonControl = styled.div`
   border: none;
 `
-export const MessageBox = styled.textarea`
-  width: 100%;
-  min-height: 100px;
-  max-height: 300px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+export const PhoneNumber = styled.p`
+  color: white; 
+  margin-top: 8px;
   font-size: 16px;
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
-  resize: vertical;
-  outline: none;
-  transition: border-color 0.3s ease;
-
-  &:focus {
-    border-color: #f69320;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(246, 147, 32, 0.5);
-  }
-`
+`;

@@ -5,7 +5,7 @@ import { userSlice } from 'store/redux/userSlice/userSlice'
 import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
 import { categorySlice } from './redux/CategorySlice/categorySlice'
 import { toolSlice } from './redux/ToolSlice/toolSlice'
-
+import { messageSlice } from './redux/MessageSlice/messageSlice'
 // import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 
 const rootReducer = combineSlices(
@@ -13,6 +13,7 @@ const rootReducer = combineSlices(
   signInOutSlice,
   toolSlice,
   categorySlice,
+  messageSlice,
 )
 
 export type RootState = ReturnType<typeof rootReducer>
