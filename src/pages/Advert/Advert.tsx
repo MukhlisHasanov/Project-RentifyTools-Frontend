@@ -1,3 +1,21 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAppSelector, useAppDispatch } from 'store/hooks'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
+import {
+  signInOutSliceAction,
+  signInOutSliceSelectors,
+} from 'store/redux/signInSlice/signInOutSlice'
+import {
+  messageSliceAction,
+  messageSliceSelectors,
+} from 'store/redux/MessageSlice/messageSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
+import MessageModal from 'components/MessageModal/MessageModal'
+
 import {
   PageWrapper,
   PhotoFrame,
@@ -10,25 +28,15 @@ import {
   ProfileImageControl,
   BackButtonControl,
   UserName,
-  MessageBox,
+  PhoneNumber,
 } from './styles'
 import Button from 'components/Button/Button'
-
 import { UserImg } from 'assets'
-import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from 'store/hooks'
-import {
-  toolSliceAction,
-  toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function Advert() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [isMessageBoxVisible, setIsMessageBoxVisible] = useState(false)
-  const [message, setMessage] = useState('')
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false)
+  const [showPhone, setShowPhone] = useState(false)
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
@@ -36,6 +44,7 @@ function Advert() {
     toolSliceSelectors.toolObj_data,
   )
   const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { success } = useAppSelector(messageSliceSelectors.message_state)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -43,6 +52,23 @@ function Advert() {
       dispatch(toolSliceAction.fetchTool(id))
     }
   }, [id, dispatch])
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setIsMessageModalOpen(false)
+        dispatch(messageSliceAction.resetState())
+      }, 3000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [success, dispatch])
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(signInOutSliceAction.getCurrentUser())
+    }
+  }, [user, dispatch])
 
   const nextImage = () => {
     if (toolObj?.imageUrls) {
@@ -59,35 +85,24 @@ function Advert() {
     }
   }
 
-  const goToLogin = () => {
-    navigate(TOOLS_APP_ROUTES.LOGIN)
-  }
-
-  const toggleMessageBox = () => {
+  const openMessageModal = () => {
     if (!user) {
       navigate(TOOLS_APP_ROUTES.LOGIN)
     } else {
-      setIsMessageBoxVisible(true)
+      setIsMessageModalOpen(true)
+      dispatch(messageSliceAction.resetState())
     }
   }
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      console.log(`Message sent: ${message}`)
-      setMessage('')
-      setIsMessageBoxVisible(false)
-    }
+  const closeMessageModal = () => {
+    setIsMessageModalOpen(false)
   }
 
-  const [buttonText, setButtonText] = useState('Show phone')
-
-  const handleClick = () => {
-    if (user) {
-      setButtonText(toolObj?.user?.phone || 'Phone not available')
-    } else if (buttonText === 'Please Log in') {
+  const togglePhoneDisplay = () => {
+    if (!user) {
       navigate(TOOLS_APP_ROUTES.LOGIN)
     } else {
-      setButtonText('Please Log in')
+      setShowPhone(true)
     }
   }
 
@@ -134,30 +149,26 @@ function Advert() {
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />
               <UserName>{userName}</UserName>
-              {!user ? (
-                <Button name="Login for message " onClick={goToLogin} />
+              <Button name="Write the message" onClick={openMessageModal} />
+              {!showPhone ? (
+                <Button name="Show phone" onClick={togglePhoneDisplay} />
               ) : (
-                <>
-                  {isMessageBoxVisible && (
-                    <MessageBox
-                      value={message}
-                      onChange={e => setMessage(e.target.value)}
-                      placeholder="Write your message here..."
-                    />
-                  )}
-                  {!isMessageBoxVisible ? (
-                    <Button
-                      name="Write the message"
-                      onClick={toggleMessageBox}
-                    />
-                  ) : (
-                    <Button name="Send message" onClick={handleSendMessage} />
-                  )}
-                </>
+                <PhoneNumber>
+                  {toolObj.user?.phone || 'Phone not available'}
+                </PhoneNumber>
               )}
-              <Button name={buttonText} onClick={handleClick} />
             </UserInfo>
           </DescriptionFrame>
+          {isMessageModalOpen && toolObj.user && user && (
+            <MessageModal
+              isOpen={isMessageModalOpen}
+              onClose={closeMessageModal}
+              recipientName={`${toolObj.user.firstname} ${toolObj.user.lastname}`}
+              recipientEmail={toolObj.user.email}
+              senderName={`${user.firstname} ${user.lastname}`}
+              senderEmail={user.email}
+            />
+          )}
         </>
       ) : (
         <p>No data available</p>

@@ -39,7 +39,6 @@ export const signInOutSlice = createAppSlice({
           return rejectWithValue('Incorrect password or email address')
         }
       },
-      
       {
         pending: (state: LoginInitialState) => {
           state.isLoading = true
