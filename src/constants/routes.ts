@@ -19,4 +19,5 @@ export enum TOOLS_APP_ROUTES {
   NOT_FOUND = '*',
   TOOLS = '/tools',
   SEARCH_RESULTS = '/search-results',
+  CHANGE_USER = "/profile/chage-user"
 }

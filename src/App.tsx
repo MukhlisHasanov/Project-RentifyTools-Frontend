@@ -15,6 +15,7 @@ import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
+import ChangeUser from 'pages/ChangeUser/ChangeUser'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
                 path={TOOLS_APP_ROUTES.FAVOURITES}
                 element={<HomePlug />}
               />
+              <Route path={'/profile/change-user'} element={<ChangeUser/>}/>
               <Route
                 path={TOOLS_APP_ROUTES.RENTED_TOOLS}
                 element={<HomePlug />}
