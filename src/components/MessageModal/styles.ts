@@ -1,4 +1,4 @@
-import { colors } from "styles/colors";
+import { colors } from 'styles/colors'
 
 export const modalStyle = {
   position: 'absolute' as 'absolute',

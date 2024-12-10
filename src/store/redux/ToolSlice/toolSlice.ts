@@ -223,7 +223,6 @@ export const toolSlice = createAppSlice({
           status: toolData.status || 'AVAILABLE',
         }
 
-
         try {
           const response = await fetch(`/api/tools/${sanitizedToolData.id}`, {
             method: 'PUT',

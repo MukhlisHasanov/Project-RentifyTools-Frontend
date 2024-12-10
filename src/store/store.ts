@@ -6,7 +6,6 @@ import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
 import { categorySlice } from './redux/CategorySlice/categorySlice'
 import { toolSlice } from './redux/ToolSlice/toolSlice'
 import { messageSlice } from './redux/MessageSlice/messageSlice'
-// import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 
 const rootReducer = combineSlices(
   userSlice,

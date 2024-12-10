@@ -153,7 +153,9 @@ function Advert() {
               {!showPhone ? (
                 <Button name="Show phone" onClick={togglePhoneDisplay} />
               ) : (
-                <PhoneNumber>{toolObj.user?.phone || 'Phone not available'}</PhoneNumber>
+                <PhoneNumber>
+                  {toolObj.user?.phone || 'Phone not available'}
+                </PhoneNumber>
               )}
             </UserInfo>
           </DescriptionFrame>

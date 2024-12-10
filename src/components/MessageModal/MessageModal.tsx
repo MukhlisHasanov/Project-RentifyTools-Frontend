@@ -60,13 +60,13 @@ function MessageModal({
           value={message}
           onChange={e => setMessage(e.target.value)}
           InputProps={{
-            style: { color: 'white' }, 
+            style: { color: 'white' },
           }}
           sx={{
             marginBottom: 2,
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: 'white', 
+                borderColor: 'white',
               },
               '&:hover fieldset': {
                 borderColor: 'white',
@@ -75,7 +75,7 @@ function MessageModal({
                 borderColor: 'white',
               },
               '&::placeholder': {
-                color: 'white', 
+                color: 'white',
               },
             },
           }}

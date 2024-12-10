@@ -85,7 +85,7 @@ export const ButtonControl = styled.div`
   border: none;
 `
 export const PhoneNumber = styled.p`
-  color: white; 
+  color: white;
   margin-top: 8px;
   font-size: 16px;
-`;
+`
