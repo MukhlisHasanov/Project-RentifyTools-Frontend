@@ -1,7 +1,14 @@
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { v4 } from 'uuid'
 
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import {
+  signInOutSliceSelectors,
+  signInOutSliceAction,
+} from 'store/redux/signInSlice/signInOutSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
+import { UserImg } from 'assets'
 
 import {
   ProfileWrapper,
@@ -14,21 +21,11 @@ import {
   UserName,
   AdminLabel,
 } from './styles'
-import { UserImg } from 'assets'
-
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
-import {
-  signInOutSliceSelectors,
-  signInOutSliceAction,
-} from 'store/redux/signInSlice/signInOutSlice'
-import { useEffect } from 'react'
-import { link } from 'fs'
 
 function LayoutProfile() {
   const navigate = useNavigate()
 
-  const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user} = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

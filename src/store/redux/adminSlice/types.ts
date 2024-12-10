@@ -15,7 +15,7 @@ export interface SearchUserRequestDto {
     lastname: string
     email: string
     phone: string
-    role: Role[]
+    // roles: Role[]
   }
   
   export interface SearchUserInitialState {

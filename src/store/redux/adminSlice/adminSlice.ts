@@ -79,16 +79,16 @@ export const adminSlice = createAppSlice({
           state.error = undefined
         },
         fulfilled: (state: SearchUserInitialState, action) => {
-          state.isLoading = false;
-          state.foundUsers = state.foundUsers.map(user => 
-            user.id === action.payload.id ? action.payload : user
-          );
-        },  
+          state.isLoading = false
+          state.foundUsers = state.foundUsers.map(user =>
+            user.id === action.payload.id ? action.payload : user,
+          )
+        },
         rejected: (state: SearchUserInitialState, action) => {
           state.isLoading = false
           state.error = action.payload as string
         },
-      }
+      },
     ),
     deleteUser: create.asyncThunk(
       async (userId: string, { rejectWithValue }) => {
@@ -98,12 +98,11 @@ export const adminSlice = createAppSlice({
           },
           method: 'DELETE',
         })
-
+        const result = await response.json()
         if (!response.ok) {
-          const result = await response.json()
           return rejectWithValue(result.message || 'Failed to delete user')
         }
-        return 'User deleted successfully'
+        return result
       },
       {
         pending: (state: SearchUserInitialState) => {
@@ -113,7 +112,7 @@ export const adminSlice = createAppSlice({
         fulfilled: (state: SearchUserInitialState, action) => {
           state.isLoading = false
           state.foundUsers = state.foundUsers.filter(
-            user => user.id !== action.payload,
+            user => user.id !== action.payload.id,
           )
         },
         rejected: (state: SearchUserInitialState, action) => {

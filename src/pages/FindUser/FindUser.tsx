@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
-import { useSnackbar } from 'notistack'
 import { useState } from 'react'
+import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -8,22 +7,17 @@ import {
   adminSliceAction,
 } from 'store/redux/adminSlice/adminSlice'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+
 import Button from 'components/Button/Button'
 import FindUsersForm from 'components/FindUserForm/FindUserForm'
 import UserCard from 'components/UserCard/UserCard'
 
 import {
   PageWrapper,
-  TitleContainer,
-  Title,
   ButtonControl,
   CardsContainer,
   CardWrapper,
-  UserDetails,
-  UserInfo,
 } from './styles'
-import { SearchUserRequestDto } from 'store/redux/adminSlice/types'
-import { FindUsersProps } from 'components/FindUserForm/types'
 
 function FindUsers() {
   const dispatch = useAppDispatch()
@@ -31,18 +25,29 @@ function FindUsers() {
 
   const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
 
-  const { foundUsers, isLoading, error } = useAppSelector(
-    adminSliceSelectors.search_users,
-  )
-  const isAdmin = user?.roles?.some(role => role.title === 'ADMIN') || false
+  const { foundUsers } = useAppSelector(adminSliceSelectors.search_users)
 
   const [isFound, setIsFound] = useState(false)
 
   const onDeleteUser = (userId: string) => {
-    dispatch(adminSliceAction.deleteUser(userId))
+    if (window.confirm('Are you sure you want to delete this user?'))
+      dispatch(adminSliceAction.deleteUser(userId))
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar('User deleted successfully', {
+            variant: 'success',
+          })
+          // return dispatch(adminSliceAction.getAllUsers())
+        })
+        .catch(error => {
+          enqueueSnackbar(error, { variant: 'error' })
+        })
+  }
+  const onUpdateRole = (userId: string, role: string) => {
+    dispatch(adminSliceAction.setUserRole({ userId, role }))
       .unwrap()
       .then(() => {
-        enqueueSnackbar('User deleted successfully', {
+        enqueueSnackbar('Users role updated successfully', {
           variant: 'success',
         })
       })
@@ -50,7 +55,6 @@ function FindUsers() {
         enqueueSnackbar(error, { variant: 'error' })
       })
   }
-
   const handleIsFound = () => {
     if (foundUsers.length) {
       setIsFound(true)
@@ -64,9 +68,14 @@ function FindUsers() {
   }
 
   const userCards = foundUsers.map(user => (
-    <CardsContainer>
-    <UserCard key={user.id} userData={user} onDelete={() => onDeleteUser} />
-    </CardsContainer>
+    <CardWrapper>
+      <UserCard
+        key={user.id}
+        userData={user}
+        onDelete={() => onDeleteUser(user.id)}
+        onUpdate={() => onUpdateRole(user.id, 'ADMIN')}
+      />
+    </CardWrapper>
   ))
 
   return (
@@ -74,11 +83,12 @@ function FindUsers() {
       {!isFound ? (
         <FindUsersForm onSearch={handleIsFound} />
       ) : (
-        <CardWrapper>
-          {userCards}
-          <Button onClick={handleNewSearch} name='New search'/>
-        </CardWrapper>
-        
+        <>
+          <ButtonControl>
+            <Button onClick={handleNewSearch} name="New search" />
+          </ButtonControl>
+          <CardsContainer>{userCards}</CardsContainer>
+        </>
       )}
     </PageWrapper>
   )
