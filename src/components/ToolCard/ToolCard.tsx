@@ -1,4 +1,5 @@
 import {
+  CardCategory,
   CardContent,
   CardDescription,
   CardIcons,
@@ -21,6 +22,7 @@ import { colors } from 'styles/colors'
 
 function ToolCard({
   id,
+  userTool,
   imageUrls,
   title,
   price,
@@ -67,7 +69,7 @@ function ToolCard({
             ? imageUrls[0]
             : '/placeholder.jpg'
         }
-        alt={title}
+        alt={title || undefined}
       />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>

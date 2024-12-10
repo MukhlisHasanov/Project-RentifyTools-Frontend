@@ -9,11 +9,11 @@ export const PageWrapper = styled.div`
   flex: 1;
   gap: 50px;
 `
-// export const BackButtonWrapper = styled.div`
-// display: flex;
-// flex-direction: row;
-// gap: ;
-// `
+
+export const UserName = styled.h3`
+  color: ${colors.WHITE};
+`
+
 export const BackButtonControl = styled.div`
   width: 80px;
   position: fixed;
@@ -41,9 +41,7 @@ export const ProductImageControl = styled.img`
 
 export const ProfileImageControl = styled.img`
   width: 100px;
-  /* height: 100px; */
   border-radius: 50%;
-  /* align-items: center; */
 `
 
 export const PhotoFrame = styled.div``
@@ -58,27 +56,26 @@ export const DescriptionFrame = styled.div`
   backdrop-filter: blur(4px);
   background: ${colors.HEADER};
   gap: 20px;
-  /* background-color: blue; */
   justify-content: space-between;
 `
 
 export const ToolInfo = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 400px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   color: white;
   display: flex;
   margin-top: 30px;
   padding: 10px;
   gap: 10px;
-
-  /* background-color: yellow; */
 `
 
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  /* background-color: green; */
   align-items: center;
   gap: 20px;
   border-left: 2px solid white;
@@ -86,4 +83,9 @@ export const UserInfo = styled.div`
 
 export const ButtonControl = styled.div`
   border: none;
+`
+export const PhoneNumber = styled.p`
+  color: white;
+  margin-top: 8px;
+  font-size: 16px;
 `

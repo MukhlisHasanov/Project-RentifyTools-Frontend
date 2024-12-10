@@ -4,6 +4,7 @@ export enum NEWADVERT_FORM_NAMES {
   STATUS = 'status',
   IMAGE_URLS = 'imageUrls',
   PRICE = 'price',
+  CATEGORY_IDS = 'categoryIds',
 }
 
 export interface AdvertFormProps {

@@ -22,6 +22,16 @@ import {
   AdminLabel,
 } from './styles'
 
+import { UserImg } from 'assets'
+
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
+import {
+  signInOutSliceSelectors,
+  signInOutSliceAction,
+} from 'store/redux/signInSlice/signInOutSlice'
+import { useEffect } from 'react'
+
 function LayoutProfile() {
   const navigate = useNavigate()
 
