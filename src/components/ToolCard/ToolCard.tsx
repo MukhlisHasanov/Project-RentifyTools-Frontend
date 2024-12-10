@@ -22,6 +22,7 @@ import { colors } from 'styles/colors'
 
 function ToolCard({
   id,
+  userTool,
   imageUrls,
   title,
   price,
