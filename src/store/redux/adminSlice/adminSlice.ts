@@ -44,7 +44,6 @@ export const adminSlice = createAppSlice({
           state.isLoading = true
         },
         fulfilled: (state: SearchUserInitialState, action) => {
-          console.log('Payload received:', action.payload)
           state.isLoading = false
           state.foundUsers = action.payload
         },
