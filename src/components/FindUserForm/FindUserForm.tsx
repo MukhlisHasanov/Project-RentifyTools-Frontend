@@ -33,7 +33,7 @@ function FindUsersForm({ onSearch }: FindUsersProps) {
   const { isLoading, foundUsers } = useAppSelector(
     adminSliceSelectors.search_users,
   )
-
+  
   const validationSchema = Yup.object().shape({
     [FINDUSER_FORM_NAMES.LAST_NAME]: Yup.string().max(
       15,
