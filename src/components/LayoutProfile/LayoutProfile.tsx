@@ -37,7 +37,7 @@ function LayoutProfile() {
   const isAdmin = user?.roles?.some(role => role.title === 'ADMIN') || false
 
   const goToProfile = () => {
-    navigate(TOOLS_APP_ROUTES.PROFILE)
+    navigate(TOOLS_APP_ROUTES.MY_PROFILE)
   }
 
   const profileLinks = {

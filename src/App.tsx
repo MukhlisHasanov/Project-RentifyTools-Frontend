@@ -36,7 +36,7 @@ function App() {
             />
             <Route path={TOOLS_APP_ROUTES.TOOLS} element={<Advert />} />
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
-              <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
+              <Route path={TOOLS_APP_ROUTES.MY_PROFILE} element={<Profile />} />
               <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
               <Route
                 path={TOOLS_APP_ROUTES.MY_ADVERTS}

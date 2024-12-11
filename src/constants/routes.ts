@@ -3,6 +3,7 @@ export enum TOOLS_APP_ROUTES {
   ADD_ADVERTS = '/add-adverts',
   LOGIN = '/login',
   PROFILE = '/profile',
+  MY_PROFILE = '/profile/me',
   MESSAGES = '/profile/messages',
   MY_ADVERTS = '/profile/my-adverts',
   CHANGE_ADVERTS = '/profile/my-adverts/change-advert',
