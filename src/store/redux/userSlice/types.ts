@@ -15,7 +15,7 @@ export interface UserResponseDto {
   roles?: Role[]
 }
 export interface Role {
-  id: string
+  id: number
   title: string
 }
 export interface UserInitialState {

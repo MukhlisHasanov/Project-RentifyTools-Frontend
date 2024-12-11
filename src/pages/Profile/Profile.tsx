@@ -13,7 +13,12 @@ function Profile() {
     <PageWrapper>
       {user && (
         <ProfileContainer>
-          <UserCard userData={user} error={error} />
+          <UserCard
+            userData={user}
+            error={error}
+            onDelete={() => {}}
+            onUpdate={() => {}}
+          />
         </ProfileContainer>
       )}
     </PageWrapper>
