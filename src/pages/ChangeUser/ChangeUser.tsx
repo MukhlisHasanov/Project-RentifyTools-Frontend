@@ -1,3 +1,4 @@
+
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { PageWrapper, PageTitle } from './styles';
 import ChangeUserForm from 'components/ChangeUserForm/ChangeUserForm';
@@ -36,8 +37,11 @@ function ChangeUser() {
        
         error={updateError}  
       />
+
     </PageWrapper>
   );
 }
 
+
 export default ChangeUser;
+

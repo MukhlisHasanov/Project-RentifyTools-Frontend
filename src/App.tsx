@@ -52,6 +52,7 @@ function App() {
                 path={TOOLS_APP_ROUTES.FAVOURITES}
                 element={<HomePlug />}
               />
+              <Route path={'/profile/change-user'} element={<ChangeUser/>}/>
               <Route
                 path={TOOLS_APP_ROUTES.RENTED_TOOLS}
                 element={<HomePlug />}
