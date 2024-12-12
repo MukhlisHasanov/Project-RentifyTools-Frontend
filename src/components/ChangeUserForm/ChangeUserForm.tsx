@@ -1,66 +1,64 @@
-import { useEffect } from 'react';
+
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import {
-  userSliceAction,
-  userSliceSelectors,
-} from 'store/redux/userSlice/userSlice';
+import { userSliceAction, userSliceSelectors } from 'store/redux/userSlice/userSlice';
 import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
-
-import {
-  ChangeUserFormContainer,
-  Title,
-  InputsContainer,
-  ButtonControlWrapper,
-} from './styles';
+import { ChangeUserFormContainer, Title, InputsContainer, ButtonControlWrapper } from './styles';
 import { UserFormValues } from './types';
 import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice';
 import { useNavigate } from 'react-router-dom';
+import { UserResponseDto } from 'store/redux/signInSlice/types';
+import { UserRequestDto } from 'store/redux/userSlice/types';
 
-function ChangeUserForm() {
+
+interface ChangeUserFormProps {
+  userData: UserResponseDto;
+ 
+  error?: string;
+}
+
+const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-
-  const { userObj, isLoading, error } = useAppSelector(userSliceSelectors.user_data);
-
-  useEffect(() => {
-    dispatch(signInOutSliceAction.getCurrentUser());
-  }, [dispatch]);
-
+  const { isLoading } = useAppSelector(userSliceSelectors.user_data);
 
   const formik = useFormik<UserFormValues>({
     initialValues: {
-      firstname: userObj?.firstname || '',
-      lastname: userObj?.lastname || '',
-      email: userObj?.email || '',
+      firstname: userData?.firstname || '',
+      lastname: userData?.lastname || '',
+      email: userData?.email || '',
       password: '', 
-      phone: userObj?.phone || '', 
+      phone: userData?.phone || '',
+
     },
     enableReinitialize: true,
     validationSchema: Yup.object().shape({
       firstname: Yup.string()
-        .required('First name is required')
-        .min(2, 'First name must be at least 2 characters long')
-        .max(30, 'First name cannot exceed 30 characters'),
+
+        .required('Vorname ist erforderlich')
+        .min(2, 'Vorname muss mindestens 2 Zeichen lang sein')
+        .max(30, 'Vorname darf maximal 30 Zeichen lang sein'),
       lastname: Yup.string()
-        .required('Last name is required')
-        .min(2, 'Last name must be at least 2 characters long')
-        .max(30, 'Last name cannot exceed 30 characters'),
+        .required('Nachname ist erforderlich')
+        .min(2, 'Nachname muss mindestens 2 Zeichen lang sein')
+        .max(30, 'Nachname darf maximal 30 Zeichen lang sein'),
       email: Yup.string()
-        .required('Email is required')
-        .email('Invalid email format'),
+        .required('E-Mail ist erforderlich')
+        .email('Ungültiges E-Mail-Format'),
       password: Yup.string()
-        .min(6, 'Password must be at least 6 characters long')
-        .max(30, 'Password cannot exceed 30 characters'),
+        .min(6, 'Passwort muss mindestens 6 Zeichen lang sein')
+        .max(30, 'Passwort darf maximal 30 Zeichen lang sein'),
       phone: Yup.string().matches(
         /^\+?[0-9\s]*$/,
-        'Phone number must be valid (digits and optional "+")'
+        'Telefonnummer muss gültig sein (Ziffern und optional "+" Zeichen)'
       ),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values) => {
+
       try {
         const result = await dispatch(
           userSliceAction.updateUser({
@@ -75,74 +73,99 @@ function ChangeUserForm() {
         if (userSliceAction.updateUser.fulfilled.match(result)) {
           navigate('/profile/change-user');
         } else {
-          console.error('Update failed:', result.error);
+
+          console.error('Update fehlgeschlagen:', result.error);
         }
       } catch (error) {
-        console.error('Submit error:', error);
+        console.error('Fehler beim Absenden:', error);
+
       }
     },
   });
 
   return (
     <ChangeUserFormContainer onSubmit={formik.handleSubmit}>
-      <Title>Edit Your Profile</Title>
+
+      <Title>Profil bearbeiten</Title>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <InputsContainer>
-        <Input
-          id="editform-firstname"
-          label="First Name:"
-          name="firstname"
-          type="text"
-          value={formik.values.firstname}
-          onChange={formik.handleChange}
-          error={formik.errors.firstname}
-        />
-        <Input
-          id="editform-lastname"
-          label="Last Name:"
-          name="lastname"
-          type="text"
-          value={formik.values.lastname}
-          onChange={formik.handleChange}
-          error={formik.errors.lastname}
-        />
-        <Input
-          id="editform-email"
-          label="Email:"
-          name="email"
-          type="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.errors.email}
-        />
-        <Input
-          id="editform-password"
-          label="Password:"
-          name="password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.errors.password}
-        />
-        <Input
-          id="editform-phone"
-          label="Phone:"
-          name="phone"
-          type="text"
-          value={formik.values.phone}
-          onChange={formik.handleChange}
-          error={formik.errors.phone}
-        />
+       
+        <div>
+          <label htmlFor="editform-firstname">Vorname:</label>
+          <Input
+            id="editform-firstname"
+            name="firstname"
+            type="text"
+            value={formik.values.firstname}
+            onChange={formik.handleChange}
+            error={formik.errors.firstname}
+          />
+        </div>
+
+      
+        <div>
+          <label htmlFor="editform-lastname">Nachname:</label>
+          <Input
+            id="editform-lastname"
+            name="lastname"
+            type="text"
+            value={formik.values.lastname}
+            onChange={formik.handleChange}
+            error={formik.errors.lastname}
+          />
+        </div>
+
+  
+        <div>
+          <label htmlFor="editform-email">E-Mail:</label>
+          <Input
+            id="editform-email"
+            name="email"
+            type="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.errors.email}
+          />
+        </div>
+
+     
+        <div>
+          <label htmlFor="editform-password">Passwort:</label>
+          <Input
+            id="editform-password"
+            name="password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.errors.password}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="editform-phone">Telefon:</label>
+          <Input
+            id="editform-phone"
+            name="phone"
+            type="text"
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            error={formik.errors.phone}
+          />
+        </div>
       </InputsContainer>
+
       <ButtonControlWrapper>
         <Button
           type="submit"
-          name={isLoading ? 'Updating...' : 'Update Profile'}
+          name={isLoading ? 'Wird aktualisiert...' : 'Profil aktualisieren'}
+
           disabled={isLoading}
         />
       </ButtonControlWrapper>
     </ChangeUserFormContainer>
   );
-}
+
+};
+
 
 export default ChangeUserForm;

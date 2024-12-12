@@ -57,7 +57,7 @@ export const userSlice = createAppSlice({
 
     updateUser: create.asyncThunk(
       async (userData: UserRequestDto, { rejectWithValue }) => {
-        const response = await fetch('/api/users/{userId}', {
+        const response = await fetch(`/api/users/${userData}`, {
           method: 'PUT',
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),

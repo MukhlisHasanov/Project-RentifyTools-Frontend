@@ -74,6 +74,10 @@ export const UserName = styled.h3`
   font-size: 24px;
   color: ${colors.WHITE};
 `
+export const AdminLabel = styled.h3`
+  font-size: 24px;
+  color: ${colors.BUTTON};
+`
 
 export const SidebarNav = styled.nav`
   align-items: center;

@@ -1,7 +1,14 @@
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { v4 } from 'uuid'
 
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import {
+  signInOutSliceSelectors,
+  signInOutSliceAction,
+} from 'store/redux/signInSlice/signInOutSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
+import { UserImg } from 'assets'
 
 import {
   ProfileWrapper,
@@ -12,21 +19,13 @@ import {
   UserProfile,
   UserPhoto,
   UserName,
+  AdminLabel,
 } from './styles'
-import { UserImg } from 'assets'
-
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { userSliceSelectors } from 'store/redux/userSlice/userSlice'
-import {
-  signInOutSliceSelectors,
-  signInOutSliceAction,
-} from 'store/redux/signInSlice/signInOutSlice'
-import { useEffect } from 'react'
 
 function LayoutProfile() {
   const navigate = useNavigate()
 
-  const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user} = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -35,8 +34,10 @@ function LayoutProfile() {
     }
   }, [user, dispatch])
 
+  const isAdmin = user?.roles?.some(role => role.title === 'ADMIN') || false
+
   const goToProfile = () => {
-    navigate(TOOLS_APP_ROUTES.PROFILE)
+    navigate(TOOLS_APP_ROUTES.MY_PROFILE)
   }
 
   const profileLinks = {
@@ -45,14 +46,29 @@ function LayoutProfile() {
     [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
   }
+  const adminLinks = {
+    [TOOLS_APP_ROUTES.FIND_USERS]: 'Find Users',
+    [TOOLS_APP_ROUTES.CATEGORY]: 'Category',
+  }
 
-  const sidebarLinks = Object.keys(profileLinks).map(link => {
-    return (
+  const sidebarLinks = [
+    ...Object.keys(profileLinks).map(link => (
       <SidebarLink key={v4()} to={link}>
         {profileLinks[link as keyof typeof profileLinks]}
       </SidebarLink>
-    )
-  })
+    )),
+    isAdmin && (
+      <>
+        <hr />
+        <AdminLabel>Admin Panel</AdminLabel>
+        {Object.keys(adminLinks).map(link => (
+          <SidebarLink key={v4()} to={link}>
+            {adminLinks[link as keyof typeof adminLinks]}
+          </SidebarLink>
+        ))}
+      </>
+    ),
+  ].filter(Boolean)
 
   const userName = user ? `${user.firstname} ${user.lastname}` : 'User Name'
 

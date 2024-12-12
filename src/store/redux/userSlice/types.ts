@@ -12,8 +12,12 @@ export interface UserResponseDto {
   lastname: string
   email: string
   phone: string
+  roles?: Role[]
 }
-
+export interface Role {
+  id: number
+  title: string
+}
 export interface UserInitialState {
   userObj: UserResponseDto | undefined
   isLoading: boolean
