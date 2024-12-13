@@ -123,6 +123,12 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+
+    addFavorites: create => ({
+      
+
+    }),
+
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools', {
