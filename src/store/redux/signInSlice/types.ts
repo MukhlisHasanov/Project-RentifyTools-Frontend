@@ -4,7 +4,8 @@ export interface LoginRequestDto {
 }
 
 export interface LoginInitialState {
-  user:UserResponseDto | undefined
+  user: UserResponseDto | undefined
+  authData: LoginRequestDto | undefined
   isLoading: boolean
   isAuthenticated: boolean
   error: string | undefined
@@ -16,7 +17,15 @@ export interface UserResponseDto {
   lastname: string
   email: string
   phone: string
+  address: Address
   roles: Role[]
+}
+
+export interface Address {
+  country: string
+  zipcode: string
+  city: string
+  street: string
 }
 export interface Role {
   id: number

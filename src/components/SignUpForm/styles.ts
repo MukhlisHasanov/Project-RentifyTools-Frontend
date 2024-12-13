@@ -36,6 +36,11 @@ export const InputsContainer = styled.div`
   flex-direction: column;
   margin-top: 2px;
   width: 350px;
+  
+  &.inline {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `
 export const Text = styled.span`
   color: ${colors.WHITE};
