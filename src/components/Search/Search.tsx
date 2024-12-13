@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react'
+import { KeyboardEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, TextField, Box } from '@mui/material'
@@ -6,8 +7,9 @@ import { Button, TextField, Box } from '@mui/material'
 import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
 
 import { TOOLS_APP_ROUTES } from 'constants/routes'
-import { SearchProps } from './types'
 import { colors } from 'styles/colors'
+
+import { SearchProps } from './types'
 
 function Search({ toolName, onChangeValue }: SearchProps) {
   const dispatch = useDispatch()
@@ -22,7 +24,11 @@ function Search({ toolName, onChangeValue }: SearchProps) {
       onChangeValue({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     }
   }
-
+  const onSearchEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSearch()
+    }
+  }
   return (
     <Box
       sx={{
@@ -43,6 +49,7 @@ function Search({ toolName, onChangeValue }: SearchProps) {
         placeholder="Search tools"
         value={toolName}
         onChange={onChangeValue}
+        onKeyDown={onSearchEnter}
         InputProps={{
           disableUnderline: true,
           style: {
