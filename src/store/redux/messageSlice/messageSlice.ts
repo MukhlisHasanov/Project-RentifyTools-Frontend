@@ -2,7 +2,7 @@ import { createAppSlice } from 'store/createAppSlice'
 import {
   MessageInitialState,
   MessageRequest,
-} from 'store/redux/messageSlice/types'
+} from 'store/redux/MessageSlice/types'
 import emailjs from 'emailjs-com'
 
 const initialState: MessageInitialState = {
