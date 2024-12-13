@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   messageSliceAction,
   messageSliceSelectors,
-} from 'store/redux/MessageSlice/messageSlice'
+} from 'store/redux/messageSlice/messageSlice'
 import { MessageModalProps } from './types'
 import { modalStyle } from './styles'
 import { colors } from 'styles/colors'

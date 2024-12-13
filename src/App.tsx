@@ -15,6 +15,7 @@ import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
+import FindUsers from 'pages/FindUser/FindUser'
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
             />
             <Route path={TOOLS_APP_ROUTES.TOOLS} element={<Advert />} />
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
-              <Route path={TOOLS_APP_ROUTES.PROFILE} element={<Profile />} />
+              <Route path={TOOLS_APP_ROUTES.MY_PROFILE} element={<Profile />} />
               <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
               <Route
                 path={TOOLS_APP_ROUTES.MY_ADVERTS}
@@ -52,6 +53,10 @@ function App() {
               <Route
                 path={TOOLS_APP_ROUTES.RENTED_TOOLS}
                 element={<HomePlug />}
+              />
+              <Route
+                path={TOOLS_APP_ROUTES.FIND_USERS}
+                element={<FindUsers />}
               />
             </Route>
             <Route path="/tools/:id" element={<Advert />} />

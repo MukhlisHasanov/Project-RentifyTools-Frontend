@@ -2,7 +2,7 @@ import { useAppSelector } from 'store/hooks'
 
 import { PageWrapper, ProfileContainer } from './styles'
 
-import UserCard from 'components/UseCard/UserCard'
+import UserCard from 'components/UserCard/UserCard'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function Profile() {
@@ -13,7 +13,12 @@ function Profile() {
     <PageWrapper>
       {user && (
         <ProfileContainer>
-          <UserCard userData={user} error={error} />
+          <UserCard
+            userData={user}
+            error={error}
+            onDelete={() => {}}
+            onUpdate={() => {}}
+          />
         </ProfileContainer>
       )}
     </PageWrapper>

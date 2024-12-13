@@ -12,7 +12,7 @@ import {
 import {
   messageSliceAction,
   messageSliceSelectors,
-} from 'store/redux/MessageSlice/messageSlice'
+} from 'store/redux/messageSlice/messageSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import MessageModal from 'components/MessageModal/MessageModal'
 

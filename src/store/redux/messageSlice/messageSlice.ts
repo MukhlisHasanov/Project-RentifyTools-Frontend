@@ -1,5 +1,8 @@
 import { createAppSlice } from 'store/createAppSlice'
-import { MessageRequest, MessageInitialState } from './types'
+import {
+  MessageInitialState,
+  MessageRequest,
+} from 'store/redux/messageSlice/types'
 import emailjs from 'emailjs-com'
 
 const initialState: MessageInitialState = {

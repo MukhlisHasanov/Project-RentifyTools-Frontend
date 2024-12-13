@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -30,11 +31,13 @@ import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 import ImagePreviewList from './ImagePrevievList'
 import { Select, MenuItem, FormControl, } from '@mui/material'
 import { colors } from 'styles/colors'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function NewAdvertForm() {
   const [localImages, setLocalImages] = useState<File[]>([])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
 
   const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
   const { categories } = useAppSelector(categorySliceSelectors.categories_data)
@@ -115,10 +118,11 @@ function NewAdvertForm() {
         )
 
         if (toolSliceAction.createTool.fulfilled.match(result)) {
+          enqueueSnackbar('Advert created successfully !', { variant: 'success' })
           formik.resetForm()
-          navigate('/profile/my-adverts')
+          navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
         } else {
-          console.error('Failed to create advert:', result.error)
+          enqueueSnackbar('Failed to create advert', { variant: 'error' })
         }
       } catch (error) {
         console.error('Submission error:', error)
