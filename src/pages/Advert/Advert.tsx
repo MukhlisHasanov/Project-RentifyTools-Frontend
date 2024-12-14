@@ -145,11 +145,12 @@ function Advert() {
               <p>{toolObj.description}</p>
               <p>Price: ${toolObj.price}</p>
               <p>Status: {toolObj.status}</p>
+              <p>City: {toolObj.city || "Stadt nicht erkant"}</p>     //v141224
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />
               <UserName>{userName}</UserName>
-              <Button name="Write the message" onClick={openMessageModal} />
+              <p>City: {toolObj.city || "Stadt nicht erkant"}</p>           //v141224
               {!showPhone ? (
                 <Button name="Show phone" onClick={togglePhoneDisplay} />
               ) : (

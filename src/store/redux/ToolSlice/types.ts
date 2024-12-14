@@ -22,6 +22,7 @@ export interface ToolUserResponseDto {
   imageUrls: string[]
   price: string
   user?: User
+  city: string //v141224
 }
 
 export interface ToolInitialState {
