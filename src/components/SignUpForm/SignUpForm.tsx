@@ -5,6 +5,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { useNavigate } from 'react-router-dom'
 
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 import {
   userSliceAction,
   userSliceSelectors,
@@ -29,7 +30,8 @@ function SignUpForm({
   onRegistrationSuccess,
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
-  const { error,isLoading } = useAppSelector(userSliceSelectors.user_data)
+  const { error, isLoading } = useAppSelector(userSliceSelectors.user_data)
+  const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
@@ -50,44 +52,54 @@ function SignUpForm({
         /^\+?[1-9]\d{1,14}$/,
         'Use international format, e.g., +1234567890',
       ),
-      
-    [SIGNUP_FORM_NAMES.EMAIL]: Yup.string()
-      .required('Email is required')
-      .min(5, 'At least 5 characters')
-      .max(30, 'Up to 30 characters')
-      .matches(
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        'Enter a valid email, e.g., example@mail.com',
-      ),
 
-    [SIGNUP_FORM_NAMES.PASSWORD]: Yup.string()
-      .required('Password is required')
-      .min(8, 'At least 8 characters')
-      .max(30, 'Up to 30 characters')
-      .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-        'Must include 1 uppercase, 1 number, and 1 special character',
-      ),
+    [SIGNUP_FORM_NAMES.COUNTRY]: Yup.string()
+      .required('Country is required')
+      .max(50, 'Up to 50 characters'),
 
-    [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
-      .required('Confirm your password')
-      .oneOf([Yup.ref(SIGNUP_FORM_NAMES.PASSWORD)], 'Passwords must match'),
+    [SIGNUP_FORM_NAMES.ZIPCODE]: Yup.string()
+      .required('Zip code is required')
+      .matches(/^[0-9]{5,6}$/, 'Enter a valid zip code'),
+
+    [SIGNUP_FORM_NAMES.CITY]: Yup.string()
+      .required('City is required')
+      .max(50, 'Up to 50 characters'),
+
+    [SIGNUP_FORM_NAMES.STREET]: Yup.string()
+      .required('Street is required')
+      .max(100, 'Up to 100 characters'),
   })
 
   const formik = useFormik({
     initialValues: {
       [SIGNUP_FORM_NAMES.FIRST_NAME]: '',
       [SIGNUP_FORM_NAMES.LAST_NAME]: '',
-      [SIGNUP_FORM_NAMES.EMAIL]: '',
-      [SIGNUP_FORM_NAMES.PASSWORD]: '',
       [SIGNUP_FORM_NAMES.PHONE]: '',
-      [SIGNUP_FORM_NAMES.REPEAT_PASSWORD]: '',
+      [SIGNUP_FORM_NAMES.COUNTRY]: '',
+      [SIGNUP_FORM_NAMES.ZIPCODE]: '',
+      [SIGNUP_FORM_NAMES.CITY]: '',
+      [SIGNUP_FORM_NAMES.STREET]: '',
     },
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
-      console.log(values)
-      const { repeatPassword, ...userData } = values
+      if (!authData) {
+        helpers.setSubmitting(false)
+        enqueueSnackbar('Authentication data is missing', { variant: 'error' })
+        return
+      }
+      const userData = {
+        ...values,
+        email: authData.email,
+        password: authData.password,
+        address: {
+          country: values[SIGNUP_FORM_NAMES.COUNTRY],
+          zipcode: values[SIGNUP_FORM_NAMES.ZIPCODE],
+          city: values[SIGNUP_FORM_NAMES.CITY],
+          street: values[SIGNUP_FORM_NAMES.STREET],
+        },
+      }
+
       dispatch(userSliceAction.createUser(userData))
         .unwrap()
         .then(() => {
@@ -100,7 +112,7 @@ function SignUpForm({
           }, 2000)
           navigate(TOOLS_APP_ROUTES.LOGIN)
         })
-        .catch((error) => {
+        .catch(error => {
           enqueueSnackbar(error, { variant: 'error' })
           helpers.resetForm()
         })
@@ -116,7 +128,7 @@ function SignUpForm({
           </Title>
           <Title $isActive>Sign Up</Title>
         </TitleContainer>
-        <InputsContainer>
+        <InputsContainer className="inline">
           <Input
             id="signupform-name"
             label="First name:"
@@ -135,6 +147,8 @@ function SignUpForm({
             onChange={formik.handleChange}
             error={formik.errors.lastname}
           />
+        </InputsContainer>
+        <InputsContainer>
           <Input
             id="signupform-phone"
             label="Phone:"
@@ -145,33 +159,47 @@ function SignUpForm({
             error={formik.errors.phone}
           />
           <Input
-            id="signupform-email"
-            label="Email:"
-            name={SIGNUP_FORM_NAMES.EMAIL}
-            type="email"
-            value={formik.values.email}
+            id="signupform-country"
+            label="Country:"
+            name={SIGNUP_FORM_NAMES.COUNTRY}
+            type="text"
+            value={formik.values.country}
             onChange={formik.handleChange}
-            error={formik.errors.email}
-          />
-          <Input
-            id="signupform-password"
-            label="Password:"
-            name={SIGNUP_FORM_NAMES.PASSWORD}
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.errors.password}
-          />
-          <Input
-            id="signupform-repeat_password"
-            label="Repeat password:"
-            name={SIGNUP_FORM_NAMES.REPEAT_PASSWORD}
-            type="password"
-            value={formik.values.repeatPassword}
-            onChange={formik.handleChange}
-            error={formik.errors.repeatPassword}
+            error={formik.errors.country}
           />
         </InputsContainer>
+        <InputsContainer className="inline">
+          <Input
+            id="signupform-zipcode"
+            label="Zip Code:"
+            name={SIGNUP_FORM_NAMES.ZIPCODE}
+            type="text"
+            value={formik.values.zipcode}
+            onChange={formik.handleChange}
+            error={formik.errors.zipcode}
+          />
+          <Input
+            id="signupform-city"
+            label="City:"
+            name={SIGNUP_FORM_NAMES.CITY}
+            type="text"
+            value={formik.values.city}
+            onChange={formik.handleChange}
+            error={formik.errors.city}
+          />
+        </InputsContainer>
+        <InputsContainer>
+          <Input
+            id="signupform-street"
+            label="Street:"
+            name={SIGNUP_FORM_NAMES.STREET}
+            type="text"
+            value={formik.values.street}
+            onChange={formik.handleChange}
+            error={formik.errors.street}
+          />
+        </InputsContainer>
+        <Text>Step 2 of 2</Text>
         <ButtonControl>
           <Button
             type="submit"

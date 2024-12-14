@@ -2,24 +2,19 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import {
-  userSliceAction,
-  userSliceSelectors,
-} from 'store/redux/userSlice/userSlice'
 
 import SignUpForm from 'components/SignUpForm/SignUpForm'
 import SignInForm from 'components/SignInForm/SignInForm'
 
 import { PageWrapper, SuccessMessage } from './styles'
 
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+
 function Login() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { userObj, isLoading, error } = useAppSelector(
-    userSliceSelectors.user_data,
-  )
   const isRegistered = Boolean(localStorage.getItem('accessToken'))
-
+  const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
   const [isSignInMode, setIsSignInMode] = useState<boolean>(true)
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false)
 
@@ -37,8 +32,12 @@ function Login() {
         <SuccessMessage>Registration successful! Please sign in</SuccessMessage>
       )}
 
-      {isSignInMode || isRegistered ? (
-        <SignInForm onSwitchToSignUp={onSignUpClick} />
+      {isSignInMode || !authData ? (
+        <SignInForm
+          onSwitchToSignUp={onSignUpClick}
+          onSwitchToSignIn={onSignInClick}
+          isSignInMode={isSignInMode}
+        />
       ) : (
         <SignUpForm
           onRegistrationSuccess={registrationSuccess}
