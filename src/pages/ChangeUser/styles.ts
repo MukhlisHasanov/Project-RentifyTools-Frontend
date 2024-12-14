@@ -6,7 +6,9 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 40px;
+
   background-color: ${colors.CARD};
+
   min-height: 100vh;
 `;
 

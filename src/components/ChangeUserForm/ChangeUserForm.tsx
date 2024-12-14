@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -33,10 +34,12 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
       email: userData?.email || '',
       password: '', 
       phone: userData?.phone || '',
+
     },
     enableReinitialize: true,
     validationSchema: Yup.object().shape({
       firstname: Yup.string()
+
         .required('Vorname ist erforderlich')
         .min(2, 'Vorname muss mindestens 2 Zeichen lang sein')
         .max(30, 'Vorname darf maximal 30 Zeichen lang sein'),
@@ -56,6 +59,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
       ),
     }),
     onSubmit: async (values) => {
+
       try {
         const result = await dispatch(
           userSliceAction.updateUser({
@@ -70,16 +74,19 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
         if (userSliceAction.updateUser.fulfilled.match(result)) {
           navigate('/profile/change-user');
         } else {
+
           console.error('Update fehlgeschlagen:', result.error);
         }
       } catch (error) {
         console.error('Fehler beim Absenden:', error);
+
       }
     },
   });
 
   return (
     <ChangeUserFormContainer onSubmit={formik.handleSubmit}>
+
       <Title>Profil bearbeiten</Title>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <InputsContainer>
@@ -152,11 +159,14 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
         <Button
           type="submit"
           name={isLoading ? 'Wird aktualisiert...' : 'Profil aktualisieren'}
+
           disabled={isLoading}
         />
       </ButtonControlWrapper>
     </ChangeUserFormContainer>
   );
+
 };
+
 
 export default ChangeUserForm;
