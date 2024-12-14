@@ -13,6 +13,5 @@ export interface CardProps {
   status?: string | null
   description: string | null
   onAddToCard: () => void
-  onAddToFavourites: () => void
   isMyAdvert?: boolean
 }

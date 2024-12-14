@@ -31,4 +31,5 @@ export interface ToolInitialState {
   initialTools: ToolUserResponseDto[]
   isLoading: boolean
   error: string | undefined
+  favCards: ToolUserResponseDto[]
 }
