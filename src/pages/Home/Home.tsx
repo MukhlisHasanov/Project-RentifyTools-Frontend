@@ -12,20 +12,6 @@ import {
 } from 'store/redux/CategorySlice/categorySlice'
 
 import ToolCard from 'components/ToolCard/ToolCard'
-// import {
-//   CategoryImg1,
-//   CategoryImg2,
-//   CategoryImg3,
-//   CategoryImg4,
-//   CategoryImg5,
-//   CategoryImg6,
-//   CategoryImg7,
-//   CategoryImg8,
-//   CategoryImg9,
-//   CategoryImg10,
-//   CategoryImg11,
-//   CategoryImg12,
-// } from 'assets'
 
 import {
   PageTitle,
@@ -39,22 +25,8 @@ import {
   TextContainer,
   BackButtonControl,
 } from './styles'
-import Button from 'components/Button/Button'
 
-// const imagesWithTitles = [
-//   { src: CategoryImg1, title: 'Excavators & Mini Excavators' },
-//   { src: CategoryImg2, title: 'Lifting Equipment & Aerial Work Platforms' },
-//   { src: CategoryImg3, title: 'Power Tools' },
-//   { src: CategoryImg4, title: 'Front Loaders & Mini Loaders' },
-//   { src: CategoryImg5, title: 'Compressors & Generators' },
-//   { src: CategoryImg6, title: 'Measuring Equipment' },
-//   { src: CategoryImg7, title: 'Concrete Mixers & Concrete Pumps' },
-//   { src: CategoryImg8, title: 'Rollers & Compaction Equipment' },
-//   { src: CategoryImg9, title: 'Welding Equipment' },
-//   { src: CategoryImg10, title: 'Cranes & Manipulators' },
-//   { src: CategoryImg11, title: 'Garden & Landscaping Tools' },
-//   { src: CategoryImg12, title: 'Lighting Equipment & Spotlights' },
-// ]
+import Button from 'components/Button/Button'
 
 function Home() {
   const navigate = useNavigate()
@@ -62,10 +34,10 @@ function Home() {
 
   const [selectCategory, setSelectCategory] = useState<number | null>(null)
 
-  const { tools } = useAppSelector(
-    toolSliceSelectors.tools_data,
+  const { tools } = useAppSelector(toolSliceSelectors.tools_data)
+  const { categories, error } = useAppSelector(
+    categorySliceSelectors.categories_data,
   )
-  const { categories, error } = useAppSelector(categorySliceSelectors.categories_data)
 
   useEffect(() => {
     dispatch(categorySliceAction.fetchCategories())
@@ -81,8 +53,7 @@ function Home() {
     setSelectCategory(null)
     dispatch(toolSliceAction.fetchTools())
   }
-console.log("Error ", error)  
-console.log(categories)
+
   const imageContainers = categories.map(category => (
     <ImageWrapper key={category.id} onClick={() => handleCategory(category.id)}>
       <CategoryImg>
@@ -91,7 +62,7 @@ console.log(categories)
       <ImageTitle>{category.title}</ImageTitle>
     </ImageWrapper>
   ))
-console.log(imageContainers)
+
   const toolCards = tools.map(tool => (
     <ToolCard
       id={tool.id}
@@ -102,7 +73,6 @@ console.log(imageContainers)
       description={tool.description}
       status={tool.status}
       onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
     />
   ))
 

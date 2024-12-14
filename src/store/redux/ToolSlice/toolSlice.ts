@@ -9,6 +9,7 @@ const toolDataInitialState: ToolInitialState = {
   toolObj: undefined,
   isLoading: false,
   error: undefined,
+  favCards: [],
 }
 
 const token = localStorage.getItem('accessToken')
@@ -94,6 +95,19 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    addToFavorites: create.reducer(
+      (state: ToolInitialState, action: PayloadAction<ToolUserResponseDto>) => {
+        const tool = action.payload
+        const isAlreadyFavorite = state.favCards.some(fav => fav.id === tool.id)
+
+        if (isAlreadyFavorite) {
+          state.favCards = state.favCards.filter(fav => fav.id !== tool.id)
+        } else {
+          state.favCards.push(tool)
+        }
+      },
+    ),
+
     fetchTool: create.asyncThunk(
       async (id: string, { rejectWithValue }) => {
         const response = await fetch(`/api/tools/${id}`, {
@@ -122,12 +136,6 @@ export const toolSlice = createAppSlice({
         },
       },
     ),
-
-
-    addFavorites: create => ({
-      
-
-    }),
 
     fetchTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
@@ -323,6 +331,7 @@ export const toolSlice = createAppSlice({
       tools: state.tools,
       isLoading: state.isLoading,
       error: state.error,
+      favCards: state.favCards,
     }),
 
     toolObj_data: (state: ToolInitialState) => ({

@@ -30,7 +30,6 @@ function MyAdvert() {
       status={tool.status}
       description={tool.description}
       onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
       isMyAdvert
     />
   ))
