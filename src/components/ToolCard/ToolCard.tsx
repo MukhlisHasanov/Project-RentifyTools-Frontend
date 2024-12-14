@@ -1,5 +1,4 @@
 import {
-  CardCategory,
   CardContent,
   CardDescription,
   CardIcons,
@@ -9,16 +8,21 @@ import {
   CardTitle,
   CardWrapper,
 } from './styles'
-import { useAppDispatch } from 'store/hooks'
-import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import {
+  toolSliceAction,
+  toolSliceSelectors,
+} from 'store/redux/ToolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { colors } from 'styles/colors'
+import { ToolUserResponseDto } from 'store/redux/ToolSlice/types'
 
 function ToolCard({
   id,
@@ -29,21 +33,36 @@ function ToolCard({
   status,
   description,
   onAddToCard,
-  onAddToFavourites,
   isMyAdvert = false,
 }: CardProps) {
   const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
+
+  const tool = {
+    id,
+    title: title || '',
+    description: description || '',
+    status: status || '',
+    imageUrls: imageUrls || [],
+    price: price || '',
+  }
+
+  const { favCards } = useAppSelector(toolSliceSelectors.tools_data)
+
+  const isFavorite = favCards.some(tool => tool.id === id)
+
+  const handleAddToFavorites = (tool: ToolUserResponseDto) => {
+    dispatch(toolSliceAction.addToFavorites(tool))
+  }
 
   const goAdvertPage = (id: string) => {
     navigate(`/tools/${id}`)
   }
 
   const handleEdit = () => {
-    console.log('Edit button clicked')
     navigate(`/profile/my-adverts/change-advert/${id}`)
   }
-
-  const dispatch = useAppDispatch()
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this tool?')) {
@@ -104,11 +123,11 @@ function ToolCard({
                 <ShoppingBagIcon />
               </IconButton>
               <IconButton
-                onClick={onAddToFavourites}
+                onClick={() => handleAddToFavorites(tool)}
                 sx={{ color: colors.BUTTON }}
                 aria-label="addToFavorite"
               >
-                <FavoriteIcon />
+                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </IconButton>
             </>
           )}

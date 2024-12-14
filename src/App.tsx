@@ -16,6 +16,7 @@ import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
 import Advert from 'pages/Advert/Advert'
 import FindUsers from 'pages/FindUser/FindUser'
+import Favorites from 'pages/Favorites/Favorites'
 import ChangeUser from 'pages/ChangeUser/ChangeUser'
 
 function App() {
@@ -50,7 +51,7 @@ function App() {
               />
               <Route
                 path={TOOLS_APP_ROUTES.FAVOURITES}
-                element={<HomePlug />}
+                element={<Favorites />}
               />
               <Route path={'/profile/change-user'} element={<ChangeUser/>}/>
               <Route

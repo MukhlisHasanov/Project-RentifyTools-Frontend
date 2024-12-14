@@ -22,7 +22,6 @@ function SearchResults() {
       status={tool.status}
       description={tool.description}
       onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
     />
   ))
 
