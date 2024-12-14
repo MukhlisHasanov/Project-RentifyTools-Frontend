@@ -56,8 +56,11 @@ export const userSlice = createAppSlice({
     ),
 
     updateUser: create.asyncThunk(
-      async (userData: UserRequestDto, { rejectWithValue }) => {
-        const response = await fetch(`/api/users/${userData}`, {
+      async (
+        { userId, userData }: { userId: string; userData: UserRequestDto },
+        { rejectWithValue },
+      ) => {
+        const response = await fetch(`/api/users/${userId}`, {
           method: 'PUT',
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
@@ -65,7 +68,7 @@ export const userSlice = createAppSlice({
           },
           body: JSON.stringify(userData),
         })
-
+console.log("SliceV", userId, userData)
         const result = await response.json()
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to update user data')
@@ -98,7 +101,6 @@ export const userSlice = createAppSlice({
         })
         const result = await response.json()
         if (!response.ok) {
-          
           return rejectWithValue(result.message || 'Failed to delete user')
         }
         return result

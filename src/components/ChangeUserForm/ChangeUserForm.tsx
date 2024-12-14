@@ -27,6 +27,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
 
   const formik = useFormik<UserFormValues>({
     initialValues: {
+     
       firstname: userData?.firstname || '',
       lastname: userData?.lastname || '',
       email: userData?.email || '',
@@ -58,13 +59,13 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
       try {
         const result = await dispatch(
           userSliceAction.updateUser({
-            firstname: values.firstname,
-            lastname: values.lastname,
-            email: values.email,
-            phone: values.phone,
-            password: values.password,
+            userId: userData.id,
+            userData: values,
+            
+
           })
         );
+        console.log("formV" , userData.id, values)
 
         if (userSliceAction.updateUser.fulfilled.match(result)) {
           navigate('/profile/change-user');
