@@ -62,10 +62,10 @@ function Home() {
 
   const [selectCategory, setSelectCategory] = useState<number | null>(null)
 
-  const { tools } = useAppSelector(
-    toolSliceSelectors.tools_data,
+  const { tools } = useAppSelector(toolSliceSelectors.tools_data)
+  const { categories, error } = useAppSelector(
+    categorySliceSelectors.categories_data,
   )
-  const { categories, error } = useAppSelector(categorySliceSelectors.categories_data)
 
   useEffect(() => {
     dispatch(categorySliceAction.fetchCategories())
@@ -81,8 +81,8 @@ function Home() {
     setSelectCategory(null)
     dispatch(toolSliceAction.fetchTools())
   }
-console.log("Error ", error)  
-console.log(categories)
+  console.log('Error ', error)
+  console.log(categories)
   const imageContainers = categories.map(category => (
     <ImageWrapper key={category.id} onClick={() => handleCategory(category.id)}>
       <CategoryImg>
@@ -91,7 +91,7 @@ console.log(categories)
       <ImageTitle>{category.title}</ImageTitle>
     </ImageWrapper>
   ))
-console.log(imageContainers)
+  console.log(imageContainers)
   const toolCards = tools.map(tool => (
     <ToolCard
       id={tool.id}
