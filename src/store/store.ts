@@ -3,13 +3,13 @@ import { combineSlices, configureStore } from '@reduxjs/toolkit'
 
 import { userSlice } from 'store/redux/userSlice/userSlice'
 import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
-import { categorySlice } from './redux/CategorySlice/categorySlice'
-import { toolSlice } from './redux/ToolSlice/toolSlice'
+import { categorySlice } from './redux/categorySlice/categorySlice'
+import { toolSlice } from './redux/toolSlice/toolSlice'
 import { adminSlice } from 'store/redux/adminSlice/adminSlice'
 
 // import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
-import { messageSlice } from './redux/MessageSlice/messageSlice'
-import { addressSlice } from './redux/AddressSlice/addressSlice'
+import { messageSlice } from './redux/messageSlice/messageSlice'
+import { addressSlice } from './redux/addressSlice/addressSlice'
 
 const rootReducer = combineSlices(
   userSlice,

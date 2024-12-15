@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
@@ -12,7 +12,7 @@ import {
 import {
   messageSliceAction,
   messageSliceSelectors,
-} from 'store/redux/MessageSlice/messageSlice'
+} from 'store/redux/messageSlice/messageSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import MessageModal from 'components/MessageModal/MessageModal'
 
@@ -153,7 +153,7 @@ function Advert() {
               <Button
                 name="Write the message"
                 onClick={openMessageModal}
-                disabled={!user} 
+                disabled={!user}
               />
               {!showPhone ? (
                 <Button

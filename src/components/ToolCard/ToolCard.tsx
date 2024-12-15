@@ -10,7 +10,7 @@ import {
   CardWrapper,
 } from './styles'
 import { useAppDispatch } from 'store/hooks'
-import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
+import { toolSliceAction } from 'store/redux/toolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '@mui/material'

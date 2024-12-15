@@ -8,11 +8,11 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/CategorySlice/categorySlice'
+} from 'store/redux/categorySlice/categorySlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -27,9 +27,9 @@ import {
   ButtonControlWrapper,
 } from './styles'
 import { NEWADVERT_FORM_NAMES } from './types'
-import { ToolRequestDto } from 'store/redux/ToolSlice/types'
+import { ToolRequestDto } from 'store/redux/toolSlice/types'
 import ImagePreviewList from './ImagePrevievList'
-import { Select, MenuItem, FormControl, } from '@mui/material'
+import { Select, MenuItem, FormControl } from '@mui/material'
 import { colors } from 'styles/colors'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
@@ -118,7 +118,9 @@ function NewAdvertForm() {
         )
 
         if (toolSliceAction.createTool.fulfilled.match(result)) {
-          enqueueSnackbar('Advert created successfully !', { variant: 'success' })
+          enqueueSnackbar('Advert created successfully !', {
+            variant: 'success',
+          })
           formik.resetForm()
           navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
         } else {
