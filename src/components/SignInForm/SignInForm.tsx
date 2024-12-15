@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { SnackbarProvider, useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -94,7 +94,6 @@ function SignInForm({
   }, [isSignInMode])
 
   return (
-    <SnackbarProvider maxSnack={3}>
       <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
           <Title isActive={isSignInMode} onClick={onSwitchToSignIn}>
@@ -150,7 +149,6 @@ function SignInForm({
             : 'By signing up, you accept our Terms and Conditions and acknowledge our Privacy Policy'}
         </Text>
       </SignInFormContainer>
-    </SnackbarProvider>
   )
 }
 export default SignInForm
