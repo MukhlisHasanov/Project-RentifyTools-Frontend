@@ -319,15 +319,26 @@ export const toolSlice = createAppSlice({
     ),
 
     searchTools: create.reducer(
-      (state: ToolInitialState, action: PayloadAction<string>) => {
-        const searchTerm = action.payload.toLowerCase()
+      (
+        state: ToolInitialState,
+        action: PayloadAction<{ searchTerm: string; city: string }>,
+      ) => {
+        const { searchTerm, city } = action.payload
         state.tools = state.initialTools.filter(tool => {
-          return tool.title && tool.title.toLowerCase().includes(searchTerm)
+          const matchesTitle = tool.title
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase())
+          const matchesCity =
+            tool.user?.address?.city?.toLowerCase() === city.toLowerCase()
+
+          if (searchTerm && city) return matchesTitle && matchesCity
+          if (searchTerm) return matchesTitle
+          if (city) return matchesCity
+
+          return true
         })
       },
     ),
-    
- 
   }),
   selectors: {
     tools_data: (state: ToolInitialState) => ({

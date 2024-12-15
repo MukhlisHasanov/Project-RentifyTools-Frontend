@@ -1,4 +1,4 @@
-import { Address } from "../signInSlice/types"
+import { Address } from "../addressSlice/types"
 export interface ToolRequestDto {
   title: string
   description: string

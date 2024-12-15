@@ -1,16 +1,10 @@
-import { useLocation } from 'react-router-dom'
-import { useAppSelector } from 'store/hooks'
-import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
-import ToolCard from 'components/ToolCard/ToolCard'
-import { PageWrapper, CardsContainer, TextContainer } from './styles'
+import { useAppSelector } from 'store/hooks';
+import ToolCard from 'components/ToolCard/ToolCard';
+import { PageWrapper, CardsContainer, TextContainer } from './styles';
+import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice';
 
 function SearchResults() {
-  const location = useLocation()
-  const { tools, isLoading, error } = useAppSelector(
-    toolSliceSelectors.tools_data,
-  )
-
-  const searchTerm = location.state?.searchTerm || ''
+  const tools = useAppSelector(toolSliceSelectors.tools_data).tools;
 
   const toolCards = tools.map(tool => (
     <ToolCard
@@ -23,20 +17,20 @@ function SearchResults() {
       description={tool.description}
       onAddToCard={() => {}}
     />
-  ))
+  ));
 
   return (
     <PageWrapper>
-      <TextContainer>Search Results for: "{searchTerm}"</TextContainer>
+      <TextContainer>Search Results</TextContainer>
       <CardsContainer>
         {toolCards.length > 0 ? (
           toolCards
         ) : (
-          <TextContainer>No tools found for "{searchTerm}"</TextContainer>
+          <TextContainer>No tools found</TextContainer>
         )}
       </CardsContainer>
     </PageWrapper>
-  )
+  );
 }
 
-export default SearchResults
+export default SearchResults;
