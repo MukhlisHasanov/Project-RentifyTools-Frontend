@@ -34,4 +34,5 @@ export interface ToolInitialState {
   isLoading: boolean
   isCategoryLoading: boolean
   error: string | undefined
+  favCards: ToolUserResponseDto[]
 }
