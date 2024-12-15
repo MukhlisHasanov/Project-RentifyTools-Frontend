@@ -1,25 +1,43 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 import SignUpForm from 'components/SignUpForm/SignUpForm'
 import SignInForm from 'components/SignInForm/SignInForm'
 
-import { PageWrapper } from './styles'
+import { PageWrapper, SuccessMessage } from './styles'
+
+import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
 function Login() {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const isRegistered = Boolean(localStorage.getItem('accessToken'))
   const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
   const [isSignInMode, setIsSignInMode] = useState<boolean>(true)
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false)
 
   const onSignUpClick = () => setIsSignInMode(false)
   const onSignInClick = () => setIsSignInMode(true)
 
   const registrationSuccess = () => {
     setIsSignInMode(true)
+    setShowSuccessMessage(true)
+    setTimeout(() => setShowSuccessMessage(false), 3000)
   }
   return (
     <PageWrapper>
-      {isSignInMode || isRegistered ? (
-        <SignInForm onSwitchToSignUp={onSignUpClick} />
+      {showSuccessMessage && (
+        <SuccessMessage>Registration successful! Please sign in</SuccessMessage>
+      )}
+
+      {isSignInMode || !authData ? (
+        <SignInForm
+          onSwitchToSignUp={onSignUpClick}
+          onSwitchToSignIn={onSignInClick}
+          isSignInMode={isSignInMode}
+        />
       ) : (
         <SignUpForm
           onRegistrationSuccess={registrationSuccess}

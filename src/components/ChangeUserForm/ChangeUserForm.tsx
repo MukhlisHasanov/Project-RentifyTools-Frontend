@@ -86,7 +86,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <InputsContainer>
         <InputsContainer>
-          <label htmlFor="editform-firstname">Vorname:</label>
+          <label htmlFor="editform-firstname">firstname:</label>
           <Input
             id="editform-firstname"
             name="firstname"
@@ -98,7 +98,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
         </InputsContainer>
 
         <InputsContainer>
-          <label htmlFor="editform-lastname">Nachname:</label>
+          <label htmlFor="editform-lastname">lastname:</label>
           <Input
             id="editform-lastname"
             name="lastname"
@@ -122,7 +122,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
         </InputsContainer>
 
         <InputsContainer>
-          <label htmlFor="editform-password">Passwort:</label>
+          <label htmlFor="editform-password">Password:</label>
           <Input
             id="editform-password"
             name="password"

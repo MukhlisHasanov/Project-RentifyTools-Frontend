@@ -87,7 +87,7 @@ function ChangeAdvertForm() {
       price: toolObj?.price || '',
       status: toolObj?.status || 'AVAILABLE',
       imageUrls: [],
-      categoryIds: []
+      categoryIds: [],
     },
     enableReinitialize: true,
     validationSchema: Yup.object().shape({

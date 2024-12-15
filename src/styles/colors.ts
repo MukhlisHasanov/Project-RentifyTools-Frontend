@@ -1,5 +1,4 @@
 export interface Colors {
-  BACKGROUND: Interpolation<{ theme?: Theme | undefined; as?: ElementType<any, keyof IntrinsicElements> | undefined } & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & { theme: Theme }>
   ERROR: string
   DISABLED: string
   GREY: string
