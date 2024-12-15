@@ -2,7 +2,6 @@ import { KeyboardEvent, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 
-
 import {
   addressSliceAction,
   addressSliceSelectors,
@@ -51,10 +50,9 @@ function Search({ toolName, onChangeValue }: SearchProps) {
   }, [city, addressesCityZip])
 
   const handleCitySelect = (city: string, zipCode: string | undefined) => {
-    setCity(city); 
-    setFilteredAddresses([]); 
-  };
-  
+    setCity(city)
+    setFilteredAddresses([])
+  }
 
   const onSearch = () => {
     const sanitizedCity = city.split(' (')[0].trim()
