@@ -119,7 +119,6 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -128,7 +127,6 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.toolObj = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
