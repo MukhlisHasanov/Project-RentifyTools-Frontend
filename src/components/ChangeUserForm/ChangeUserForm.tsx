@@ -1,40 +1,41 @@
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import {
+  userSliceAction,
+  userSliceSelectors,
+} from 'store/redux/userSlice/userSlice'
+import Input from 'components/Input/Input'
+import Button from 'components/Button/Button'
+import {
+  ChangeUserFormContainer,
+  Title,
+  InputsContainer,
+  ButtonControlWrapper,
+} from './styles'
+import { UserFormValues } from './types'
 
-import React, { useEffect } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { userSliceAction, userSliceSelectors } from 'store/redux/userSlice/userSlice';
-import Input from 'components/Input/Input';
-import Button from 'components/Button/Button';
-import { ChangeUserFormContainer, Title, InputsContainer, ButtonControlWrapper } from './styles';
-import { UserFormValues } from './types';
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice';
-import { useNavigate } from 'react-router-dom';
-import { UserResponseDto } from 'store/redux/signInSlice/types';
-import { UserRequestDto } from 'store/redux/userSlice/types';
-
+import { useNavigate } from 'react-router-dom'
+import { UserResponseDto } from 'store/redux/signInSlice/types'
 
 interface ChangeUserFormProps {
-  userData: UserResponseDto;
- 
-  error?: string;
+  userData: UserResponseDto
+  error?: string
 }
 
-const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const { isLoading } = useAppSelector(userSliceSelectors.user_data);
+  const { isLoading } = useAppSelector(userSliceSelectors.user_data)
 
   const formik = useFormik<UserFormValues>({
     initialValues: {
-     
       firstname: userData?.firstname || '',
       lastname: userData?.lastname || '',
       email: userData?.email || '',
-      password: '', 
+      password: '',
       phone: userData?.phone || '',
-
     },
     enableReinitialize: true,
     validationSchema: Yup.object().shape({
@@ -55,43 +56,36 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
         .max(30, 'Passwort darf maximal 30 Zeichen lang sein'),
       phone: Yup.string().matches(
         /^\+?[0-9\s]*$/,
-        'Telefonnummer muss gültig sein (Ziffern und optional "+" Zeichen)'
+        'Telefonnummer muss gültig sein (Ziffern und optional "+" Zeichen)',
       ),
     }),
-    onSubmit: async (values) => {
-
+    onSubmit: async values => {
       try {
         const result = await dispatch(
           userSliceAction.updateUser({
             userId: userData.id,
             userData: values,
-            
-
-          })
-        );
-        console.log("formV" , userData.id, values)
+          }),
+        )
+        console.log('formV', userData.id, values)
 
         if (userSliceAction.updateUser.fulfilled.match(result)) {
-          navigate('/profile/change-user');
+          navigate('/profile/change-user')
         } else {
-
-          console.error('Update fehlgeschlagen:', result.error);
+          console.error('Update fehlgeschlagen:', result.error)
         }
       } catch (error) {
-        console.error('Fehler beim Absenden:', error);
-
+        console.error('Fehler beim Absenden:', error)
       }
     },
-  });
+  })
 
   return (
     <ChangeUserFormContainer onSubmit={formik.handleSubmit}>
-
       <Title>Profil bearbeiten</Title>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <InputsContainer>
-       
-        <div>
+        <InputsContainer>
           <label htmlFor="editform-firstname">Vorname:</label>
           <Input
             id="editform-firstname"
@@ -101,10 +95,9 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
             onChange={formik.handleChange}
             error={formik.errors.firstname}
           />
-        </div>
+        </InputsContainer>
 
-      
-        <div>
+        <InputsContainer>
           <label htmlFor="editform-lastname">Nachname:</label>
           <Input
             id="editform-lastname"
@@ -114,10 +107,9 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
             onChange={formik.handleChange}
             error={formik.errors.lastname}
           />
-        </div>
+        </InputsContainer>
 
-  
-        <div>
+        <InputsContainer>
           <label htmlFor="editform-email">E-Mail:</label>
           <Input
             id="editform-email"
@@ -127,10 +119,9 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
             onChange={formik.handleChange}
             error={formik.errors.email}
           />
-        </div>
+        </InputsContainer>
 
-     
-        <div>
+        <InputsContainer>
           <label htmlFor="editform-password">Passwort:</label>
           <Input
             id="editform-password"
@@ -140,9 +131,9 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
             onChange={formik.handleChange}
             error={formik.errors.password}
           />
-        </div>
+        </InputsContainer>
 
-        <div>
+        <InputsContainer>
           <label htmlFor="editform-phone">Telefon:</label>
           <Input
             id="editform-phone"
@@ -152,21 +143,18 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData,  error }) => 
             onChange={formik.handleChange}
             error={formik.errors.phone}
           />
-        </div>
+        </InputsContainer>
       </InputsContainer>
 
       <ButtonControlWrapper>
         <Button
           type="submit"
           name={isLoading ? 'Wird aktualisiert...' : 'Profil aktualisieren'}
-
           disabled={isLoading}
         />
       </ButtonControlWrapper>
     </ChangeUserFormContainer>
-  );
+  )
+}
 
-};
-
-
-export default ChangeUserForm;
+export default ChangeUserForm
