@@ -1,9 +1,9 @@
+import { useAppSelector } from 'store/hooks';
+import ToolCard from 'components/ToolCard/ToolCard';
+import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice';
 import { useLocation } from 'react-router-dom'
-import { useAppSelector } from 'store/hooks'
 import Switch from '@mui/material/Switch'
 import { colors } from 'styles/colors'
-import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
-import ToolCard from 'components/ToolCard/ToolCard'
 import {
   PageWrapper,
   CardsContainer,
@@ -14,6 +14,7 @@ import {
 import { useState } from 'react'
 
 function SearchResults() {
+
   const location = useLocation()
   const { tools, isLoading, error } = useAppSelector(
     toolSliceSelectors.tools_data,
@@ -69,11 +70,11 @@ function SearchResults() {
             />
           ))
         ) : (
-          <TextContainer>No tools found for "{searchTerm}"</TextContainer>
+          <TextContainer>No tools found</TextContainer>
         )}
       </CardsContainer>
     </PageWrapper>
-  )
+  );
 }
 
 export default SearchResults

@@ -66,7 +66,7 @@ function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
         </HeaderLink>
         {isLogin ? (
           <>
-            <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>
+            <HeaderLink to={TOOLS_APP_ROUTES.MY_PROFILE}>
               <AccountCircleIcon
                 sx={{
                   transition: 'background-color 0.3s, color 0.3s',

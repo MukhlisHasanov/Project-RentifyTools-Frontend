@@ -8,6 +8,7 @@ const toolDataInitialState: ToolInitialState = {
   tools: [],
   toolObj: undefined,
   isLoading: false,
+  isCategoryLoading: false,
   error: undefined,
   favCards: [],
 }
@@ -118,7 +119,6 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
-        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -127,7 +127,6 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.toolObj = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -180,16 +179,17 @@ export const toolSlice = createAppSlice({
       },
       {
         pending: (state: ToolInitialState) => {
-          state.isLoading = true
+          state.isCategoryLoading = true
           state.error = undefined
+          state.tools = []
         },
         fulfilled: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.tools = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.error = action.payload as string
         },
       },
@@ -374,10 +374,23 @@ export const toolSlice = createAppSlice({
     ),
 
     searchTools: create.reducer(
-      (state: ToolInitialState, action: PayloadAction<string>) => {
-        const searchTerm = action.payload.toLowerCase()
+      (
+        state: ToolInitialState,
+        action: PayloadAction<{ searchTerm: string; city: string }>,
+      ) => {
+        const { searchTerm, city } = action.payload
         state.tools = state.initialTools.filter(tool => {
-          return tool.title && tool.title.toLowerCase().includes(searchTerm)
+          const matchesTitle = tool.title
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase())
+          const matchesCity =
+            tool.user?.address?.city?.toLowerCase() === city.toLowerCase()
+
+          if (searchTerm && city) return matchesTitle && matchesCity
+          if (searchTerm) return matchesTitle
+          if (city) return matchesCity
+
+          return true
         })
       },
     ),
@@ -386,6 +399,7 @@ export const toolSlice = createAppSlice({
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
       isLoading: state.isLoading,
+      isCategoryLoading: state.isCategoryLoading,
       error: state.error,
       favCards: state.favCards,
     }),

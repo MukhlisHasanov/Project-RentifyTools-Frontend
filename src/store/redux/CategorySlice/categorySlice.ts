@@ -15,7 +15,7 @@ export const categorySlice = createAppSlice({
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/categories')
         const result = await response.json()
-        console.log("Result from API:", result);
+        console.log('Result from API:', result)
 
         if (!response.ok) {
           return rejectWithValue(result.message || 'Error fetching categories')
@@ -33,7 +33,7 @@ export const categorySlice = createAppSlice({
             ...category,
             image: `data:image/jpeg;base64,${category.image}`,
           }))
-          console.log("State:", state.categories);
+          console.log('State:', state.categories)
         },
         rejected: (state: CategoriesInitialState, action) => {
           state.isLoading = false

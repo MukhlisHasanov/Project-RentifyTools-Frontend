@@ -1,4 +1,4 @@
-import { Key } from "readline"
+import { Key } from 'readline'
 
 export interface UserCardProps {
   description: string | undefined
@@ -12,4 +12,3 @@ export interface UserCardProps {
   password: string
   phone: string
 }
-

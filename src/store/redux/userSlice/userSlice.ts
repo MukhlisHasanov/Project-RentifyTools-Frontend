@@ -1,7 +1,6 @@
 import { createAppSlice } from 'store/createAppSlice'
 
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
-import { error } from 'console'
 
 const userDataInitialState: UserInitialState = {
   userObj: undefined,
@@ -56,8 +55,11 @@ export const userSlice = createAppSlice({
     ),
 
     updateUser: create.asyncThunk(
-      async (userData: UserRequestDto, { rejectWithValue }) => {
-        const response = await fetch('/api/users/{userId}', {
+      async (
+        { userId, userData }: { userId: string; userData: UserRequestDto },
+        { rejectWithValue },
+      ) => {
+        const response = await fetch(`/api/users/${userId}`, {
           method: 'PUT',
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
@@ -65,7 +67,6 @@ export const userSlice = createAppSlice({
           },
           body: JSON.stringify(userData),
         })
-
         const result = await response.json()
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to update user data')
@@ -90,18 +91,17 @@ export const userSlice = createAppSlice({
 
     deleteUser: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/users/{userId}', {
+        const response = await fetch('/api/users/me', {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
           method: 'DELETE',
         })
-
+        const result = await response.json()
         if (!response.ok) {
-          const result = await response.json()
           return rejectWithValue(result.message || 'Failed to delete user')
         }
-        return 'User deleted successfully'
+        return result
       },
       {
         pending: (state: UserInitialState) => {
