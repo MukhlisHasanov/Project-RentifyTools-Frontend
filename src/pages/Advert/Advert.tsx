@@ -147,7 +147,7 @@ function Advert() {
               <p>Price: ${toolObj.price}</p>
               <p>Status: {toolObj.status}</p>
               <p>Address: {toolObj.user?.address.city }</p>
-              <p>Post Code: {toolObj.user?.address.zipCode}:</p>
+              <p>Post Code: {toolObj.user?.address.zipCode}</p>
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />
