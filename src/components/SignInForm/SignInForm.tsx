@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -23,64 +24,81 @@ import {
 } from './styles'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
 
-function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
+function SignInForm({
+  isSignInMode,
+  onSwitchToSignUp,
+  onSwitchToSignIn,
+}: SignInFormProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { user, isLoading } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
 
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     [SIGNIN_FORM_NAMES.EMAIL]: Yup.string()
-      .required('Email is required')
-      .min(5, 'At least 5 characters')
-      .max(30, 'Up to 30 characters')
-      .matches(
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        'Enter a valid email, e.g., example@mail.com',
-      ),
-
+      .email('Invalid email address')
+      .required('Email is required'),
     [SIGNIN_FORM_NAMES.PASSWORD]: Yup.string()
       .required('Password is required')
-      .min(5, 'At least 5 characters')
-      .max(30, 'Up to 30 characters')
-      .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]+$/,
-        'Include 1 uppercase, 1 number, and 1 special character',
-      ),
+      .min(6, 'Password must be at least 6 characters'),
+    ...(!isSignInMode && {
+      [SIGNIN_FORM_NAMES.REPEAT_PASSWORD]: Yup.string()
+        .required('Confirm your password')
+        .oneOf([Yup.ref(SIGNIN_FORM_NAMES.PASSWORD)], 'Passwords must match'),
+    }),
   })
 
   const formik = useFormik({
     initialValues: {
       [SIGNIN_FORM_NAMES.EMAIL]: '',
       [SIGNIN_FORM_NAMES.PASSWORD]: '',
+      ...(!isSignInMode && { [SIGNIN_FORM_NAMES.REPEAT_PASSWORD]: '' }),
     },
     validationSchema: validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
-      console.log(values)
-      dispatch(signInOutSliceAction.loginUser(values))
-        .unwrap()
-        .then(() => {
-          dispatch(signInOutSliceAction.getCurrentUser())
-          console.log(user)
-          enqueueSnackbar('Login successful !', { variant: 'success' })
-          setTimeout(() => {
+      if (isSignInMode) {
+        console.log(values)
+        dispatch(signInOutSliceAction.loginUser(values))
+          .unwrap()
+          .then(() => {
+            dispatch(signInOutSliceAction.getCurrentUser())
+            console.log(user)
+            enqueueSnackbar('Login successful !', { variant: 'success' })
+            setTimeout(() => {
+              helpers.resetForm()
+              navigate(TOOLS_APP_ROUTES.HOME)
+            }, 2000)
+          })
+          .catch(error => {
+            enqueueSnackbar(error, { variant: 'error' })
             helpers.resetForm()
-            navigate(TOOLS_APP_ROUTES.HOME)
-          }, 2000)
-        })
-        .catch(() => {
-          enqueueSnackbar('Incorrect email or password!', { variant: 'error' })
-          helpers.resetForm()
-        })
+          })
+      } else {
+        dispatch(signInOutSliceAction.checkEmail(values))
+          .unwrap()
+          .then(() => {
+            enqueueSnackbar('Email is available', { variant: 'success' })
+            setTimeout(() => {
+              onSwitchToSignUp()
+            }, 2000)
+          })
+          .catch(error => enqueueSnackbar(error, { variant: 'error' }))
+      }
     },
   })
+
+  useEffect(() => {
+    formik.resetForm()
+  }, [isSignInMode])
 
   return (
       <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
         <TitleContainer>
-          <Title isActive>Sign In</Title>
-          <Title isActive={false} onClick={onSwitchToSignUp}>
+          <Title isActive={isSignInMode} onClick={onSwitchToSignIn}>
+            Sign In
+          </Title>
+          <Title isActive={!isSignInMode} onClick={onSwitchToSignUp}>
             Sign Up
           </Title>
         </TitleContainer>
@@ -103,15 +121,32 @@ function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
             onChange={formik.handleChange}
             error={formik.errors.password}
           />
+          {!isSignInMode && (
+            <Input
+              id="signupform-repeat_password"
+              label="Repeat password:"
+              name={SIGNIN_FORM_NAMES.REPEAT_PASSWORD}
+              type="password"
+              value={formik.values.repeatPassword}
+              onChange={formik.handleChange}
+              error={formik.errors.repeatPassword}
+            />
+          )}
         </InputsContainer>
+        {!isSignInMode && <Text>Step 1 of 2</Text>}
         <ButtonControl>
           <Button
             type="submit"
-            name={isLoading ? 'Signing In...' : 'Sign In'}
+            name={isSignInMode ? 'Sign In' : 'Next'}
             disabled={isLoading}
           />
         </ButtonControl>
-        <Text>By signing in, you agree to our Terms of Service</Text>
+        <Text>
+          {' '}
+          {isSignInMode
+            ? 'By signing in, you agree to our Terms of Service'
+            : 'By signing up, you accept our Terms and Conditions and acknowledge our Privacy Policy'}
+        </Text>
       </SignInFormContainer>
   )
 }

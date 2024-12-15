@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import { useEffect } from 'react'
 // import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 

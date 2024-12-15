@@ -8,6 +8,7 @@ const toolDataInitialState: ToolInitialState = {
   tools: [],
   toolObj: undefined,
   isLoading: false,
+  isCategoryLoading: false,
   error: undefined,
   favCards: [],
 }
@@ -180,20 +181,22 @@ export const toolSlice = createAppSlice({
       },
       {
         pending: (state: ToolInitialState) => {
-          state.isLoading = true
+          state.isCategoryLoading = true
           state.error = undefined
+          state.tools = []
         },
         fulfilled: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.tools = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.error = action.payload as string
         },
       },
     ),
+
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {
@@ -325,11 +328,14 @@ export const toolSlice = createAppSlice({
         })
       },
     ),
+    
+ 
   }),
   selectors: {
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
       isLoading: state.isLoading,
+      isCategoryLoading: state.isCategoryLoading,
       error: state.error,
       favCards: state.favCards,
     }),

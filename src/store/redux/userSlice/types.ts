@@ -1,9 +1,12 @@
+import { Address } from "../signInSlice/types"
+
 export interface UserRequestDto {
   firstname: string
   lastname: string
   email: string
   password: string
   phone: string
+  adress: Address
 }
 
 export interface UserResponseDto {
@@ -13,6 +16,7 @@ export interface UserResponseDto {
   email: string
   phone: string
   roles?: Role[]
+  address: Address
 }
 export interface Role {
   id: number

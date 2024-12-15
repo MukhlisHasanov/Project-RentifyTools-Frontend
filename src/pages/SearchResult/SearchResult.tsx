@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import { useAppSelector } from 'store/hooks'
-import { toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
 import ToolCard from 'components/ToolCard/ToolCard'
 import { PageWrapper, CardsContainer, TextContainer } from './styles'
 

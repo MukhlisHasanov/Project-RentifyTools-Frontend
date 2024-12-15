@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/CategorySlice/categorySlice'
+} from 'store/redux/categorySlice/categorySlice'
 
 import ToolCard from 'components/ToolCard/ToolCard'
 
@@ -24,9 +24,12 @@ import {
   CardsContainer,
   TextContainer,
   BackButtonControl,
+  LoaderWrapper,
 } from './styles'
 
 import Button from 'components/Button/Button'
+import { CircularProgress } from '@mui/material'
+import { colors } from 'styles/colors'
 
 function Home() {
   const navigate = useNavigate()
@@ -34,10 +37,14 @@ function Home() {
 
   const [selectCategory, setSelectCategory] = useState<number | null>(null)
 
-  const { tools } = useAppSelector(toolSliceSelectors.tools_data)
-  const { categories, error } = useAppSelector(
-    categorySliceSelectors.categories_data,
+  const { tools, isCategoryLoading } = useAppSelector(
+    toolSliceSelectors.tools_data,
   )
+  const {
+    categories,
+    error,
+    isLoading: isCategoriesLoading,
+  } = useAppSelector(categorySliceSelectors.categories_data)
 
   useEffect(() => {
     dispatch(categorySliceAction.fetchCategories())
@@ -84,16 +91,30 @@ function Home() {
             {categories.find(category => category.id === selectCategory)?.title}
           </PageTitle>
           <BackButtonControl>
-            <Button name="< Back" onClick={handleBack} />
+            <Button name="Back" onClick={handleBack} />
           </BackButtonControl>
-          <CardsContainer>{toolCards}</CardsContainer>
+          {isCategoryLoading ? (
+            <LoaderWrapper>
+              <CircularProgress sx={{ color: colors.WHITE }} />{' '}
+            </LoaderWrapper>
+          ) : tools.length > 0 ? (
+            <CardsContainer>{toolCards}</CardsContainer>
+          ) : (
+            <p>No tools available in this category.</p>
+          )}
         </>
       ) : (
         <>
-          <CategoryContainer>
-            <PageTitle>RentifyTools Categories</PageTitle>
-            <PageContainer>{imageContainers}</PageContainer>
-          </CategoryContainer>
+          {isCategoriesLoading ? (
+            <LoaderWrapper>
+              <CircularProgress sx={{ color: colors.WHITE }} />
+            </LoaderWrapper>
+          ) : (
+            <CategoryContainer>
+              <PageTitle>RentifyTools Categories</PageTitle>
+              <PageContainer>{imageContainers}</PageContainer>
+            </CategoryContainer>
+          )}
           <TextContainer>Last Adverts</TextContainer>
           <CardsContainer>{toolCards}</CardsContainer>
         </>

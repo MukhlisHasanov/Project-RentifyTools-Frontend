@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
@@ -66,9 +66,10 @@ function Advert() {
 
   useEffect(() => {
     if (!user) {
-      dispatch(signInOutSliceAction.getCurrentUser())
+      setShowPhone(false)
+      setIsMessageModalOpen(false)
     }
-  }, [user, dispatch])
+  }, [user])
 
   const nextImage = () => {
     if (toolObj?.imageUrls) {
@@ -149,9 +150,17 @@ function Advert() {
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />
               <UserName>{userName}</UserName>
-              <Button name="Write the message" onClick={openMessageModal} />
+              <Button
+                name="Write the message"
+                onClick={openMessageModal}
+                disabled={!user}
+              />
               {!showPhone ? (
-                <Button name="Show phone" onClick={togglePhoneDisplay} />
+                <Button
+                  name="Show phone"
+                  onClick={togglePhoneDisplay}
+                  disabled={!user}
+                />
               ) : (
                 <PhoneNumber>
                   {toolObj.user?.phone || 'Phone not available'}
