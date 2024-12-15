@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '@mui/material'
@@ -22,7 +22,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { colors } from 'styles/colors'
-import { ToolUserResponseDto } from 'store/redux/ToolSlice/types'
+import { ToolUserResponseDto } from 'store/redux/toolSlice/types'
 
 function ToolCard({
   id,

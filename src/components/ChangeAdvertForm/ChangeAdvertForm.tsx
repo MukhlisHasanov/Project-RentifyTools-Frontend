@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
 import ImagePreviewList from 'components/NewAdvertForm/ImagePrevievList'
@@ -17,7 +17,7 @@ import {
   InputsContainer,
   ButtonControlWrapper,
 } from './styles'
-import { ToolRequestDto } from 'store/redux/ToolSlice/types'
+import { ToolRequestDto } from 'store/redux/toolSlice/types'
 
 function ChangeAdvertForm() {
   const { id } = useParams<{ id: string }>()
