@@ -42,7 +42,7 @@ export const CardTitle = styled.h2`
   text-align: center;
   color: ${colors.WHITE};
   cursor: pointer;
-  margin-right: 15px;
+  margin-right: 26px;
 `
 
 export const CardPrice = styled.p`

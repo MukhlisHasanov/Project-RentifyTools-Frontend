@@ -9,6 +9,23 @@ export const PageWrapper = styled.div`
   align-items: center;
   flex: 1;
   gap: 20px;
+  position: relative;
+`
+
+export const SwitchContainer = styled.div`
+position: absolute;
+left: 300px;
+top: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+`
+
+export const SwitchContainerText = styled.span`
+  font-size: 20px;
+  color: ${colors.WHITE};
 `
 
 export const CardsContainer = styled.div`
@@ -19,6 +36,7 @@ export const CardsContainer = styled.div`
   align-items: center;
   width: fit-content;
   padding: 20px;
+  margin-top: 20px;
 `
 export const TextContainer = styled.h2`
   font-weight: bold;

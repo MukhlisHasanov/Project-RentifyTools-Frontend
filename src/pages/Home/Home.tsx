@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/CategorySlice/categorySlice'
+} from 'store/redux/categorySlice/categorySlice'
 
 import ToolCard from 'components/ToolCard/ToolCard'
 

@@ -1,7 +1,7 @@
 import { useAppSelector } from 'store/hooks'
 import { PageWrapper, CardsContainer, TextContainer } from './styles'
 import ToolCard from 'components/ToolCard/ToolCard'
-import { toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
+import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
 
 function Favorites() {
   const { favCards } = useAppSelector(toolSliceSelectors.tools_data)

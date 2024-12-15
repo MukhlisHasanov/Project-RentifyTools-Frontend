@@ -13,25 +13,24 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
+  createTheme,
   IconButton,
-  Slider,
+  ThemeProvider,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
+  Tooltip,
 } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { colors } from 'styles/colors'
-import { ToolUserResponseDto } from 'store/redux/ToolSlice/types'
-import { useState } from 'react'
-import { SpaceBarOutlined, SpaceBarSharp } from '@mui/icons-material'
+import { ToolUserResponseDto } from 'store/redux/toolSlice/types'
 
 function ToolCard({
   id,
@@ -59,20 +58,20 @@ function ToolCard({
   const { favCards } = useAppSelector(toolSliceSelectors.tools_data)
 
   const isFavorite = favCards.some(tool => tool.id === id)
-  //________________________
-
-  const [statusTool, setStatus] = useState('AVAILABLE')
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newStatus: string | null,
   ) => {
-    if (newStatus !== null) {
-      setStatus(newStatus)
+    if (newStatus) {
+      dispatch(
+        toolSliceAction.updateToolStatus({
+          id,
+          status: newStatus,
+        }),
+      )
     }
   }
-
-  //___________________________________
 
   const handleAddToFavorites = (tool: ToolUserResponseDto) => {
     dispatch(toolSliceAction.addToFavorites(tool))
@@ -100,6 +99,24 @@ function ToolCard({
       }
     }
   }
+
+  const theme = createTheme({
+    components: {
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            fontSize: '20px',
+            backgroundColor: 'whitesmoke',
+            color: 'black',
+            borderRadius: '8px',
+          },
+          arrow: {
+            color: 'whitesmoke',
+          },
+        },
+      },
+    },
+  })
 
   return (
     <CardWrapper>
@@ -136,78 +153,89 @@ function ToolCard({
                   aria-label="Status Toggle"
                   sx={{ display: 'flex', gap: 2 }}
                 >
-                  <ToggleButton
-                    value="AVAILABLE"
-                    aria-label="Rented"
-                    sx={{
-                      backgroundColor: 'transparent',
-                      color: '#F69320',
-                      fontWeight: 'bold',
-                      width: 30,
-                      height: 30,
-                      fontSize: 20,
-                      border: 'none',
-                      '&:hover': {
-                        backgroundColor: 'green',
-                        color: 'white',
-                      },
-                      '&.Mui-selected': {
-                        backgroundColor: 'green',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    A
-                  </ToggleButton>
-                  <ToggleButton
-                    value="PENDING"
-                    aria-label="Rented"
-                    sx={{
-                      backgroundColor: 'transparent',
-                      color: '#F69320',
-                      fontWeight: 'bold',
-                      width: 30,
-                      height: 30,
-                      fontSize: 20,
-                      border: 'none',
-                      '&:hover': {
-                        backgroundColor: '#F69320',
-                        color: 'white',
-                      },
-                      '&.Mui-selected': {
-                        backgroundColor: '#F69320',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    P
-                  </ToggleButton>
-                  <ToggleButton
-                    value="RENTED"
-                    aria-label="Rented"
-                    sx={{
-                      backgroundColor: 'transparent',
-                      color: '#F69320',
-                      fontWeight: 'bold',
-                      width: 30,
-                      height: 30,
-                      fontSize: 20,
-                      border: 'none',
-                      '&:hover': {
-                        backgroundColor: 'red',
-                        color: 'white',
-                      },
-                      '&.Mui-selected': {
-                        backgroundColor: 'red',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    R
-                  </ToggleButton>
+                  <ThemeProvider theme={theme}>
+                    <Tooltip title="Available" arrow>
+                      <ToggleButton
+                        value="AVAILABLE"
+                        aria-label="Rented"
+                        sx={{
+                          backgroundColor: 'transparent',
+                          color: '#F69320',
+                          fontWeight: 'bold',
+                          width: 30,
+                          height: 30,
+                          fontSize: 20,
+                          border: 'none',
+                          '&:hover': {
+                            backgroundColor: 'green',
+                            color: 'white',
+                          },
+                          '&.Mui-selected': {
+                            backgroundColor: 'green',
+                            color: 'white',
+                          },
+                        }}
+                      >
+                        A
+                      </ToggleButton>
+                    </Tooltip>
+                  </ThemeProvider>
+                  <ThemeProvider theme={theme}>
+                    <Tooltip title="Pending" arrow>
+                      <ToggleButton
+                        value="PENDING"
+                        aria-label="Rented"
+                        sx={{
+                          backgroundColor: 'transparent',
+                          color: '#F69320',
+                          fontWeight: 'bold',
+                          width: 30,
+                          height: 30,
+                          fontSize: 20,
+                          border: 'none',
+                          '&:hover': {
+                            backgroundColor: '#F69320',
+                            color: 'white',
+                          },
+                          '&.Mui-selected': {
+                            backgroundColor: '#F69320',
+                            color: 'white',
+                          },
+                        }}
+                      >
+                        P
+                      </ToggleButton>
+                    </Tooltip>
+                  </ThemeProvider>
+                  <ThemeProvider theme={theme}>
+                    <Tooltip title="Rented" arrow>
+                      <ToggleButton
+                        value="RENTED"
+                        aria-label="Rented"
+                        sx={{
+                          backgroundColor: 'transparent',
+                          color: '#F69320',
+                          fontWeight: 'bold',
+                          width: 30,
+                          height: 30,
+                          fontSize: 20,
+                          border: 'none',
+                          '&:hover': {
+                            backgroundColor: 'red',
+                            color: 'white',
+                          },
+                          '&.Mui-selected': {
+                            backgroundColor: 'red',
+                            color: 'white',
+                          },
+                        }}
+                      >
+                        R
+                      </ToggleButton>
+                    </Tooltip>
+                  </ThemeProvider>
                 </ToggleButtonGroup>
               </Box>
-
               <IconButton
                 onClick={() => handleDelete(id)}
                 sx={{ color: colors.BUTTON }}

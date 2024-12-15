@@ -28,7 +28,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/files/upload', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
           body: formData,
         })
@@ -63,7 +63,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/tools', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(toolData),
@@ -201,7 +201,7 @@ export const toolSlice = createAppSlice({
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
@@ -229,29 +229,19 @@ export const toolSlice = createAppSlice({
     ),
 
     updateToolStatus: create.asyncThunk(
-      async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
-        const validStatuses = ['Available', 'Rented', 'Pending']
-        if (!validStatuses.includes(toolData.status)) {
-          return rejectWithValue('Invalid tool status')
-        }
-        const sanitizedToolData = {
-          ...toolData,
-          status: toolData.status || null,
-        }
-
+      async (
+        { id, status }: { id: string; status: string },
+        { rejectWithValue },
+      ) => {
         try {
-          const response = await fetch(
-            `/api/tools/${sanitizedToolData.id}`,
-            {
-              method: 'PUt',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + token,
-              },
-              body: JSON.stringify(sanitizedToolData),
+          const response = await fetch(`/api/tools/${id}?status=${status}`, {
+            method: 'PATCH',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             },
-          )
+          })
 
           if (!response.ok) {
             const errorResult = await response.json().catch(() => null)
@@ -274,10 +264,17 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
-          state.tools = state.tools.map(tool =>
-            tool.id === action.payload.id ? action.payload : tool,
-          )
           state.error = undefined
+          state.tools = state.tools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
+          state.userTools = state.userTools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
         },
         rejected: (state: ToolInitialState, action) => {
           state.isLoading = false
@@ -302,7 +299,7 @@ export const toolSlice = createAppSlice({
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             },
             body: JSON.stringify(sanitizedToolData),
           })
@@ -346,7 +343,7 @@ export const toolSlice = createAppSlice({
           method: 'DELETE',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
