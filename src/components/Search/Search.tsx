@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 
-import { addressSliceAction, addressSliceSelectors } from 'store/redux/addressSlice/addressSlice';
+import { addressSliceAction, addressSliceSelectors } from '../../store/redux/AddressSlice/addressSlice';
 import { toolSliceAction, toolSliceSelectors } from 'store/redux/toolSlice/toolSlice';
 
 import {
@@ -13,7 +13,7 @@ import {
   CitySuggestion,
   CityInputContainer,
 } from './styles';
-import { AddressCityZip } from 'store/redux/addressSlice/types';
+import { AddressCityZip } from 'store/redux/AddressSlice/types';
 import { ToolUserResponseDto } from 'store/redux/toolSlice/types';
 import { SearchProps } from './types';
 
