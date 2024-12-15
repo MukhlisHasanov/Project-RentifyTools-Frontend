@@ -45,13 +45,13 @@ export const SearchButton = styled(Button)({
 });
 
 export const CityInputContainer = styled(Box)({
+    height: '100%',
     position: 'relative',
     flex: 1,
     minWidth: 0,
     display: 'flex',
     flexDirection: 'column',
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
+    borderLeft: `2px solid ${colors.HEADER}`,
     '& .MuiInputBase-root': {
       height: '100%',
     },

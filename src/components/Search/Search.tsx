@@ -1,9 +1,12 @@
-import { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { KeyboardEvent, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 
-import { addressSliceAction, addressSliceSelectors } from 'store/redux/addressSlice/addressSlice';
-import { toolSliceAction, toolSliceSelectors } from 'store/redux/toolSlice/toolSlice';
+import {
+  addressSliceAction,
+  addressSliceSelectors,
+} from 'store/redux/addressSlice/addressSlice'
+import { toolSliceAction } from 'store/redux/toolSlice/toolSlice'
 
 import {
   SearchContainer,
@@ -12,71 +15,64 @@ import {
   CitySuggestionList,
   CitySuggestion,
   CityInputContainer,
-} from './styles';
-import { AddressCityZip } from 'store/redux/addressSlice/types';
-import { ToolUserResponseDto } from 'store/redux/toolSlice/types';
-import { SearchProps } from './types';
+} from './styles'
+import { AddressCityZip } from 'store/redux/addressSlice/types'
+import { SearchProps } from './types'
 
 function Search({ toolName, onChangeValue }: SearchProps) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const [city, setCity] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [filteredAddresses, setFilteredAddresses] = useState<AddressCityZip[]>([]);
-  const [filteredTools, setFilteredTools] = useState<ToolUserResponseDto[]>([]);
+  const [city, setCity] = useState('')
+  const [filteredAddresses, setFilteredAddresses] = useState<AddressCityZip[]>(
+    [],
+  )
 
-  const { addressesCityZip } = useAppSelector(addressSliceSelectors.address_state);
-  const { tools } = useAppSelector(toolSliceSelectors.tools_data);
+  const { addressesCityZip } = useAppSelector(
+    addressSliceSelectors.address_state,
+  )
 
   useEffect(() => {
     if (addressesCityZip.length === 0) {
-      dispatch(addressSliceAction.fetchCityZipSuggestions());
+      dispatch(addressSliceAction.fetchCityZipSuggestions())
     }
-
-    dispatch(toolSliceAction.fetchTools());
-  }, [dispatch, addressesCityZip]);
+  }, [dispatch, addressesCityZip])
 
   useEffect(() => {
     if (city.trim().length > 2) {
       const filtered = addressesCityZip.filter(({ city: cityName }) =>
-        cityName.toLowerCase().includes(city.toLowerCase())
-      );
-      setFilteredAddresses(filtered);
+        cityName.toLowerCase().includes(city.toLowerCase()),
+      )
+      setFilteredAddresses(filtered)
     } else {
-      setFilteredAddresses([]);
+      setFilteredAddresses([])
     }
-  }, [city, addressesCityZip]);
+  }, [city, addressesCityZip])
 
   const handleCitySelect = (city: string, zipCode: string | undefined) => {
-    setCity(`${city} (${zipCode || 'N/A'})`);
-    setSelectedCity(city);
-    setFilteredAddresses([]);
+    setCity(city); 
+    setFilteredAddresses([]); 
   };
+  
 
   const onSearch = () => {
-    if (toolName.trim() !== '') {
-      const filtered = tools.filter(tool => {
-        const matchesToolName = tool.title.toLowerCase().includes(toolName.toLowerCase());
-        const matchesCity =
-          tool.user?.address?.city?.toLowerCase() === selectedCity.toLowerCase();
-        return matchesToolName && matchesCity;
-      });
+    const sanitizedCity = city.split(' (')[0].trim()
 
-      setFilteredTools(filtered);
+    dispatch(
+      toolSliceAction.searchTools({
+        searchTerm: toolName || '',
+        city: sanitizedCity || '',
+      }),
+    )
 
-      navigate('/search-results', { state: { filteredTools } });
-
-      setCity('');
-      setSelectedCity('');
-    }
-  };
+    navigate('/search-results')
+  }
 
   const onSearchEnter = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      onSearch();
+      onSearch()
     }
-  };
+  }
 
   return (
     <SearchContainer>
@@ -117,7 +113,7 @@ function Search({ toolName, onChangeValue }: SearchProps) {
         Search
       </SearchButton>
     </SearchContainer>
-  );
+  )
 }
 
-export default Search;
+export default Search
