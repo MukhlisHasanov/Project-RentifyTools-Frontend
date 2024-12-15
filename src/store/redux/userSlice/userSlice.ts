@@ -68,7 +68,6 @@ export const userSlice = createAppSlice({
           },
           body: JSON.stringify(userData),
         })
-        console.log('SliceV', userId, userData)
         const result = await response.json()
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to update user data')
