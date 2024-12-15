@@ -12,6 +12,7 @@ import {
 } from 'store/redux/categorySlice/categorySlice'
 
 import ToolCard from 'components/ToolCard/ToolCard'
+
 import {
   PageTitle,
   PageWrapper,
@@ -25,6 +26,7 @@ import {
   BackButtonControl,
   LoaderWrapper,
 } from './styles'
+
 import Button from 'components/Button/Button'
 import { CircularProgress } from '@mui/material'
 import { colors } from 'styles/colors'
@@ -78,7 +80,6 @@ function Home() {
       description={tool.description}
       status={tool.status}
       onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
     />
   ))
 
