@@ -17,3 +17,9 @@ export const PageTitle = styled.h1`
   font-size: 32px;
   margin-bottom: 20px;
 `;
+
+export const Pragraph = styled.p`
+  color: white;
+  margin-top: 8px;
+  font-size: 16px;
+`

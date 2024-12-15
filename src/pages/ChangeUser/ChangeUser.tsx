@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { PageWrapper, PageTitle } from './styles'
+import { PageWrapper, PageTitle, Pragraph} from './styles'
 import ChangeUserForm from 'components/ChangeUserForm/ChangeUserForm'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 
@@ -19,17 +19,18 @@ function ChangeUser() {
     return (
       <PageWrapper>
         <PageTitle>Edit Your Profile</PageTitle>
-        <p>User information could not be loaded.</p>
-        {loadError && <p style={{ color: 'red' }}>{loadError}</p>}
+        <Pragraph>User information could not be loaded.</Pragraph>
+        {loadError && <Pragraph style={{ color: 'red' }}>{loadError}</Pragraph>}
       </PageWrapper>
     )
   }
 
   return (
     <PageWrapper>
-      {isLoading && <p>Lädt...</p>}
-      {updateError && <p style={{ color: 'red' }}>Fehler: {updateError}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+      {isLoading && <Pragraph>Lädt...</Pragraph>}
+      {updateError && <Pragraph style={{ color: 'red' }}>Fehler: {updateError}</Pragraph>}
+      {successMessage && <Pragraph style={{ color: 'green' }}>{successMessage}</Pragraph>}
+
       <ChangeUserForm userData={user} error={updateError} />
     </PageWrapper>
   )
