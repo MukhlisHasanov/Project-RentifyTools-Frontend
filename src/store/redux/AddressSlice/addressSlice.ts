@@ -1,5 +1,5 @@
 import { createAppSlice } from 'store/createAppSlice'
-import { Address, AddressCityZip, AddressInitialState } from './types'
+import { Address, AddressCityZip, AddressInitialState } from '../AddressSlice/types'
 
 const addressDataInitialState: AddressInitialState = {
   addresses: [],

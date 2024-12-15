@@ -6,7 +6,6 @@ export interface UserRequestDto {
   email: string
   password: string
   phone: string
-  adress: Address
 }
 
 export interface UserResponseDto {

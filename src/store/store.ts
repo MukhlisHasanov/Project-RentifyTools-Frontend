@@ -9,7 +9,7 @@ import { adminSlice } from 'store/redux/adminSlice/adminSlice'
 
 // import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 import { messageSlice } from './redux/messageSlice/messageSlice'
-import { addressSlice } from './redux/addressSlice/addressSlice'
+import { addressSlice } from '../store/redux/AddressSlice/addressSlice'
 
 const rootReducer = combineSlices(
   userSlice,
