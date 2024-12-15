@@ -24,6 +24,7 @@ import {
   InputsContainer,
   ButtonControl,
 } from './styles'
+import { useEffect } from 'react'
 
 function SignUpForm({
   onSwitchToSignIn,
@@ -34,6 +35,29 @@ function SignUpForm({
   const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
+
+  // Функція для отримання міста за ZIP-кодом
+  const fetchCityByZipCode = async (zipCode: string) => {
+    try {
+      const response = await fetch(
+        `https://openplzapi.org/de/Localities?postalCode=${zipCode}`,
+      )
+      if (!response.ok) {
+        throw new Error('City not found')
+      }
+      const data = await response.json()
+
+      // Перевіряємо, чи є дані, і повертаємо назву міста
+      if (data && data.length > 0) {
+        return data[0].name // Назва міста
+      }
+      return '' // Якщо масив пустий, повертаємо порожній рядок
+    } catch (error) {
+      console.error('Failed to fetch city:', error)
+      return ''
+    }
+  }
+
   const validationSchema = Yup.object().shape({
     [SIGNUP_FORM_NAMES.FIRST_NAME]: Yup.string()
       .required('First name is required')
@@ -80,7 +104,7 @@ function SignUpForm({
       [SIGNUP_FORM_NAMES.CITY]: '',
       [SIGNUP_FORM_NAMES.STREET]: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     validateOnChange: false,
     onSubmit: (values, helpers) => {
       if (!authData) {
@@ -88,16 +112,21 @@ function SignUpForm({
         enqueueSnackbar('Authentication data is missing', { variant: 'error' })
         return
       }
+
+      const address = {
+        country: values[SIGNUP_FORM_NAMES.COUNTRY],
+        zipCode: values[SIGNUP_FORM_NAMES.ZIPCODE],
+        city: values[SIGNUP_FORM_NAMES.CITY],
+        street: values[SIGNUP_FORM_NAMES.STREET],
+      }
+
       const userData = {
-        ...values,
+        firstname: values[SIGNUP_FORM_NAMES.FIRST_NAME],
+        lastname: values[SIGNUP_FORM_NAMES.LAST_NAME],
+        phone: values[SIGNUP_FORM_NAMES.PHONE],
         email: authData.email,
         password: authData.password,
-        address: {
-          country: values[SIGNUP_FORM_NAMES.COUNTRY],
-          zipcode: values[SIGNUP_FORM_NAMES.ZIPCODE],
-          city: values[SIGNUP_FORM_NAMES.CITY],
-          street: values[SIGNUP_FORM_NAMES.STREET],
-        },
+        adress: address,
       }
 
       dispatch(userSliceAction.createUser(userData))
@@ -118,6 +147,23 @@ function SignUpForm({
         })
     },
   })
+
+  // Виклик API при зміні ZIP-коду
+  useEffect(() => {
+    const fetchCity = async () => {
+      const zipCode = formik.values[SIGNUP_FORM_NAMES.ZIPCODE]
+      if (zipCode && zipCode.length >= 5) {
+        const city = await fetchCityByZipCode(zipCode)
+        if (city) {
+          formik.setFieldValue(SIGNUP_FORM_NAMES.CITY, city)
+        } else {
+          formik.setFieldError(SIGNUP_FORM_NAMES.CITY, 'City not found')
+        }
+      }
+    }
+
+    fetchCity()
+  }, [formik.values[SIGNUP_FORM_NAMES.ZIPCODE]])
 
   return (
     <SnackbarProvider maxSnack={3}>
@@ -174,9 +220,9 @@ function SignUpForm({
             label="Zip Code:"
             name={SIGNUP_FORM_NAMES.ZIPCODE}
             type="text"
-            value={formik.values.zipcode}
+            value={formik.values.zipCode}
             onChange={formik.handleChange}
-            error={formik.errors.zipcode}
+            error={formik.errors.zipCode}
           />
           <Input
             id="signupform-city"
@@ -215,4 +261,5 @@ function SignUpForm({
     </SnackbarProvider>
   )
 }
+
 export default SignUpForm

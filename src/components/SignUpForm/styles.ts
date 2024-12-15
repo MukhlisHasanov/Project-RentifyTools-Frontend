@@ -39,6 +39,7 @@ export const InputsContainer = styled.div`
   
   &.inline {
     flex-direction: row;
+    gap: 5px;
     justify-content: space-between;
   }
 `

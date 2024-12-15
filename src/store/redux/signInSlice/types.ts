@@ -23,7 +23,7 @@ export interface UserResponseDto {
 
 export interface Address {
   country: string
-  zipcode: string
+  zipCode: string
   city: string
   street: string
 }

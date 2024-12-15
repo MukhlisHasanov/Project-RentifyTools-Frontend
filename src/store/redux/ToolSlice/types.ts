@@ -1,3 +1,4 @@
+import { Address } from "../signInSlice/types"
 export interface ToolRequestDto {
   title: string
   description: string
@@ -12,6 +13,7 @@ export interface User {
   lastname: string
   email: string
   phone?: string
+  address: Address
 }
 
 export interface ToolUserResponseDto {
@@ -30,5 +32,6 @@ export interface ToolInitialState {
   toolObj: Partial<ToolUserResponseDto> | undefined
   initialTools: ToolUserResponseDto[]
   isLoading: boolean
+  isCategoryLoading: boolean
   error: string | undefined
 }

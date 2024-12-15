@@ -9,6 +9,7 @@ import { adminSlice } from 'store/redux/adminSlice/adminSlice'
 
 // import { addAdvertSlice } from 'store/redux/addAdvert/addAdvertSlice'
 import { messageSlice } from './redux/MessageSlice/messageSlice'
+import { addressSlice } from './redux/AddressSlice/addressSlice'
 
 const rootReducer = combineSlices(
   userSlice,
@@ -17,6 +18,7 @@ const rootReducer = combineSlices(
   adminSlice,
   categorySlice,
   messageSlice,
+  addressSlice,
 )
 
 export type RootState = ReturnType<typeof rootReducer>
