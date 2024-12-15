@@ -7,7 +7,7 @@ export const ChangeUserFormContainer = styled.form`
   align-items: center;
   width: 100%;
   max-width: 500px;
-  background-color: ${colors.WHITE};
+  background-color: ${colors.CARD};
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -15,7 +15,7 @@ export const ChangeUserFormContainer = styled.form`
 
 export const Title = styled.h2`
   font-size: 24px;
-  color: ${colors.BUTTON};
+  color: ${colors.WHITE};
   margin-bottom: 20px;
 `;
 
@@ -31,4 +31,9 @@ export const ButtonControlWrapper = styled.div`
   justify-content: space-between;
   margin-top: 20px;
   width: 100%;
+`;
+export const Label = styled.h2`
+  font-size: 16px;
+  color: ${colors.WHITE};
+  margin-bottom: 5px;
 `;

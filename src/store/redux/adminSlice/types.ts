@@ -1,4 +1,4 @@
-import { Address } from "../addressSlice/types"
+import { Address } from "../AddressSlice/types"
 
 export interface SearchUserRequestDto {
     lastname?: string

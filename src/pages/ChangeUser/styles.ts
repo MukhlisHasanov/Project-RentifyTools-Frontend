@@ -7,7 +7,7 @@ export const PageWrapper = styled.div`
   align-items: center;
   padding: 40px;
 
-  background-color: ${colors.CARD};
+
 
   min-height: 100vh;
 `;
