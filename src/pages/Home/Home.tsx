@@ -72,7 +72,6 @@ function Home() {
       price={tool.price}
       description={tool.description}
       status={tool.status}
-      onAddToCard={() => {}}
     />
   ))
 

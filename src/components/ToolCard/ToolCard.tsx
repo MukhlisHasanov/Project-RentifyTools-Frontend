@@ -7,6 +7,7 @@ import {
   CardStatus,
   CardTitle,
   CardWrapper,
+  FavoriteIconConteiner,
 } from './styles'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -15,14 +16,22 @@ import {
 } from 'store/redux/ToolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
-import { IconButton } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  Slider,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { colors } from 'styles/colors'
 import { ToolUserResponseDto } from 'store/redux/ToolSlice/types'
+import { useState } from 'react'
+import { SpaceBarOutlined, SpaceBarSharp } from '@mui/icons-material'
 
 function ToolCard({
   id,
@@ -32,7 +41,6 @@ function ToolCard({
   price,
   status,
   description,
-  onAddToCard,
   isMyAdvert = false,
 }: CardProps) {
   const navigate = useNavigate()
@@ -51,6 +59,20 @@ function ToolCard({
   const { favCards } = useAppSelector(toolSliceSelectors.tools_data)
 
   const isFavorite = favCards.some(tool => tool.id === id)
+  //________________________
+
+  const [statusTool, setStatus] = useState('AVAILABLE')
+
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newStatus: string | null,
+  ) => {
+    if (newStatus !== null) {
+      setStatus(newStatus)
+    }
+  }
+
+  //___________________________________
 
   const handleAddToFavorites = (tool: ToolUserResponseDto) => {
     dispatch(toolSliceAction.addToFavorites(tool))
@@ -95,9 +117,10 @@ function ToolCard({
         <CardPrice>Price: {price}</CardPrice>
         <CardStatus>Status: {status}</CardStatus>
         <CardDescription>Description: {description}</CardDescription>
-        <CardIcons>
-          {isMyAdvert ? (
-            <>
+
+        {isMyAdvert ? (
+          <>
+            <CardIcons>
               <IconButton
                 onClick={handleEdit}
                 sx={{ color: colors.BUTTON }}
@@ -105,6 +128,86 @@ function ToolCard({
               >
                 <EditIcon />
               </IconButton>
+              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                <ToggleButtonGroup
+                  value={status}
+                  exclusive
+                  onChange={handleChange}
+                  aria-label="Status Toggle"
+                  sx={{ display: 'flex', gap: 2 }}
+                >
+                  <ToggleButton
+                    value="AVAILABLE"
+                    aria-label="Rented"
+                    sx={{
+                      backgroundColor: 'transparent',
+                      color: '#F69320',
+                      fontWeight: 'bold',
+                      width: 30,
+                      height: 30,
+                      fontSize: 20,
+                      border: 'none',
+                      '&:hover': {
+                        backgroundColor: 'green',
+                        color: 'white',
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: 'green',
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    A
+                  </ToggleButton>
+                  <ToggleButton
+                    value="PENDING"
+                    aria-label="Rented"
+                    sx={{
+                      backgroundColor: 'transparent',
+                      color: '#F69320',
+                      fontWeight: 'bold',
+                      width: 30,
+                      height: 30,
+                      fontSize: 20,
+                      border: 'none',
+                      '&:hover': {
+                        backgroundColor: '#F69320',
+                        color: 'white',
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: '#F69320',
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    P
+                  </ToggleButton>
+                  <ToggleButton
+                    value="RENTED"
+                    aria-label="Rented"
+                    sx={{
+                      backgroundColor: 'transparent',
+                      color: '#F69320',
+                      fontWeight: 'bold',
+                      width: 30,
+                      height: 30,
+                      fontSize: 20,
+                      border: 'none',
+                      '&:hover': {
+                        backgroundColor: 'red',
+                        color: 'white',
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: 'red',
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    R
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
+
               <IconButton
                 onClick={() => handleDelete(id)}
                 sx={{ color: colors.BUTTON }}
@@ -112,26 +215,19 @@ function ToolCard({
               >
                 <DeleteIcon />
               </IconButton>
-            </>
-          ) : (
-            <>
-              <IconButton
-                onClick={onAddToCard}
-                sx={{ color: colors.BUTTON }}
-                aria-label="addToBag"
-              >
-                <ShoppingBagIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => handleAddToFavorites(tool)}
-                sx={{ color: colors.BUTTON }}
-                aria-label="addToFavorite"
-              >
-                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-            </>
-          )}
-        </CardIcons>
+            </CardIcons>
+          </>
+        ) : (
+          <FavoriteIconConteiner>
+            <IconButton
+              onClick={() => handleAddToFavorites(tool)}
+              sx={{ color: colors.BUTTON }}
+              aria-label="addToFavorite"
+            >
+              {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+          </FavoriteIconConteiner>
+        )}
       </CardContent>
     </CardWrapper>
   )

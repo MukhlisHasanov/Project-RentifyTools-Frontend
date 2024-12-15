@@ -10,6 +10,7 @@ export const CardWrapper = styled.div`
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #4d4d4dc7;
+  position: relative;
 `
 
 export const CardImage = styled.img`
@@ -32,28 +33,27 @@ export const CardContent = styled.div`
   justify-content: space-between;
   color: ${colors.WHITE};
   overflow: hidden;
+  gap: 10px;
 `
 
 export const CardTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 10px;
   color: ${colors.WHITE};
   cursor: pointer;
+  margin-right: 15px;
 `
 
 export const CardPrice = styled.p`
   font-size: 16px;
   font-weight: bold;
   color: ${colors.WHITE};
-  margin-bottom: 10px;
 `
 export const CardCategory = styled.p`
   font-size: 16px;
   font-weight: bold;
   color: ${colors.WHITE};
-  margin-bottom: 10px;
 `
 
 export const CardDescription = styled.div`
@@ -72,7 +72,6 @@ export const CardStatus = styled.p`
   font-size: 16px;
   font-weight: bold;
   color: ${colors.WHITE};
-  margin-bottom: 10px;
 `
 
 export const CardIcons = styled.div`
@@ -81,12 +80,8 @@ export const CardIcons = styled.div`
   align-items: center;
 `
 
-export const CardIcon = styled.span`
-  cursor: pointer;
-  color: ${colors.BUTTON};
-
-  img {
-    width: 32px;
-    height: 32px;
-  }
+export const FavoriteIconConteiner = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `

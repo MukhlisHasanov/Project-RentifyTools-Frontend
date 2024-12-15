@@ -25,7 +25,7 @@ import {
 function LayoutProfile() {
   const navigate = useNavigate()
 
-  const { user} = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function LayoutProfile() {
   const profileLinks = {
     [TOOLS_APP_ROUTES.MESSAGES]: 'Messages',
     [TOOLS_APP_ROUTES.MY_ADVERTS]: 'My Adverts',
-    [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites',
+    [TOOLS_APP_ROUTES.FAVOURITES]: 'Favorites ',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
   }
   const adminLinks = {

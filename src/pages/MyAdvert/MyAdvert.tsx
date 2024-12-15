@@ -6,8 +6,11 @@ import {
   toolSliceAction,
   toolSliceSelectors,
 } from 'store/redux/ToolSlice/toolSlice'
-import { useEffect } from 'react'
-// import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+import { useEffect, useState } from 'react'
+import { Box, Slider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
+import BlockIcon from '@mui/icons-material/Block'
 
 function MyAdvert() {
   const navigate = useNavigate()
@@ -16,29 +19,35 @@ function MyAdvert() {
     toolSliceSelectors.userTools_data,
   )
 
-  useEffect(() => {
-    dispatch(toolSliceAction.fetchUserTools())
-  }, [dispatch])
+  const { toolObj } = useAppSelector(toolSliceSelectors.toolObj_data)
 
-  const userToolCards = userTools.map(tool => (
-    <ToolCard
-      id={tool.id}
-      key={tool.id}
-      imageUrls={tool.imageUrls}
-      title={tool.title}
-      price={tool.price}
-      status={tool.status}
-      description={tool.description}
-      onAddToCard={() => {}}
-      isMyAdvert
-    />
-  ))
 
-  return (
-    <PageWrapper>
-      <CardsContainer>{userToolCards}</CardsContainer>
-    </PageWrapper>
-  )
-}
+
+    useEffect(() => {
+      dispatch(toolSliceAction.fetchUserTools())
+    }, [dispatch])
+
+    const userToolCards = userTools.map(tool => (
+      <ToolCard
+        id={tool.id}
+        key={tool.id}
+        imageUrls={tool.imageUrls}
+        title={tool.title}
+        price={tool.price}
+        status={tool.status}
+        description={tool.description}
+        isMyAdvert
+      />
+    ))
+
+    return (
+      <PageWrapper>
+     
+
+        <CardsContainer>{userToolCards}</CardsContainer>
+      </PageWrapper>
+    )
+  }
+
 
 export default MyAdvert

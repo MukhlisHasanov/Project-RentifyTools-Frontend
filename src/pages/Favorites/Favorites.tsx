@@ -26,7 +26,6 @@ function Favorites() {
             price={tool.price}
             status={tool.status}
             description={tool.description}
-            onAddToCard={() => {}}
           />
         ))}
       </CardsContainer>

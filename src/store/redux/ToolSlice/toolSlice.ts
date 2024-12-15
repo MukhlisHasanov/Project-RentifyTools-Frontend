@@ -194,6 +194,7 @@ export const toolSlice = createAppSlice({
         },
       },
     ),
+
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {
@@ -218,6 +219,64 @@ export const toolSlice = createAppSlice({
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
           state.userTools = action.payload
+          state.error = undefined
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
+    updateToolStatus: create.asyncThunk(
+      async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
+        const validStatuses = ['Available', 'Rented', 'Pending']
+        if (!validStatuses.includes(toolData.status)) {
+          return rejectWithValue('Invalid tool status')
+        }
+        const sanitizedToolData = {
+          ...toolData,
+          status: toolData.status || null,
+        }
+
+        try {
+          const response = await fetch(
+            `/api/tools/${sanitizedToolData.id}`,
+            {
+              method: 'PUt',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+              },
+              body: JSON.stringify(sanitizedToolData),
+            },
+          )
+
+          if (!response.ok) {
+            const errorResult = await response.json().catch(() => null)
+            return rejectWithValue(
+              errorResult?.message || 'Failed to update tool status',
+            )
+          }
+
+          const result = await response.json()
+          return result as ToolUserResponseDto
+        } catch (error) {
+          console.error('Update Tool Error: ', error)
+          return rejectWithValue('Network error or invalid JSON response')
+        }
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.tools = state.tools.map(tool =>
+            tool.id === action.payload.id ? action.payload : tool,
+          )
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -258,7 +317,7 @@ export const toolSlice = createAppSlice({
           const result = await response.json()
           return result as ToolUserResponseDto
         } catch (error) {
-          console.error('Update Tool Error:', error)
+          console.error('Update Tool Error: ', error)
           return rejectWithValue('Network error or invalid JSON response')
         }
       },
