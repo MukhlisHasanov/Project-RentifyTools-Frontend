@@ -10,14 +10,15 @@ import { userSliceAction } from 'store/redux/userSlice/userSlice'
 function Profile() {
   const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
 
-
   const navigate = useNavigate()
-  const dispatch = useAppDispatch() 
+  const dispatch = useAppDispatch()
 
   const handleDelete = async () => {
-    if (window.confirm('Bist du sicher, dass du den Benutzer löschen möchtest?')) {
+    if (
+      window.confirm('Bist du sicher, dass du den Benutzer löschen möchtest?')
+    ) {
       try {
-        const result = await dispatch(userSliceAction.deleteUser()) 
+        const result = await dispatch(userSliceAction.deleteUser())
         if (userSliceAction.deleteUser.fulfilled.match(result)) {
           console.log('Benutzer erfolgreich gelöscht:')
         } else {
@@ -30,11 +31,11 @@ function Profile() {
   }
 
   const handleUpdate = () => {
-    navigate('/profile/change-user');
-  };
-  
+    navigate('/profile/change-user')
+  }
+
   console.log(user)
- 
+
   return (
     <PageWrapper>
       {user ? (
@@ -47,10 +48,10 @@ function Profile() {
           />
         </ProfileContainer>
       ) : (
-        <p>Benutzerdaten sind nicht verfügbar.</p> 
+        <p>User data is not available.</p>
       )}
     </PageWrapper>
-  );
+  )
 }
 
-export default Profile;
+export default Profile

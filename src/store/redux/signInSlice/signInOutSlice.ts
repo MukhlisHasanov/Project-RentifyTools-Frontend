@@ -72,15 +72,15 @@ export const signInOutSlice = createAppSlice({
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
           })
-          console.log('Response status:', response.status);
+          console.log('Response status:', response.status)
           const result = await response.json()
-          console.log('Response body:', result);
+          console.log('Response body:', result)
           if (!response.ok) {
             return rejectWithValue(result.message || 'Email already exists')
           }
           return loginData
         } catch (error) {
-          console.error('Error in checkEmail:', error);
+          console.error('Error in checkEmail:', error)
           return rejectWithValue('Network error or server is unavailable')
         }
       },
