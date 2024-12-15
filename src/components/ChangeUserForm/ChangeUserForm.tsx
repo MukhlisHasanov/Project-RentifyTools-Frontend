@@ -41,22 +41,22 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
     validationSchema: Yup.object().shape({
       firstname: Yup.string()
 
-        .required('Vorname ist erforderlich')
-        .min(2, 'Vorname muss mindestens 2 Zeichen lang sein')
-        .max(30, 'Vorname darf maximal 30 Zeichen lang sein'),
+        .required('First name is required')
+        .min(2, 'First name is required')
+        .max(30, 'First name can be a maximum of 30 characters long'),
       lastname: Yup.string()
-        .required('Nachname ist erforderlich')
-        .min(2, 'Nachname muss mindestens 2 Zeichen lang sein')
-        .max(30, 'Nachname darf maximal 30 Zeichen lang sein'),
+        .required('Last name is required')
+        .min(2, 'Last name must be at least 2 characters long')
+        .max(30, 'Last name can be a maximum of 30 characters long'),
       email: Yup.string()
-        .required('E-Mail ist erforderlich')
-        .email('Ungültiges E-Mail-Format'),
+        .required('Email is required')
+        .email('Invalid email format'),
       password: Yup.string()
-        .min(6, 'Passwort muss mindestens 6 Zeichen lang sein')
-        .max(30, 'Passwort darf maximal 30 Zeichen lang sein'),
+        .min(6, 'Password must be at least 6 characters long')
+        .max(30, 'Password can be a maximum of 30 characters long'),
       phone: Yup.string().matches(
         /^\+?[0-9\s]*$/,
-        'Telefonnummer muss gültig sein (Ziffern und optional "+" Zeichen)',
+        'Phone number must be valid (digits and optional "+" sign)',
       ),
     }),
     onSubmit: async values => {
@@ -149,7 +149,7 @@ const ChangeUserForm: React.FC<ChangeUserFormProps> = ({ userData, error }) => {
       <ButtonControlWrapper>
         <Button
           type="submit"
-          name={isLoading ? 'Wird aktualisiert...' : 'Profil aktualisieren'}
+          name={isLoading ? 'Updating...' : 'Update profile'}
           disabled={isLoading}
         />
       </ButtonControlWrapper>
