@@ -149,7 +149,7 @@ function Advert() {
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />
               <UserName>{userName}</UserName>
-
+              <Button name="Write the message" onClick={openMessageModal} />
               {!showPhone ? (
                 <Button name="Show phone" onClick={togglePhoneDisplay} />
               ) : (
