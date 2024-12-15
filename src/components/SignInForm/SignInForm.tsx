@@ -23,7 +23,6 @@ import {
   TitleContainer,
 } from './styles'
 import { SIGNIN_FORM_NAMES, SignInFormProps } from './types'
-import { Label } from '@mui/icons-material'
 
 function SignInForm({
   isSignInMode,

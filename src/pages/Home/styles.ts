@@ -19,6 +19,7 @@ export const PageTitle = styled.span`
 `
 
 export const CategoryContainer = styled.div`
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -29,7 +30,12 @@ export const CategoryContainer = styled.div`
   border-radius: 7px;
   border: 1px solid ${colors.WHITE};
 `
-
+export const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+`
 export const PageContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);

@@ -1,7 +1,6 @@
 import { createAppSlice } from 'store/createAppSlice'
 
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
-import { error } from 'console'
 
 const userDataInitialState: UserInitialState = {
   userObj: undefined,

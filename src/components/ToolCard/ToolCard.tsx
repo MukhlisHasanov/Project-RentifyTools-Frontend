@@ -8,11 +8,9 @@ import {
   CardTitle,
   CardWrapper,
 } from './styles'
+
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import {
-  toolSliceAction,
-  toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+import { toolSliceAction } from 'store/redux/toolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '@mui/material'

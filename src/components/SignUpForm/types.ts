@@ -3,7 +3,7 @@ export enum SIGNUP_FORM_NAMES {
   LAST_NAME = 'lastname',
   PHONE = 'phone',
   COUNTRY = 'country',
-  ZIPCODE = 'zipcode',
+  ZIPCODE = 'zipCode',
   CITY = 'city',
   STREET = 'street',
 }

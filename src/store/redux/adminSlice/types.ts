@@ -1,3 +1,5 @@
+import { Address } from "../addressSlice/types"
+
 export interface SearchUserRequestDto {
     lastname?: string
     email?: string
@@ -15,6 +17,7 @@ export interface SearchUserRequestDto {
     lastname: string
     email: string
     phone: string
+    address: Address
     // roles: Role[]
   }
   
