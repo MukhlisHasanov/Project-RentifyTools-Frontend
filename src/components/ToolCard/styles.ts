@@ -20,7 +20,7 @@ export const CardImage = styled.img`
   background-position: center;
   height: 240px;
   width: 200px;
-  padding: 5px 7px;
+  padding: 5px 9px;
   border-radius: 15px;
   align-self: center;
   cursor: pointer;
@@ -31,16 +31,14 @@ export const CardContent = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   color: ${colors.WHITE};
   overflow: hidden;
   gap: 10px;
 `
 
 export const CardTitle = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
+  font-size: 20px;
+  // font-weight: bold;
   color: ${colors.WHITE};
   cursor: pointer;
   margin-right: 26px;
@@ -48,7 +46,7 @@ export const CardTitle = styled.h2`
 
 export const CardPrice = styled.p`
   font-size: 16px;
-  font-weight: bold;
+  // font-weight: bold;
   color: ${colors.WHITE};
 `
 export const CardCategory = styled.p`
@@ -61,7 +59,7 @@ export const CardDescription = styled.div`
   font-size: 16px;
   color: ${colors.WHITE};
   margin-bottom: auto;
-  font-weight: bold;
+  // font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
@@ -71,7 +69,7 @@ export const CardDescription = styled.div`
 `
 export const CardStatus = styled.p`
   font-size: 16px;
-  font-weight: bold;
+  // font-weight: bold;
   color: ${colors.WHITE};
 `
 

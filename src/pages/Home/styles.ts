@@ -94,7 +94,7 @@ export const TextContainer = styled.h2`
   background: ${colors.HEADER};
   height: fit-content;
   width: fit-content;
-  padding: 5px;
+  padding: 25px;
   border-radius: 7px;
 `
 export const BackButtonControl = styled.div`

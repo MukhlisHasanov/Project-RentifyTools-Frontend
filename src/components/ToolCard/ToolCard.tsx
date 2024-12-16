@@ -113,9 +113,9 @@ function ToolCard({
       />
       <CardContent>
         <CardTitle onClick={() => goAdvertPage(id)}>{title}</CardTitle>
-        <CardPrice>Price: {price}</CardPrice>
         <CardStatus>Status: {status}</CardStatus>
-        <CardDescription>Description: {description}</CardDescription>
+        <CardPrice>Price: {price} per day</CardPrice>
+        {/* <CardDescription>Description: {description}</CardDescription>  */}
 
         {isMyAdvert ? (
           <>
