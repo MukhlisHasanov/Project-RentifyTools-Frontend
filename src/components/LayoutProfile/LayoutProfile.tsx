@@ -42,11 +42,12 @@ function LayoutProfile() {
 
   const profileLinks = {
     [TOOLS_APP_ROUTES.MY_ADVERTS]: 'My Adverts',
-    [TOOLS_APP_ROUTES.FAVOURITES]: 'Favorites ',
+    [TOOLS_APP_ROUTES.FAVOURITES]: 'Favourites ',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',
   }
   const adminLinks = {
     [TOOLS_APP_ROUTES.FIND_USERS]: 'Find Users',
+    [TOOLS_APP_ROUTES.FIND_TOOLS]: 'Find Tools',
     [TOOLS_APP_ROUTES.CATEGORY]: 'Category',
   }
 

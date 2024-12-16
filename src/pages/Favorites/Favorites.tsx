@@ -9,7 +9,7 @@ function Favorites() {
   if (!favCards || favCards.length === 0) {
     return (
       <PageWrapper>
-        <TextContainer>No favorite tools added yet.</TextContainer>
+        <TextContainer>No favourite tools added yet.</TextContainer>
       </PageWrapper>
     )
   }

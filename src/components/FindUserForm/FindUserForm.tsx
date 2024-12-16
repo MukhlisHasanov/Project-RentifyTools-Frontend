@@ -64,17 +64,17 @@ function FindUsersForm({ onSearch }: FindUsersProps) {
       dispatch(adminSliceAction.searchUsers(values))
         .unwrap()
         .then(() => {
-          console.log(foundUsers)
           if (foundUsers.length) {
             onSearch()
             enqueueSnackbar('User found !', { variant: 'success' })
           } else {
             enqueueSnackbar('No users found!', { variant: 'warning' })
+            helpers.resetForm()
           }
 
-          setTimeout(() => {
-            helpers.resetForm()
-          }, 2000)
+          // setTimeout(() => {
+          //   helpers.resetForm()
+          // }, 2000)
         })
         .catch(() => {
           enqueueSnackbar('Check the input data!', { variant: 'error' })

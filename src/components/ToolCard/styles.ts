@@ -35,7 +35,6 @@ export const CardContent = styled.div`
   overflow: hidden;
   gap: 10px;
 `
-
 export const CardTitle = styled.h2`
   font-size: 20px;
   // font-weight: bold;
@@ -43,7 +42,6 @@ export const CardTitle = styled.h2`
   cursor: pointer;
   margin-right: 26px;
 `
-
 export const CardPrice = styled.p`
   font-size: 16px;
   // font-weight: bold;
@@ -54,7 +52,6 @@ export const CardCategory = styled.p`
   font-weight: bold;
   color: ${colors.WHITE};
 `
-
 export const CardDescription = styled.div`
   font-size: 16px;
   color: ${colors.WHITE};
@@ -102,20 +99,20 @@ export const toolStatusButtonStyle = {
   },
 }
 
- export const theme = createTheme({
-    components: {
-      MuiTooltip: {
-        styleOverrides: {
-          tooltip: {
-            fontSize: '20px',
-            backgroundColor: 'whitesmoke',
-            color: 'black',
-            borderRadius: '8px',
-          },
-          arrow: {
-            color: 'whitesmoke',
-          },
+export const theme = createTheme({
+  components: {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: '20px',
+          backgroundColor: 'whitesmoke',
+          color: 'black',
+          borderRadius: '8px',
+        },
+        arrow: {
+          color: 'whitesmoke',
         },
       },
     },
-  })
+  },
+})
