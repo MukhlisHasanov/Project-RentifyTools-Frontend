@@ -10,6 +10,7 @@ export enum TOOLS_APP_ROUTES {
   FAVOURITES = '/profile/favourites',
   RENTED_TOOLS = '/profile/rented-tools',
   FIND_USERS = '/profile/find-users',
+  FIND_TOOLS = '/profile/find-tools',
   CATEGORY = '/profile/category',
   CATEGORIES = '/api/categories',
   HELP = '/help',

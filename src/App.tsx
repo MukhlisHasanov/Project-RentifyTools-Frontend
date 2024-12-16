@@ -66,6 +66,10 @@ function App() {
                 path={TOOLS_APP_ROUTES.FIND_USERS}
                 element={<FindUsers />}
               />
+              <Route
+                path={TOOLS_APP_ROUTES.FIND_TOOLS}
+                element={<HomePlug />}
+              />
               <Route path={TOOLS_APP_ROUTES.CATEGORY} element={<HomePlug />} />
             </Route>
             <Route path="/tools/:id" element={<Advert />} />

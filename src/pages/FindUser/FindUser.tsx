@@ -31,7 +31,6 @@ function FindUsers() {
           enqueueSnackbar('User deleted successfully', {
             variant: 'success',
           })
-          // return dispatch(adminSliceAction.getAllUsers())
         })
         .catch(error => {
           enqueueSnackbar(error, { variant: 'error' })
