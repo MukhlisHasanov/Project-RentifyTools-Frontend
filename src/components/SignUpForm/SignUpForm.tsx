@@ -36,7 +36,6 @@ function SignUpForm({
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
 
-  // Функція для отримання міста за ZIP-кодом
   const fetchCityByZipCode = async (zipCode: string) => {
     try {
       const response = await fetch(
@@ -47,11 +46,10 @@ function SignUpForm({
       }
       const data = await response.json()
 
-      // Перевіряємо, чи є дані, і повертаємо назву міста
       if (data && data.length > 0) {
-        return data[0].name // Назва міста
+        return data[0].name
       }
-      return '' // Якщо масив пустий, повертаємо порожній рядок
+      return ''
     } catch (error) {
       console.error('Failed to fetch city:', error)
       return ''
@@ -126,7 +124,7 @@ function SignUpForm({
         phone: values[SIGNUP_FORM_NAMES.PHONE],
         email: authData.email,
         password: authData.password,
-        adress: address,
+        address: address,
       }
 
       dispatch(userSliceAction.createUser(userData))
@@ -148,7 +146,6 @@ function SignUpForm({
     },
   })
 
-  // Виклик API при зміні ZIP-коду
   useEffect(() => {
     const fetchCity = async () => {
       const zipCode = formik.values[SIGNUP_FORM_NAMES.ZIPCODE]
