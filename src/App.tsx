@@ -38,7 +38,10 @@ function App() {
             <Route path={TOOLS_APP_ROUTES.PROFILE} element={<LayoutProfile />}>
               <Route path={TOOLS_APP_ROUTES.MY_PROFILE} element={<Profile />} />
               <Route path={TOOLS_APP_ROUTES.MESSAGES} element={<HomePlug />} />
-              <Route path={TOOLS_APP_ROUTES.CHANGE_USER} element={<ChangeUser />} />
+              <Route
+                path={TOOLS_APP_ROUTES.CHANGE_USER}
+                element={<ChangeUser />}
+              />
               <Route
                 path={TOOLS_APP_ROUTES.MY_ADVERTS}
                 element={<MyAdvert />}
@@ -51,7 +54,10 @@ function App() {
                 path={TOOLS_APP_ROUTES.FAVOURITES}
                 element={<Favorites />}
               />
-              <Route path={TOOLS_APP_ROUTES.CHANGE_USER} element={<ChangeUser />} />
+              <Route
+                path={TOOLS_APP_ROUTES.CHANGE_USER}
+                element={<ChangeUser />}
+              />
               <Route
                 path={TOOLS_APP_ROUTES.RENTED_TOOLS}
                 element={<HomePlug />}
@@ -60,6 +66,7 @@ function App() {
                 path={TOOLS_APP_ROUTES.FIND_USERS}
                 element={<FindUsers />}
               />
+              <Route path={TOOLS_APP_ROUTES.CATEGORY} element={<HomePlug />} />
             </Route>
             <Route path="/tools/:id" element={<Advert />} />
           </Route>

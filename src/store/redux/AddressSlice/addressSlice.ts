@@ -108,7 +108,7 @@ export const addressSlice = createAppSlice({
       },
     ),
   }),
-  
+
   selectors: {
     address_state: (state: AddressInitialState) => state,
   },

@@ -18,7 +18,6 @@ export interface SearchUserResponseDto {
   email: string
   phone: string
   address: Address
-  // roles: Role[]
 }
 
 export interface SearchUserInitialState {

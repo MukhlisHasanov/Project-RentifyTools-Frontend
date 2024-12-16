@@ -16,7 +16,6 @@ function Profile() {
       try {
         const result = await dispatch(userSliceAction.deleteUser())
         if (userSliceAction.deleteUser.fulfilled.match(result)) {
-          console.log('User successfully deleted:')
         } else {
           console.error('Error deleting:', result.payload || result.error)
         }
