@@ -1,5 +1,4 @@
 import { createAppSlice } from 'store/createAppSlice'
-
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
 
 const userDataInitialState: UserInitialState = {

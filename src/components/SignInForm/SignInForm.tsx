@@ -93,61 +93,61 @@ function SignInForm({
   }, [isSignInMode])
 
   return (
-      <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
-        <TitleContainer>
-          <Title isActive={isSignInMode} onClick={onSwitchToSignIn}>
-            Sign In
-          </Title>
-          <Title isActive={!isSignInMode} onClick={onSwitchToSignUp}>
-            Sign Up
-          </Title>
-        </TitleContainer>
-        <InputsContainer>
+    <SignInFormContainer onSubmit={formik.handleSubmit} noValidate>
+      <TitleContainer>
+        <Title isActive={isSignInMode} onClick={onSwitchToSignIn}>
+          Sign In
+        </Title>
+        <Title isActive={!isSignInMode} onClick={onSwitchToSignUp}>
+          Sign Up
+        </Title>
+      </TitleContainer>
+      <InputsContainer>
+        <Input
+          id="signinform-email"
+          label="Email:"
+          name={SIGNIN_FORM_NAMES.EMAIL}
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.errors.email}
+        />
+        <Input
+          id="signinform-password"
+          label="Password:"
+          name={SIGNIN_FORM_NAMES.PASSWORD}
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.errors.password}
+        />
+        {!isSignInMode && (
           <Input
-            id="signinform-email"
-            label="Email:"
-            name={SIGNIN_FORM_NAMES.EMAIL}
-            type="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.errors.email}
-          />
-          <Input
-            id="signinform-password"
-            label="Password:"
-            name={SIGNIN_FORM_NAMES.PASSWORD}
+            id="signupform-repeat_password"
+            label="Repeat password:"
+            name={SIGNIN_FORM_NAMES.REPEAT_PASSWORD}
             type="password"
-            value={formik.values.password}
+            value={formik.values.repeatPassword}
             onChange={formik.handleChange}
-            error={formik.errors.password}
+            error={formik.errors.repeatPassword}
           />
-          {!isSignInMode && (
-            <Input
-              id="signupform-repeat_password"
-              label="Repeat password:"
-              name={SIGNIN_FORM_NAMES.REPEAT_PASSWORD}
-              type="password"
-              value={formik.values.repeatPassword}
-              onChange={formik.handleChange}
-              error={formik.errors.repeatPassword}
-            />
-          )}
-        </InputsContainer>
-        {!isSignInMode && <Text>Step 1 of 2</Text>}
-        <ButtonControl>
-          <Button
-            type="submit"
-            name={isSignInMode ? 'Sign In' : 'Next'}
-            disabled={isLoading}
-          />
-        </ButtonControl>
-        <Text>
-          {' '}
-          {isSignInMode
-            ? 'By signing in, you agree to our Terms of Service'
-            : 'By signing up, you accept our Terms and Conditions and acknowledge our Privacy Policy'}
-        </Text>
-      </SignInFormContainer>
+        )}
+      </InputsContainer>
+      {!isSignInMode && <Text>Step 1 of 2</Text>}
+      <ButtonControl>
+        <Button
+          type="submit"
+          name={isSignInMode ? 'Sign In' : 'Next'}
+          disabled={isLoading}
+        />
+      </ButtonControl>
+      <Text>
+        {' '}
+        {isSignInMode
+          ? 'By signing in, you agree to our Terms of Service'
+          : 'By signing up, you accept our Terms and Conditions and acknowledge our Privacy Policy'}
+      </Text>
+    </SignInFormContainer>
   )
 }
 export default SignInForm

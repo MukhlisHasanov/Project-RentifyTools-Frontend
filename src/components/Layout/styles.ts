@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
-
 import { colors } from 'styles/colors'
-
 import { AppImg } from 'assets'
 
 export const LayoutWrapper = styled.div`

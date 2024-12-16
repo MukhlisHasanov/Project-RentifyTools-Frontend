@@ -1,5 +1,4 @@
 import { createAppSlice } from 'store/createAppSlice'
-
 import { LoginInitialState, LoginRequestDto } from './types'
 
 const loginDataInitialState: LoginInitialState = {

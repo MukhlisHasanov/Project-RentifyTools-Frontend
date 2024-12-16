@@ -41,7 +41,6 @@ function LayoutProfile() {
   }
 
   const profileLinks = {
-    [TOOLS_APP_ROUTES.MESSAGES]: 'Messages',
     [TOOLS_APP_ROUTES.MY_ADVERTS]: 'My Adverts',
     [TOOLS_APP_ROUTES.FAVOURITES]: 'Favorites ',
     [TOOLS_APP_ROUTES.RENTED_TOOLS]: 'Rented Tools',

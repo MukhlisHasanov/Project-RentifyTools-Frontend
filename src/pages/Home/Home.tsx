@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
@@ -10,9 +9,7 @@ import {
   categorySliceAction,
   categorySliceSelectors,
 } from 'store/redux/categorySlice/categorySlice'
-
 import ToolCard from 'components/ToolCard/ToolCard'
-
 import {
   PageTitle,
   PageWrapper,
@@ -26,7 +23,6 @@ import {
   BackButtonControl,
   LoaderWrapper,
 } from './styles'
-
 import Button from 'components/Button/Button'
 import { CircularProgress } from '@mui/material'
 import { colors } from 'styles/colors'
@@ -34,12 +30,11 @@ import { colors } from 'styles/colors'
 function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
   const [selectCategory, setSelectCategory] = useState<number | null>(null)
-
   const { tools, isCategoryLoading } = useAppSelector(
     toolSliceSelectors.tools_data,
   )
+
   const {
     categories,
     error,

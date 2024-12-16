@@ -1,6 +1,6 @@
-import { useAppSelector } from 'store/hooks';
-import ToolCard from 'components/ToolCard/ToolCard';
-import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice';
+import { useAppSelector } from 'store/hooks'
+import ToolCard from 'components/ToolCard/ToolCard'
+import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
 import { useLocation } from 'react-router-dom'
 import Switch from '@mui/material/Switch'
 import { colors } from 'styles/colors'
@@ -14,7 +14,6 @@ import {
 import { useState } from 'react'
 
 function SearchResults() {
-
   const location = useLocation()
   const { tools, isLoading, error } = useAppSelector(
     toolSliceSelectors.tools_data,
@@ -36,7 +35,6 @@ function SearchResults() {
   return (
     <PageWrapper>
       <TextContainer>Search Results for: "{searchTerm}"</TextContainer>
-
       <SwitchContainer>
         <SwitchContainerText>All</SwitchContainerText>
         <Switch
@@ -55,7 +53,6 @@ function SearchResults() {
         />
         <SwitchContainerText>Available</SwitchContainerText>
       </SwitchContainer>
-
       <CardsContainer>
         {filteredCards.length > 0 ? (
           filteredCards.map(tool => (
@@ -74,7 +71,7 @@ function SearchResults() {
         )}
       </CardsContainer>
     </PageWrapper>
-  );
+  )
 }
 
 export default SearchResults

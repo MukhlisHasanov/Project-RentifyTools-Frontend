@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 
 import { colors } from 'styles/colors'
 
-
 export const FindUserFormContainer = styled.form`
   display: flex;
   flex-direction: column;

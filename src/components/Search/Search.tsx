@@ -7,8 +7,6 @@ import {
   addressSliceSelectors,
 } from 'store/redux/addressSlice/addressSlice'
 import { toolSliceAction } from 'store/redux/toolSlice/toolSlice'
-import { useDispatch } from 'react-redux'
-import { Button, TextField, Box } from '@mui/material'
 
 import {
   SearchContainer,

@@ -13,9 +13,9 @@ export const PageWrapper = styled.div`
 `
 
 export const SwitchContainer = styled.div`
-position: absolute;
-left: 300px;
-top: 50px;
+  position: absolute;
+  left: 300px;
+  top: 50px;
   display: flex;
   justify-content: left;
   align-items: center;

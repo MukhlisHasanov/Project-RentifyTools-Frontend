@@ -1,40 +1,36 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-
 import { PageWrapper, ProfileContainer } from './styles'
-
 import UserCard from 'components/UserCard/UserCard'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
 import { useNavigate } from 'react-router-dom'
 import { userSliceAction } from 'store/redux/userSlice/userSlice'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function Profile() {
   const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
-
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const handleDelete = async () => {
     if (
-      window.confirm('Bist du sicher, dass du den Benutzer löschen möchtest?')
+      window.confirm('Are you sure you want to delete the user?')
     ) {
       try {
         const result = await dispatch(userSliceAction.deleteUser())
         if (userSliceAction.deleteUser.fulfilled.match(result)) {
-          console.log('Benutzer erfolgreich gelöscht:')
+          console.log('User successfully deleted:')
         } else {
-          console.error('Fehler beim Löschen:', result.payload || result.error)
+          console.error('Error deleting:', result.payload || result.error)
         }
       } catch (error) {
-        console.error('Ein unerwarteter Fehler ist aufgetreten:', error)
+        console.error('An unexpected error occurred:', error)
       }
     }
   }
 
   const handleUpdate = () => {
-    navigate('/profile/change-user')
+    navigate(TOOLS_APP_ROUTES.CHANGE_USER)
   }
-
-  console.log(user)
 
   return (
     <PageWrapper>

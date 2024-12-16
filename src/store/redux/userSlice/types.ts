@@ -1,4 +1,4 @@
-import { Address } from "../signInSlice/types"
+import { Address } from '../signInSlice/types'
 
 export interface UserRequestDto {
   firstname: string
@@ -17,6 +17,7 @@ export interface UserResponseDto {
   roles?: Role[]
   address: Address
 }
+
 export interface Role {
   id: number
   title: string

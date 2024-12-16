@@ -6,13 +6,13 @@ export interface AddressInitialState {
   error: string | undefined
 }
 
-export interface AddressCityZip{
+export interface AddressCityZip {
   city: string
   zipCode: string
 }
 export interface Address {
-    country: string
-    zipCode: string
-    city: string
-    street: string
+  country: string
+  zipCode: string
+  city: string
+  street: string
 }

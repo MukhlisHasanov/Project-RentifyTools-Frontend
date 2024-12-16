@@ -11,7 +11,6 @@ import {
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
-import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 import { FINDUSER_FORM_NAMES, FindUsersProps } from './types'
 
@@ -21,9 +20,6 @@ import {
   Title,
   InputsContainer,
   ButtonControl,
-  UserContainer,
-  UserDetails,
-  UserInfo,
 } from './styles'
 
 function FindUsersForm({ onSearch }: FindUsersProps) {
@@ -33,7 +29,7 @@ function FindUsersForm({ onSearch }: FindUsersProps) {
   const { isLoading, foundUsers } = useAppSelector(
     adminSliceSelectors.search_users,
   )
-  
+
   const validationSchema = Yup.object().shape({
     [FINDUSER_FORM_NAMES.LAST_NAME]: Yup.string().max(
       15,

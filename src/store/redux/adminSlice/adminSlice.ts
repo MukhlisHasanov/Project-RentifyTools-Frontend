@@ -1,5 +1,4 @@
 import { createAppSlice } from 'store/createAppSlice'
-
 import {
   SearchUserRequestDto,
   SearchUserResponseDto,

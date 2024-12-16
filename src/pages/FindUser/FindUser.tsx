@@ -1,17 +1,14 @@
 import { useState } from 'react'
 import { useSnackbar } from 'notistack'
-
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   adminSliceSelectors,
   adminSliceAction,
 } from 'store/redux/adminSlice/adminSlice'
 import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
-
 import Button from 'components/Button/Button'
 import FindUsersForm from 'components/FindUserForm/FindUserForm'
 import UserCard from 'components/UserCard/UserCard'
-
 import {
   PageWrapper,
   ButtonControl,
@@ -22,11 +19,8 @@ import {
 function FindUsers() {
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
-
   const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
-
   const { foundUsers } = useAppSelector(adminSliceSelectors.search_users)
-
   const [isFound, setIsFound] = useState(false)
 
   const onDeleteUser = (userId: string) => {
@@ -43,6 +37,7 @@ function FindUsers() {
           enqueueSnackbar(error, { variant: 'error' })
         })
   }
+
   const onUpdateRole = (userId: string, role: string) => {
     dispatch(adminSliceAction.setUserRole({ userId, role }))
       .unwrap()
@@ -55,6 +50,7 @@ function FindUsers() {
         enqueueSnackbar(error, { variant: 'error' })
       })
   }
+
   const handleIsFound = () => {
     if (foundUsers.length) {
       setIsFound(true)
@@ -93,4 +89,5 @@ function FindUsers() {
     </PageWrapper>
   )
 }
+
 export default FindUsers
