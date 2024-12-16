@@ -11,6 +11,7 @@ export enum TOOLS_APP_ROUTES {
   RENTED_TOOLS = '/profile/rented-tools',
   FIND_USERS = '/profile/find-users',
   CATEGORY = '/profile/category',
+  CATEGORIES = '/api/categories',
   HELP = '/help',
   ADVERTISING = '/advertising',
   ABOUT_US = '/about-us',
@@ -22,5 +23,5 @@ export enum TOOLS_APP_ROUTES {
   NOT_FOUND = '*',
   TOOLS = '/tools',
   SEARCH_RESULTS = '/search-results',
-  CHANGE_USER = "/profile/chage-user"
+  CHANGE_USER = '/profile/change-user',
 }

@@ -5,7 +5,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { useNavigate } from 'react-router-dom'
 
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import {
   userSliceAction,
   userSliceSelectors,
@@ -32,7 +32,7 @@ function SignUpForm({
 }: SignUpFormProps) {
   const dispatch = useAppDispatch()
   const { error, isLoading } = useAppSelector(userSliceSelectors.user_data)
-  const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
+  const { authData } = useAppSelector(loginSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
 

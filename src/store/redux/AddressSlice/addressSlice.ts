@@ -46,6 +46,7 @@ export const addressSlice = createAppSlice({
         },
       },
     ),
+
     fetchAddresses: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/address', {
@@ -77,6 +78,7 @@ export const addressSlice = createAppSlice({
         },
       },
     ),
+
     fetchCityZipSuggestions: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch(`/api/address/city-zip`)
@@ -106,6 +108,7 @@ export const addressSlice = createAppSlice({
       },
     ),
   }),
+  
   selectors: {
     address_state: (state: AddressInitialState) => state,
   },

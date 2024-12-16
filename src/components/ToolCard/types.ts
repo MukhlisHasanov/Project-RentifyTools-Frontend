@@ -12,6 +12,5 @@ export interface CardProps {
   price: string | null
   status?: string | null
   description: string | null
-  onAddToCard: () => void
   isMyAdvert?: boolean
 }

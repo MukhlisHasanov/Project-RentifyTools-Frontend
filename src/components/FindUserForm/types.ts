@@ -3,6 +3,7 @@ export enum FINDUSER_FORM_NAMES {
   PHONE = 'phone',
   EMAIL = 'email',
 }
+
 export interface FindUsersProps {
   onSearch: () => void
 }

@@ -1,5 +1,4 @@
 import { createAppSlice } from 'store/createAppSlice'
-
 import { UserRequestDto, UserResponseDto, UserInitialState } from './types'
 
 const userDataInitialState: UserInitialState = {
@@ -120,6 +119,7 @@ export const userSlice = createAppSlice({
       },
     ),
   }),
+  
   selectors: {
     user_data: (state: UserInitialState) => ({
       userObj: state.userObj,

@@ -29,7 +29,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/files/upload', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
           body: formData,
         })
@@ -64,7 +64,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/tools', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(toolData),
@@ -119,6 +119,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -127,6 +128,7 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
+          state.toolObj = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -201,7 +203,7 @@ export const toolSlice = createAppSlice({
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
@@ -228,6 +230,63 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    updateToolStatus: create.asyncThunk(
+      async (
+        { id, status }: { id: string; status: string },
+        { rejectWithValue },
+      ) => {
+        try {
+          const response = await fetch(`/api/tools/${id}?status=${status}`, {
+            method: 'PATCH',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+            },
+          })
+
+          if (!response.ok) {
+            const errorResult = await response.json().catch(() => null)
+            return rejectWithValue(
+              errorResult?.message || 'Failed to update tool status',
+            )
+          }
+
+          const result = await response.json()
+
+          return result as ToolUserResponseDto
+          
+        } catch (error) {
+          console.error('Update Tool Error: ', error)
+          return rejectWithValue('Network error or invalid JSON response')
+        }
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = undefined
+          state.tools = state.tools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
+          state.userTools = state.userTools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
     updateTool: create.asyncThunk(
       async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
         const sanitizedToolData = {
@@ -244,7 +303,7 @@ export const toolSlice = createAppSlice({
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             },
             body: JSON.stringify(sanitizedToolData),
           })
@@ -259,7 +318,7 @@ export const toolSlice = createAppSlice({
           const result = await response.json()
           return result as ToolUserResponseDto
         } catch (error) {
-          console.error('Update Tool Error:', error)
+          console.error('Update Tool Error: ', error)
           return rejectWithValue('Network error or invalid JSON response')
         }
       },
@@ -288,7 +347,7 @@ export const toolSlice = createAppSlice({
           method: 'DELETE',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 

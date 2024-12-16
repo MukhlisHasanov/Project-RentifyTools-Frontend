@@ -17,7 +17,7 @@ import {
 import { UserFormValues } from './types'
 
 import { useNavigate } from 'react-router-dom'
-import { UserResponseDto } from 'store/redux/signInSlice/types'
+import { UserResponseDto } from 'store/redux/loginSlice/types'
 
 interface ChangeUserFormProps {
   userData: UserResponseDto

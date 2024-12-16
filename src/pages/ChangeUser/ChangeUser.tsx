@@ -1,14 +1,14 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { PageWrapper, PageTitle, Pragraph } from './styles'
 import ChangeUserForm from 'components/ChangeUserForm/ChangeUserForm'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 
 import { useState } from 'react'
 
 function ChangeUser() {
   const dispatch = useAppDispatch()
   const { user, error: loadError } = useAppSelector(
-    signInOutSliceSelectors.currentUser,
+    loginSliceSelectors.currentUser,
   )
   const { isLoading, error: updateError } = useAppSelector(
     state => state.REGISTER_USER,

@@ -6,9 +6,9 @@ import {
   toolSliceSelectors,
 } from 'store/redux/toolSlice/toolSlice'
 import {
-  signInOutSliceAction,
-  signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInOutSlice'
+  loginSliceAction,
+  loginSliceSelectors,
+} from 'store/redux/loginSlice/loginSlice'
 import {
   messageSliceAction,
   messageSliceSelectors,
@@ -43,7 +43,7 @@ function Advert() {
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
   )
-  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user } = useAppSelector(loginSliceSelectors.currentUser)
   const { success } = useAppSelector(messageSliceSelectors.message_state)
   const dispatch = useAppDispatch()
 
@@ -146,6 +146,8 @@ function Advert() {
               <p>{toolObj.description}</p>
               <p>Price: ${toolObj.price}</p>
               <p>Status: {toolObj.status}</p>
+              <p>City: {toolObj.user?.address.city}</p>
+              <p>Post Code: {toolObj.user?.address.zipCode}</p>
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />

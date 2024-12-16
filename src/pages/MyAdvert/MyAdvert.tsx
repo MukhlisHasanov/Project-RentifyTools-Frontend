@@ -7,7 +7,6 @@ import {
   toolSliceSelectors,
 } from 'store/redux/toolSlice/toolSlice'
 import { useEffect } from 'react'
-// import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
 
 function MyAdvert() {
   const navigate = useNavigate()
@@ -29,7 +28,6 @@ function MyAdvert() {
       price={tool.price}
       status={tool.status}
       description={tool.description}
-      onAddToCard={() => {}}
       isMyAdvert
     />
   ))
