@@ -4,11 +4,11 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/categorySlice/categorySlice'
+} from 'store/redux/CategorySlice/categorySlice'
 import ToolCard from 'components/ToolCard/ToolCard'
 import {
   PageTitle,

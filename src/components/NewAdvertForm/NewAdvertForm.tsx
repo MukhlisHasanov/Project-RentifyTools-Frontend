@@ -8,11 +8,11 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/categorySlice/categorySlice'
+} from 'store/redux/CategorySlice/categorySlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -27,7 +27,7 @@ import {
   ButtonControlWrapper,
 } from './styles'
 import { NEWADVERT_FORM_NAMES } from './types'
-import { ToolRequestDto } from 'store/redux/toolSlice/types'
+import { ToolRequestDto } from 'store/redux/ToolSlice/types'
 import ImagePreviewList from './ImagePrevievList'
 import { Select, MenuItem, FormControl } from '@mui/material'
 import { colors } from 'styles/colors'

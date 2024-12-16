@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice'
 import {
   loginSliceAction,
   loginSliceSelectors,

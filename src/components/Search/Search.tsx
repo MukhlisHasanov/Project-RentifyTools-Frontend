@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   addressSliceAction,
   addressSliceSelectors,
-} from 'store/redux/addressSlice/addressSlice'
-import { toolSliceAction } from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/AddressSlice/addressSlice'
+import { toolSliceAction } from 'store/redux/ToolSlice/toolSlice'
 
 import {
   SearchContainer,
@@ -16,7 +16,7 @@ import {
   CitySuggestion,
   CityInputContainer,
 } from './styles'
-import { AddressCityZip } from 'store/redux/addressSlice/types'
+import { AddressCityZip } from 'store/redux/AddressSlice/types'
 import { SearchProps } from './types'
 
 function Search({ toolName, onChangeValue }: SearchProps) {

@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice'
 import { CardProps } from './types'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -33,7 +33,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { colors } from 'styles/colors'
-import { ToolUserResponseDto } from 'store/redux/toolSlice/types'
+import { ToolUserResponseDto } from 'store/redux/ToolSlice/types'
 
 function ToolCard({
   id,

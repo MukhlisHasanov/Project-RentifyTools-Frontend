@@ -1,4 +1,4 @@
-import { Address } from 'store/redux/addressSlice/types'
+import { Address } from 'store/redux/AddressSlice/types'
 
 export interface ToolRequestDto {
   title: string

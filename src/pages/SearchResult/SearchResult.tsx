@@ -1,6 +1,6 @@
 import { useAppSelector } from 'store/hooks'
 import ToolCard from 'components/ToolCard/ToolCard'
-import { toolSliceSelectors } from 'store/redux/toolSlice/toolSlice'
+import { toolSliceSelectors } from 'store/redux/ToolSlice/toolSlice'
 import { useLocation } from 'react-router-dom'
 import Switch from '@mui/material/Switch'
 import { colors } from 'styles/colors'
@@ -31,7 +31,6 @@ function SearchResults() {
     : tools
 
   const searchTerm = location.state?.searchTerm || ''
-
 
   return (
     <PageWrapper>

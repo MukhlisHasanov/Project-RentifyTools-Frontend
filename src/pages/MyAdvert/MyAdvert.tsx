@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/toolSlice/toolSlice'
+} from 'store/redux/ToolSlice/toolSlice'
 import { useEffect } from 'react'
 
 function MyAdvert() {
