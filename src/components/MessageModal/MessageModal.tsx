@@ -6,7 +6,7 @@ import {
   messageSliceSelectors,
 } from 'store/redux/messageSlice/messageSlice'
 import { MessageModalProps } from './types'
-import { modalStyle } from './styles'
+import { modalStyle, successMessageStyle } from './styles'
 import { colors } from 'styles/colors'
 
 function MessageModal({
@@ -82,7 +82,14 @@ function MessageModal({
         />
         {error && <Typography color="error">{error}</Typography>}
         {success && (
-          <Typography color="success">Message sent successfully!</Typography>
+          <Typography
+            color="success"
+            sx={{
+              ...successMessageStyle,
+            }}
+          >
+            Message sent successfully!
+          </Typography>
         )}
         <Button
           variant="contained"

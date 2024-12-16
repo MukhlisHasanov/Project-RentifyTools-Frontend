@@ -11,6 +11,7 @@ export enum TOOLS_APP_ROUTES {
   RENTED_TOOLS = '/profile/rented-tools',
   FIND_USERS = '/profile/find-users',
   CATEGORY = '/profile/category',
+  CATEGORIES = '/api/categories',
   HELP = '/help',
   ADVERTISING = '/advertising',
   ABOUT_US = '/about-us',

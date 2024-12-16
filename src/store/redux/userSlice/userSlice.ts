@@ -119,6 +119,7 @@ export const userSlice = createAppSlice({
       },
     ),
   }),
+  
   selectors: {
     user_data: (state: UserInitialState) => ({
       userObj: state.userObj,

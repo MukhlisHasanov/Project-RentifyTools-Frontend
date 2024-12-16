@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import SignUpForm from 'components/SignUpForm/SignUpForm'
 import SignInForm from 'components/SignInForm/SignInForm'
 import { PageWrapper, SuccessMessage } from './styles'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 
 function Login() {
   const navigate = useNavigate()

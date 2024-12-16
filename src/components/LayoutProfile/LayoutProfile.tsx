@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   signInOutSliceSelectors,
   signInOutSliceAction,
-} from 'store/redux/signInSlice/signInOutSlice'
+} from 'store/redux/loginSlice/loginSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import { UserImg } from 'assets'
 

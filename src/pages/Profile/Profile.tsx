@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { PageWrapper, ProfileContainer } from './styles'
 import UserCard from 'components/UserCard/UserCard'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import { useNavigate } from 'react-router-dom'
 import { userSliceAction } from 'store/redux/userSlice/userSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
@@ -12,9 +12,7 @@ function Profile() {
   const dispatch = useAppDispatch()
 
   const handleDelete = async () => {
-    if (
-      window.confirm('Are you sure you want to delete the user?')
-    ) {
+    if (window.confirm('Are you sure you want to delete the user?')) {
       try {
         const result = await dispatch(userSliceAction.deleteUser())
         if (userSliceAction.deleteUser.fulfilled.match(result)) {

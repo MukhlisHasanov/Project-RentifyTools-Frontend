@@ -9,7 +9,7 @@ const loginDataInitialState: LoginInitialState = {
   error: undefined,
 }
 
-export const signInOutSlice = createAppSlice({
+export const loginSlice = createAppSlice({
   name: 'LOGIN_USER',
   initialState: loginDataInitialState,
   reducers: create => ({
@@ -55,6 +55,7 @@ export const signInOutSlice = createAppSlice({
         },
       },
     ),
+
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
@@ -63,6 +64,7 @@ export const signInOutSlice = createAppSlice({
       state.isAuthenticated = false
       state.error = undefined
     }),
+
     checkEmail: create.asyncThunk(
       async (loginData: LoginRequestDto, { rejectWithValue }) => {
         try {
@@ -71,12 +73,13 @@ export const signInOutSlice = createAppSlice({
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
           })
-          console.log('Response status:', response.status)
+
           const result = await response.json()
-          console.log('Response body:', result)
+
           if (!response.ok) {
             return rejectWithValue(result.message || 'Email already exists')
           }
+
           return loginData
         } catch (error) {
           console.error('Error in checkEmail:', error)
@@ -100,6 +103,7 @@ export const signInOutSlice = createAppSlice({
         },
       },
     ),
+
     getCurrentUser: create.asyncThunk(
       async (_: void, { rejectWithValue }) => {
         const response = await fetch('/api/auth/profile', {
@@ -133,6 +137,7 @@ export const signInOutSlice = createAppSlice({
       },
     ),
   }),
+
   selectors: {
     login_user: (state: LoginInitialState) => state,
     currentUser: (state: LoginInitialState) => ({
@@ -142,5 +147,5 @@ export const signInOutSlice = createAppSlice({
   },
 })
 
-export const signInOutSliceAction = signInOutSlice.actions
-export const signInOutSliceSelectors = signInOutSlice.selectors
+export const signInOutSliceAction = loginSlice.actions
+export const signInOutSliceSelectors = loginSlice.selectors

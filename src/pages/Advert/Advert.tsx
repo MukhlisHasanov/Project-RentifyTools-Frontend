@@ -8,7 +8,7 @@ import {
 import {
   signInOutSliceAction,
   signInOutSliceSelectors,
-} from 'store/redux/signInSlice/signInOutSlice'
+} from 'store/redux/loginSlice/loginSlice'
 import {
   messageSliceAction,
   messageSliceSelectors,
@@ -146,6 +146,8 @@ function Advert() {
               <p>{toolObj.description}</p>
               <p>Price: ${toolObj.price}</p>
               <p>Status: {toolObj.status}</p>
+              <p>City: {toolObj.user?.address.city}</p>
+              <p>Post Code: {toolObj.user?.address.zipCode}</p>
             </ToolInfo>
             <UserInfo>
               <ProfileImageControl src={UserImg} alt="User Photo" />

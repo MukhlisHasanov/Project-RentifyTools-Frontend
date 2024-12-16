@@ -119,6 +119,7 @@ export const toolSlice = createAppSlice({
         if (!response.ok) {
           return rejectWithValue(result.message || 'Failed to fetch tools')
         }
+        return result as ToolUserResponseDto
       },
       {
         pending: (state: ToolInitialState) => {
@@ -127,6 +128,7 @@ export const toolSlice = createAppSlice({
         },
         fulfilled: (state: ToolInitialState, action) => {
           state.isLoading = false
+          state.toolObj = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
@@ -251,7 +253,9 @@ export const toolSlice = createAppSlice({
           }
 
           const result = await response.json()
+
           return result as ToolUserResponseDto
+          
         } catch (error) {
           console.error('Update Tool Error: ', error)
           return rejectWithValue('Network error or invalid JSON response')

@@ -5,7 +5,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { useNavigate } from 'react-router-dom'
 
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import {
   userSliceAction,
   userSliceSelectors,

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { PageWrapper, PageTitle, Pragraph } from './styles'
 import ChangeUserForm from 'components/ChangeUserForm/ChangeUserForm'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 
 import { useState } from 'react'
 

@@ -7,7 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LoginIcon from '@mui/icons-material/Login'
 
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceAction } from 'store/redux/loginSlice/loginSlice'
 
 import Search from 'components/Search/Search'
 import { TOOLS_APP_ROUTES } from 'constants/routes'

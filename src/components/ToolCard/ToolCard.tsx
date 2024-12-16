@@ -8,6 +8,8 @@ import {
   CardTitle,
   CardWrapper,
   FavoriteIconConteiner,
+  theme,
+  toolStatusButtonStyle,
 } from './styles'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
@@ -44,8 +46,9 @@ function ToolCard({
   isMyAdvert = false,
 }: CardProps) {
   const navigate = useNavigate()
-
   const dispatch = useAppDispatch()
+  const { favCards } = useAppSelector(toolSliceSelectors.tools_data)
+  const isFavorite = favCards.some(tool => tool.id === id)
 
   const tool = {
     id,
@@ -55,10 +58,6 @@ function ToolCard({
     imageUrls: imageUrls || [],
     price: price || '',
   }
-
-  const { favCards } = useAppSelector(toolSliceSelectors.tools_data)
-
-  const isFavorite = favCards.some(tool => tool.id === id)
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -101,24 +100,6 @@ function ToolCard({
     }
   }
 
-  const theme = createTheme({
-    components: {
-      MuiTooltip: {
-        styleOverrides: {
-          tooltip: {
-            fontSize: '20px',
-            backgroundColor: 'whitesmoke',
-            color: 'black',
-            borderRadius: '8px',
-          },
-          arrow: {
-            color: 'whitesmoke',
-          },
-        },
-      },
-    },
-  })
-
   return (
     <CardWrapper>
       <CardImage
@@ -160,21 +141,7 @@ function ToolCard({
                         value="AVAILABLE"
                         aria-label="Rented"
                         sx={{
-                          backgroundColor: 'transparent',
-                          color: '#F69320',
-                          fontWeight: 'bold',
-                          width: 30,
-                          height: 30,
-                          fontSize: 20,
-                          border: 'none',
-                          '&:hover': {
-                            backgroundColor: 'green',
-                            color: 'white',
-                          },
-                          '&.Mui-selected': {
-                            backgroundColor: 'green',
-                            color: 'white',
-                          },
+                          ...toolStatusButtonStyle,
                         }}
                       >
                         A
@@ -187,21 +154,7 @@ function ToolCard({
                         value="PENDING"
                         aria-label="Rented"
                         sx={{
-                          backgroundColor: 'transparent',
-                          color: '#F69320',
-                          fontWeight: 'bold',
-                          width: 30,
-                          height: 30,
-                          fontSize: 20,
-                          border: 'none',
-                          '&:hover': {
-                            backgroundColor: '#F69320',
-                            color: 'white',
-                          },
-                          '&.Mui-selected': {
-                            backgroundColor: '#F69320',
-                            color: 'white',
-                          },
+                          ...toolStatusButtonStyle,
                         }}
                       >
                         P
@@ -214,21 +167,7 @@ function ToolCard({
                         value="RENTED"
                         aria-label="Rented"
                         sx={{
-                          backgroundColor: 'transparent',
-                          color: '#F69320',
-                          fontWeight: 'bold',
-                          width: 30,
-                          height: 30,
-                          fontSize: 20,
-                          border: 'none',
-                          '&:hover': {
-                            backgroundColor: 'red',
-                            color: 'white',
-                          },
-                          '&.Mui-selected': {
-                            backgroundColor: 'red',
-                            color: 'white',
-                          },
+                          ...toolStatusButtonStyle,
                         }}
                       >
                         R

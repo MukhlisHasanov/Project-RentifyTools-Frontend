@@ -21,6 +21,8 @@ function UserCard({ userData, onDelete, onUpdate }: UserProps) {
             <UserInfo>Email: {userData.email}</UserInfo>
             <UserInfo>Phone: {userData.phone}</UserInfo>
             <UserInfo>Role: {usersRoles}</UserInfo>
+            <UserInfo>City: {userData.address.city}</UserInfo>
+            <UserInfo>Post Code: {userData.address.zipCode}</UserInfo>
           </>
         )}
       </UserDetails>

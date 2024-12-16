@@ -5,7 +5,7 @@ import {
   adminSliceSelectors,
   adminSliceAction,
 } from 'store/redux/adminSlice/adminSlice'
-import { signInOutSliceSelectors } from 'store/redux/signInSlice/signInOutSlice'
+import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import Button from 'components/Button/Button'
 import FindUsersForm from 'components/FindUserForm/FindUserForm'
 import UserCard from 'components/UserCard/UserCard'

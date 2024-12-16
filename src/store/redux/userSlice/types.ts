@@ -1,4 +1,4 @@
-import { Address } from '../signInSlice/types'
+import { Address } from '../loginSlice/types'
 
 export interface UserRequestDto {
   firstname: string

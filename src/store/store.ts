@@ -1,7 +1,7 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineSlices, configureStore } from '@reduxjs/toolkit'
 import { userSlice } from 'store/redux/userSlice/userSlice'
-import { signInOutSlice } from 'store/redux/signInSlice/signInOutSlice'
+import { loginSlice } from 'store/redux/loginSlice/loginSlice'
 import { categorySlice } from './redux/categorySlice/categorySlice'
 import { toolSlice } from './redux/toolSlice/toolSlice'
 import { adminSlice } from 'store/redux/adminSlice/adminSlice'
@@ -10,7 +10,7 @@ import { addressSlice } from './redux/addressSlice/addressSlice'
 
 const rootReducer = combineSlices(
   userSlice,
-  signInOutSlice,
+  loginSlice,
   toolSlice,
   adminSlice,
   categorySlice,
