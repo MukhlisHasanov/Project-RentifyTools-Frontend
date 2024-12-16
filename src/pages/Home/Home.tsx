@@ -94,7 +94,7 @@ function Home() {
           ) : tools.length > 0 ? (
             <CardsContainer>{toolCards}</CardsContainer>
           ) : (
-            <p>No tools available in this category.</p>
+            <TextContainer>No tools available in this category.</TextContainer>
           )}
         </>
       ) : (

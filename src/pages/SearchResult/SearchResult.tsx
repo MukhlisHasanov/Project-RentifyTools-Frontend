@@ -32,9 +32,10 @@ function SearchResults() {
 
   const searchTerm = location.state?.searchTerm || ''
 
+
   return (
     <PageWrapper>
-      <TextContainer>Search Results for: "{searchTerm}"</TextContainer>
+      <TextContainer>Search Results:</TextContainer>
       <SwitchContainer>
         <SwitchContainerText>All</SwitchContainerText>
         <Switch

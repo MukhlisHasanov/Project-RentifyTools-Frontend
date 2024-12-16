@@ -7,7 +7,6 @@ export const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: ${colors.HEADER};
   min-height: 100vh;
 `
 
@@ -21,4 +20,10 @@ export const SuccessMessage = styled.div`
   color: green;
   font-size: 16px;
   margin-bottom: 20px;
+`
+export const BackButtonControl = styled.div`
+  width: 80px;
+  position: fixed;
+  left: 350px;
+  top: 100px;
 `
