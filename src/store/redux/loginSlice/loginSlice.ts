@@ -1,21 +1,15 @@
-import { jwtDecode } from 'jwt-decode'
-
 import { createAppSlice } from 'store/createAppSlice'
-
 import { LoginInitialState, LoginRequestDto } from './types'
-import { stat } from 'fs'
-
-const token = localStorage.getItem('accessToken')
-const saveUser = localStorage.getItem('user')
 
 const loginDataInitialState: LoginInitialState = {
   user: undefined,
+  authData: undefined,
   isLoading: false,
   isAuthenticated: false,
   error: undefined,
 }
 
-export const signInOutSlice = createAppSlice({
+export const loginSlice = createAppSlice({
   name: 'LOGIN_USER',
   initialState: loginDataInitialState,
   reducers: create => ({
@@ -36,10 +30,9 @@ export const signInOutSlice = createAppSlice({
           }
           return result
         } catch (error) {
-          return rejectWithValue('Incorrect password or email address')
+          return rejectWithValue('Network error or server is unavailable')
         }
       },
-      
       {
         pending: (state: LoginInitialState) => {
           state.isLoading = true
@@ -52,6 +45,7 @@ export const signInOutSlice = createAppSlice({
           state.isLoading = false
           state.isAuthenticated = true
           state.user = action.payload.user
+          state.authData = undefined
           state.error = undefined
         },
         rejected: (state: LoginInitialState, action) => {
@@ -61,20 +55,62 @@ export const signInOutSlice = createAppSlice({
         },
       },
     ),
+
     logoutUser: create.reducer((state: LoginInitialState) => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
       state.user = undefined
+      state.authData = undefined
       state.isAuthenticated = false
       state.error = undefined
     }),
+
+    checkEmail: create.asyncThunk(
+      async (loginData: LoginRequestDto, { rejectWithValue }) => {
+        try {
+          const response = await fetch('/api/users/check-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData),
+          })
+
+          const result = await response.json()
+
+          if (!response.ok) {
+            return rejectWithValue(result.message || 'Email already exists')
+          }
+
+          return loginData
+        } catch (error) {
+          console.error('Error in checkEmail:', error)
+          return rejectWithValue('Network error or server is unavailable')
+        }
+      },
+      {
+        pending: (state: LoginInitialState) => {
+          state.isLoading = true
+          state.authData = undefined
+          state.error = undefined
+        },
+        fulfilled: (state: LoginInitialState, action) => {
+          state.isLoading = false
+          state.authData = action.payload
+          state.error = undefined
+        },
+        rejected: (state: LoginInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
     getCurrentUser: create.asyncThunk(
       async (_: void, { rejectWithValue }) => {
         const response = await fetch('/api/auth/profile', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
@@ -101,6 +137,7 @@ export const signInOutSlice = createAppSlice({
       },
     ),
   }),
+
   selectors: {
     login_user: (state: LoginInitialState) => state,
     currentUser: (state: LoginInitialState) => ({
@@ -110,5 +147,5 @@ export const signInOutSlice = createAppSlice({
   },
 })
 
-export const signInOutSliceAction = signInOutSlice.actions
-export const signInOutSliceSelectors = signInOutSlice.selectors
+export const loginSliceAction = loginSlice.actions
+export const loginSliceSelectors = loginSlice.selectors

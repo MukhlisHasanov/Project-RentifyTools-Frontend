@@ -5,7 +5,6 @@ export enum CHANGE_ADVERT_FORM_NAMES {
   STATUS = 'status',
   IMAGE_URLS = 'imageUrls',
   PRICE = 'price',
-  // CATEGORY = "category",
 }
 
 export interface ChangeAdvertFormProps {

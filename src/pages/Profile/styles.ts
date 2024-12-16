@@ -1,6 +1,4 @@
 import styled from '@emotion/styled'
-import { Link, NavLink } from 'react-router-dom'
-
 import { colors } from 'styles/colors'
 
 export const PageWrapper = styled.div`
@@ -8,8 +6,7 @@ export const PageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 50vh;
-  
-`;
+`
 
 export const ProfileContainer = styled.div`
   width: 500px;
@@ -21,7 +18,7 @@ export const ProfileContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
+`
 
 export const ProfileTitle = styled.h1`
   font-size: 20px;
@@ -34,7 +31,7 @@ export const ProfileTitle = styled.h1`
 export const ProfileItem = styled.p`
   font-size: 16px;
   font-family: 'Inter', sans-serif;
-  // v141124  color: ${colors.WHITE};
+  color: ${colors.WHITE};
   color: rgba(255, 255, 255, 1);
   margin: 0 0 10px 0;
   line-height: 0.8;

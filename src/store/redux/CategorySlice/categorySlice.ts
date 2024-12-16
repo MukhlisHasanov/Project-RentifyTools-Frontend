@@ -1,5 +1,6 @@
 import { createAppSlice } from 'store/createAppSlice'
 import { CategoriesInitialState, Category } from './types'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 const categoryDataInitialState: CategoriesInitialState = {
   categories: [],
@@ -13,9 +14,8 @@ export const categorySlice = createAppSlice({
   reducers: create => ({
     fetchCategories: create.asyncThunk(
       async (_, { rejectWithValue }) => {
-        const response = await fetch('/api/categories')
+        const response = await fetch(TOOLS_APP_ROUTES.CATEGORIES)
         const result = await response.json()
-        console.log("Result from API:", result);
 
         if (!response.ok) {
           return rejectWithValue(result.message || 'Error fetching categories')
@@ -33,7 +33,7 @@ export const categorySlice = createAppSlice({
             ...category,
             image: `data:image/jpeg;base64,${category.image}`,
           }))
-          console.log("State:", state.categories);
+          console.log('State:', state.categories)
         },
         rejected: (state: CategoriesInitialState, action) => {
           state.isLoading = false
@@ -42,6 +42,7 @@ export const categorySlice = createAppSlice({
       },
     ),
   }),
+  
   selectors: {
     categories_data: (state: CategoriesInitialState) => state,
   },

@@ -8,7 +8,9 @@ const toolDataInitialState: ToolInitialState = {
   tools: [],
   toolObj: undefined,
   isLoading: false,
+  isCategoryLoading: false,
   error: undefined,
+  favCards: [],
 }
 
 const token = localStorage.getItem('accessToken')
@@ -27,7 +29,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/files/upload', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
           body: formData,
         })
@@ -62,7 +64,7 @@ export const toolSlice = createAppSlice({
         const response = await fetch('/api/tools', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(toolData),
@@ -91,6 +93,19 @@ export const toolSlice = createAppSlice({
           state.isLoading = false
           state.error = action.payload as string
         },
+      },
+    ),
+
+    addToFavorites: create.reducer(
+      (state: ToolInitialState, action: PayloadAction<ToolUserResponseDto>) => {
+        const tool = action.payload
+        const isAlreadyFavorite = state.favCards.some(fav => fav.id === tool.id)
+
+        if (isAlreadyFavorite) {
+          state.favCards = state.favCards.filter(fav => fav.id !== tool.id)
+        } else {
+          state.favCards.push(tool)
+        }
       },
     ),
 
@@ -166,27 +181,29 @@ export const toolSlice = createAppSlice({
       },
       {
         pending: (state: ToolInitialState) => {
-          state.isLoading = true
+          state.isCategoryLoading = true
           state.error = undefined
+          state.tools = []
         },
         fulfilled: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.tools = action.payload
           state.error = undefined
         },
         rejected: (state: ToolInitialState, action) => {
-          state.isLoading = false
+          state.isCategoryLoading = false
           state.error = action.payload as string
         },
       },
     ),
+
     fetchUserTools: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         const response = await fetch('/api/tools/me', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
@@ -213,6 +230,63 @@ export const toolSlice = createAppSlice({
       },
     ),
 
+    updateToolStatus: create.asyncThunk(
+      async (
+        { id, status }: { id: string; status: string },
+        { rejectWithValue },
+      ) => {
+        try {
+          const response = await fetch(`/api/tools/${id}?status=${status}`, {
+            method: 'PATCH',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+            },
+          })
+
+          if (!response.ok) {
+            const errorResult = await response.json().catch(() => null)
+            return rejectWithValue(
+              errorResult?.message || 'Failed to update tool status',
+            )
+          }
+
+          const result = await response.json()
+
+          return result as ToolUserResponseDto
+          
+        } catch (error) {
+          console.error('Update Tool Error: ', error)
+          return rejectWithValue('Network error or invalid JSON response')
+        }
+      },
+      {
+        pending: (state: ToolInitialState) => {
+          state.isLoading = true
+          state.error = undefined
+        },
+        fulfilled: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = undefined
+          state.tools = state.tools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
+          state.userTools = state.userTools.map(tool =>
+            tool.id === action.payload.id
+              ? { ...tool, status: action.payload.status }
+              : tool,
+          )
+        },
+        rejected: (state: ToolInitialState, action) => {
+          state.isLoading = false
+          state.error = action.payload as string
+        },
+      },
+    ),
+
     updateTool: create.asyncThunk(
       async (toolData: ToolUserResponseDto, { rejectWithValue }) => {
         const sanitizedToolData = {
@@ -229,7 +303,7 @@ export const toolSlice = createAppSlice({
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
+              Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             },
             body: JSON.stringify(sanitizedToolData),
           })
@@ -244,7 +318,7 @@ export const toolSlice = createAppSlice({
           const result = await response.json()
           return result as ToolUserResponseDto
         } catch (error) {
-          console.error('Update Tool Error:', error)
+          console.error('Update Tool Error: ', error)
           return rejectWithValue('Network error or invalid JSON response')
         }
       },
@@ -273,7 +347,7 @@ export const toolSlice = createAppSlice({
           method: 'DELETE',
           headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         })
 
@@ -304,10 +378,23 @@ export const toolSlice = createAppSlice({
     ),
 
     searchTools: create.reducer(
-      (state: ToolInitialState, action: PayloadAction<string>) => {
-        const searchTerm = action.payload.toLowerCase()
+      (
+        state: ToolInitialState,
+        action: PayloadAction<{ searchTerm: string; city: string }>,
+      ) => {
+        const { searchTerm, city } = action.payload
         state.tools = state.initialTools.filter(tool => {
-          return tool.title && tool.title.toLowerCase().includes(searchTerm)
+          const matchesTitle = tool.title
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase())
+          const matchesCity =
+            tool.user?.address?.city?.toLowerCase() === city.toLowerCase()
+
+          if (searchTerm && city) return matchesTitle && matchesCity
+          if (searchTerm) return matchesTitle
+          if (city) return matchesCity
+
+          return true
         })
       },
     ),
@@ -316,7 +403,9 @@ export const toolSlice = createAppSlice({
     tools_data: (state: ToolInitialState) => ({
       tools: state.tools,
       isLoading: state.isLoading,
+      isCategoryLoading: state.isCategoryLoading,
       error: state.error,
+      favCards: state.favCards,
     }),
 
     toolObj_data: (state: ToolInitialState) => ({

@@ -2,16 +2,17 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/CategorySlice/categorySlice'
+} from 'store/redux/categorySlice/categorySlice'
 
 import Input from 'components/Input/Input'
 import Button from 'components/Button/Button'
@@ -26,15 +27,17 @@ import {
   ButtonControlWrapper,
 } from './styles'
 import { NEWADVERT_FORM_NAMES } from './types'
-import { ToolRequestDto } from 'store/redux/ToolSlice/types'
+import { ToolRequestDto } from 'store/redux/toolSlice/types'
 import ImagePreviewList from './ImagePrevievList'
-import { Select, MenuItem, FormControl, } from '@mui/material'
+import { Select, MenuItem, FormControl } from '@mui/material'
 import { colors } from 'styles/colors'
+import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function NewAdvertForm() {
   const [localImages, setLocalImages] = useState<File[]>([])
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
 
   const { isLoading } = useAppSelector(toolSliceSelectors.tools_data)
   const { categories } = useAppSelector(categorySliceSelectors.categories_data)
@@ -115,10 +118,13 @@ function NewAdvertForm() {
         )
 
         if (toolSliceAction.createTool.fulfilled.match(result)) {
+          enqueueSnackbar('Advert created successfully !', {
+            variant: 'success',
+          })
           formik.resetForm()
-          navigate('/profile/my-adverts')
+          navigate(TOOLS_APP_ROUTES.MY_ADVERTS)
         } else {
-          console.error('Failed to create advert:', result.error)
+          enqueueSnackbar('Failed to create advert', { variant: 'error' })
         }
       } catch (error) {
         console.error('Submission error:', error)

@@ -7,7 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LoginIcon from '@mui/icons-material/Login'
 
-import { signInOutSliceAction } from 'store/redux/signInSlice/signInOutSlice'
+import { loginSliceAction } from 'store/redux/loginSlice/loginSlice'
 
 import Search from 'components/Search/Search'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
@@ -33,7 +33,7 @@ function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
   }
 
   const handleLogout = () => {
-    dispatch(signInOutSliceAction.logoutUser())
+    dispatch(loginSliceAction.logoutUser())
     navigate(TOOLS_APP_ROUTES.HOME)
   }
 
@@ -66,7 +66,7 @@ function Header({ isLogin, toolName, onChangeValue }: AppHeaderProps) {
         </HeaderLink>
         {isLogin ? (
           <>
-            <HeaderLink to={TOOLS_APP_ROUTES.PROFILE}>
+            <HeaderLink to={TOOLS_APP_ROUTES.MY_PROFILE}>
               <AccountCircleIcon
                 sx={{
                   transition: 'background-color 0.3s, color 0.3s',

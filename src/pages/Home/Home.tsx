@@ -1,32 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   toolSliceAction,
   toolSliceSelectors,
-} from 'store/redux/ToolSlice/toolSlice'
+} from 'store/redux/toolSlice/toolSlice'
 import {
   categorySliceAction,
   categorySliceSelectors,
-} from 'store/redux/CategorySlice/categorySlice'
-
+} from 'store/redux/categorySlice/categorySlice'
 import ToolCard from 'components/ToolCard/ToolCard'
-// import {
-//   CategoryImg1,
-//   CategoryImg2,
-//   CategoryImg3,
-//   CategoryImg4,
-//   CategoryImg5,
-//   CategoryImg6,
-//   CategoryImg7,
-//   CategoryImg8,
-//   CategoryImg9,
-//   CategoryImg10,
-//   CategoryImg11,
-//   CategoryImg12,
-// } from 'assets'
-
 import {
   PageTitle,
   PageWrapper,
@@ -38,34 +21,25 @@ import {
   CardsContainer,
   TextContainer,
   BackButtonControl,
+  LoaderWrapper,
 } from './styles'
 import Button from 'components/Button/Button'
-
-// const imagesWithTitles = [
-//   { src: CategoryImg1, title: 'Excavators & Mini Excavators' },
-//   { src: CategoryImg2, title: 'Lifting Equipment & Aerial Work Platforms' },
-//   { src: CategoryImg3, title: 'Power Tools' },
-//   { src: CategoryImg4, title: 'Front Loaders & Mini Loaders' },
-//   { src: CategoryImg5, title: 'Compressors & Generators' },
-//   { src: CategoryImg6, title: 'Measuring Equipment' },
-//   { src: CategoryImg7, title: 'Concrete Mixers & Concrete Pumps' },
-//   { src: CategoryImg8, title: 'Rollers & Compaction Equipment' },
-//   { src: CategoryImg9, title: 'Welding Equipment' },
-//   { src: CategoryImg10, title: 'Cranes & Manipulators' },
-//   { src: CategoryImg11, title: 'Garden & Landscaping Tools' },
-//   { src: CategoryImg12, title: 'Lighting Equipment & Spotlights' },
-// ]
+import { CircularProgress } from '@mui/material'
+import { colors } from 'styles/colors'
 
 function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
   const [selectCategory, setSelectCategory] = useState<number | null>(null)
-
-  const { tools } = useAppSelector(
+  const { tools, isCategoryLoading } = useAppSelector(
     toolSliceSelectors.tools_data,
   )
-  const { categories, error } = useAppSelector(categorySliceSelectors.categories_data)
+
+  const {
+    categories,
+    error,
+    isLoading: isCategoriesLoading,
+  } = useAppSelector(categorySliceSelectors.categories_data)
 
   useEffect(() => {
     dispatch(categorySliceAction.fetchCategories())
@@ -81,8 +55,7 @@ function Home() {
     setSelectCategory(null)
     dispatch(toolSliceAction.fetchTools())
   }
-console.log("Error ", error)  
-console.log(categories)
+
   const imageContainers = categories.map(category => (
     <ImageWrapper key={category.id} onClick={() => handleCategory(category.id)}>
       <CategoryImg>
@@ -91,7 +64,7 @@ console.log(categories)
       <ImageTitle>{category.title}</ImageTitle>
     </ImageWrapper>
   ))
-console.log(imageContainers)
+
   const toolCards = tools.map(tool => (
     <ToolCard
       id={tool.id}
@@ -101,8 +74,6 @@ console.log(imageContainers)
       price={tool.price}
       description={tool.description}
       status={tool.status}
-      onAddToCard={() => {}}
-      onAddToFavourites={() => {}}
     />
   ))
 
@@ -114,16 +85,30 @@ console.log(imageContainers)
             {categories.find(category => category.id === selectCategory)?.title}
           </PageTitle>
           <BackButtonControl>
-            <Button name="< Back" onClick={handleBack} />
+            <Button name="Back" onClick={handleBack} />
           </BackButtonControl>
-          <CardsContainer>{toolCards}</CardsContainer>
+          {isCategoryLoading ? (
+            <LoaderWrapper>
+              <CircularProgress sx={{ color: colors.WHITE }} />{' '}
+            </LoaderWrapper>
+          ) : tools.length > 0 ? (
+            <CardsContainer>{toolCards}</CardsContainer>
+          ) : (
+            <TextContainer>No tools available in this category.</TextContainer>
+          )}
         </>
       ) : (
         <>
-          <CategoryContainer>
-            <PageTitle>RentifyTools Categories</PageTitle>
-            <PageContainer>{imageContainers}</PageContainer>
-          </CategoryContainer>
+          {isCategoriesLoading ? (
+            <LoaderWrapper>
+              <CircularProgress sx={{ color: colors.WHITE }} />
+            </LoaderWrapper>
+          ) : (
+            <CategoryContainer>
+              <PageTitle>RentifyTools Categories</PageTitle>
+              <PageContainer>{imageContainers}</PageContainer>
+            </CategoryContainer>
+          )}
           <TextContainer>Last Adverts</TextContainer>
           <CardsContainer>{toolCards}</CardsContainer>
         </>
