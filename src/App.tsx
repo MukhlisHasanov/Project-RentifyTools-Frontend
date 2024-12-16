@@ -8,7 +8,7 @@ import MyAdvert from 'pages/MyAdvert/MyAdvert'
 import SignUpForm from 'pages/Login/Login'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import AddAdvert from 'pages/AddAdvert/AddAdvert'
-import ChangeAdvertForm from 'components/ChangeAdvertForm/ChangeAdvertForm'
+import ChangeAdvert from 'pages/ChangeAdvert/ChangeAdvert'
 import HomePlug from 'pages/HomePlug/HomePlug'
 import SearchResults from 'pages/SearchResult/SearchResult'
 import Profile from 'pages/Profile/Profile'
@@ -48,7 +48,7 @@ function App() {
               />
               <Route
                 path={'/profile/my-adverts/change-advert/:id'}
-                element={<ChangeAdvertForm />}
+                element={<ChangeAdvert />}
               />
               <Route
                 path={TOOLS_APP_ROUTES.FAVOURITES}

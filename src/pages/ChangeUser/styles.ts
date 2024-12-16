@@ -20,3 +20,9 @@ export const Pragraph = styled.p`
   margin-top: 8px;
   font-size: 16px;
 `
+export const BackButtonControl = styled.div`
+  width: 80px;
+  position: fixed;
+  left: 350px;
+  top: 100px;
+`

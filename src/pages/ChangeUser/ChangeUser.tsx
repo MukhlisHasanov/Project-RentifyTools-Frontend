@@ -1,11 +1,14 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { PageWrapper, PageTitle, Pragraph } from './styles'
+import { useNavigate } from 'react-router-dom'
+import { PageWrapper, PageTitle, Pragraph, BackButtonControl } from './styles'
 import ChangeUserForm from 'components/ChangeUserForm/ChangeUserForm'
 import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 
 import { useState } from 'react'
+import Button from 'components/Button/Button'
 
 function ChangeUser() {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { user, error: loadError } = useAppSelector(
     loginSliceSelectors.currentUser,
@@ -27,6 +30,9 @@ function ChangeUser() {
 
   return (
     <PageWrapper>
+      <BackButtonControl>
+        <Button name="Back" onClick={() => navigate(-1)} />
+      </BackButtonControl>
       {isLoading && <Pragraph>Lädt...</Pragraph>}
       {updateError && (
         <Pragraph style={{ color: 'red' }}>Fehler: {updateError}</Pragraph>
