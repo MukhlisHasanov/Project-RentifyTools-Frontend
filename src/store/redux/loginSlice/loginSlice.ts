@@ -147,5 +147,5 @@ export const loginSlice = createAppSlice({
   },
 })
 
-export const signInOutSliceAction = loginSlice.actions
-export const signInOutSliceSelectors = loginSlice.selectors
+export const loginSliceAction = loginSlice.actions
+export const loginSliceSelectors = loginSlice.selectors

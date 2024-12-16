@@ -6,8 +6,8 @@ import { useSnackbar } from 'notistack'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
-  signInOutSliceAction,
-  signInOutSliceSelectors,
+  loginSliceAction,
+  loginSliceSelectors,
 } from 'store/redux/loginSlice/loginSlice'
 
 import Input from 'components/Input/Input'
@@ -31,7 +31,7 @@ function SignInForm({
 }: SignInFormProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { user, isLoading } = useAppSelector(signInOutSliceSelectors.login_user)
+  const { user, isLoading } = useAppSelector(loginSliceSelectors.login_user)
   const { enqueueSnackbar } = useSnackbar()
 
   const validationSchema = Yup.object({
@@ -59,10 +59,10 @@ function SignInForm({
     onSubmit: (values, helpers) => {
       if (isSignInMode) {
         console.log(values)
-        dispatch(signInOutSliceAction.loginUser(values))
+        dispatch(loginSliceAction.loginUser(values))
           .unwrap()
           .then(() => {
-            dispatch(signInOutSliceAction.getCurrentUser())
+            dispatch(loginSliceAction.getCurrentUser())
             console.log(user)
             enqueueSnackbar('Login successful !', { variant: 'success' })
             setTimeout(() => {
@@ -75,7 +75,7 @@ function SignInForm({
             helpers.resetForm()
           })
       } else {
-        dispatch(signInOutSliceAction.checkEmail(values))
+        dispatch(loginSliceAction.checkEmail(values))
           .unwrap()
           .then(() => {
             enqueueSnackbar('Email is available', { variant: 'success' })

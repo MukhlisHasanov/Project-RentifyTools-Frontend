@@ -5,7 +5,7 @@ import {
   adminSliceSelectors,
   adminSliceAction,
 } from 'store/redux/adminSlice/adminSlice'
-import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
+import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import Button from 'components/Button/Button'
 import FindUsersForm from 'components/FindUserForm/FindUserForm'
 import UserCard from 'components/UserCard/UserCard'
@@ -19,7 +19,7 @@ import {
 function FindUsers() {
   const dispatch = useAppDispatch()
   const { enqueueSnackbar } = useSnackbar()
-  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user } = useAppSelector(loginSliceSelectors.currentUser)
   const { foundUsers } = useAppSelector(adminSliceSelectors.search_users)
   const [isFound, setIsFound] = useState(false)
 

@@ -4,8 +4,8 @@ import { v4 } from 'uuid'
 
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
-  signInOutSliceSelectors,
-  signInOutSliceAction,
+  loginSliceSelectors,
+  loginSliceAction,
 } from 'store/redux/loginSlice/loginSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 import { UserImg } from 'assets'
@@ -25,12 +25,12 @@ import {
 function LayoutProfile() {
   const navigate = useNavigate()
 
-  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user } = useAppSelector(loginSliceSelectors.currentUser)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!user) {
-      dispatch(signInOutSliceAction.getCurrentUser())
+      dispatch(loginSliceAction.getCurrentUser())
     }
   }, [user, dispatch])
 

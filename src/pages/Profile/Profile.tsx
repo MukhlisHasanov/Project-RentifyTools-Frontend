@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { PageWrapper, ProfileContainer } from './styles'
 import UserCard from 'components/UserCard/UserCard'
-import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
+import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 import { useNavigate } from 'react-router-dom'
 import { userSliceAction } from 'store/redux/userSlice/userSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
 
 function Profile() {
-  const { user, error } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user, error } = useAppSelector(loginSliceSelectors.currentUser)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 

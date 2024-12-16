@@ -6,8 +6,8 @@ import {
   toolSliceSelectors,
 } from 'store/redux/toolSlice/toolSlice'
 import {
-  signInOutSliceAction,
-  signInOutSliceSelectors,
+  loginSliceAction,
+  loginSliceSelectors,
 } from 'store/redux/loginSlice/loginSlice'
 import {
   messageSliceAction,
@@ -43,7 +43,7 @@ function Advert() {
   const { toolObj, isLoading, error } = useAppSelector(
     toolSliceSelectors.toolObj_data,
   )
-  const { user } = useAppSelector(signInOutSliceSelectors.currentUser)
+  const { user } = useAppSelector(loginSliceSelectors.currentUser)
   const { success } = useAppSelector(messageSliceSelectors.message_state)
   const dispatch = useAppDispatch()
 

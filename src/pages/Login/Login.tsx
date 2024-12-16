@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import SignUpForm from 'components/SignUpForm/SignUpForm'
 import SignInForm from 'components/SignInForm/SignInForm'
 import { PageWrapper, SuccessMessage } from './styles'
-import { signInOutSliceSelectors } from 'store/redux/loginSlice/loginSlice'
+import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
 
 function Login() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isRegistered = Boolean(localStorage.getItem('accessToken'))
-  const { authData } = useAppSelector(signInOutSliceSelectors.login_user)
+  const { authData } = useAppSelector(loginSliceSelectors.login_user)
   const [isSignInMode, setIsSignInMode] = useState<boolean>(true)
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false)
   const onSignUpClick = () => setIsSignInMode(false)
