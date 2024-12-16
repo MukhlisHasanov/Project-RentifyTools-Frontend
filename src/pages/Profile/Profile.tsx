@@ -1,7 +1,9 @@
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { PageWrapper, ProfileContainer } from './styles'
 import UserCard from 'components/UserCard/UserCard'
-import { loginSliceSelectors } from 'store/redux/loginSlice/loginSlice'
+import {
+  loginSliceSelectors,
+} from 'store/redux/loginSlice/loginSlice'
 import { useNavigate } from 'react-router-dom'
 import { userSliceAction } from 'store/redux/userSlice/userSlice'
 import { TOOLS_APP_ROUTES } from 'constants/routes'
