@@ -1,4 +1,4 @@
-import { Address } from '../loginSlice/types'
+import { Address } from 'store/redux/addressSlice/types'
 
 export interface UserRequestDto {
   firstname: string
