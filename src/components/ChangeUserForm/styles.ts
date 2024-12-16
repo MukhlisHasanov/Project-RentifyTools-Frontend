@@ -20,20 +20,20 @@ export const Title = styled.h2`
 `
 
 export const InputsContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  margin-top: 2px;
+  width: 350px;
+
+  &.inline {
+    flex-direction: row;
+    gap: 5px;
+    justify-content: space-between;
+  }
 `
 
 export const ButtonControlWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
   margin-top: 20px;
-  width: 100%;
-`
-export const Label = styled.h2`
-  font-size: 16px;
-  color: ${colors.WHITE};
-  margin-bottom: 5px;
+  width: 350px;
+  height: 55px;
 `
